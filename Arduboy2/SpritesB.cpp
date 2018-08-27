@@ -146,15 +146,15 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 			if(sRow >= 0)
 			{
 				data = Arduboy2Base::sBuffer[ofs];
-				data &= (uint8_t)(mask_data);
-				data |= (uint8_t)(bitmap_data);
+				data &= static_cast<uint8_t>(mask_data);
+				data |= static_cast<uint8_t>(bitmap_data);
 				Arduboy2Base::sBuffer[ofs] = data;
 			}
 			if(yOffset != 0 && sRow < 7)
 			{
 				data = Arduboy2Base::sBuffer[ofs + WIDTH];
-				data &= (*((unsigned char *) (&mask_data) + 1));
-				data |= (*((unsigned char *) (&bitmap_data) + 1));
+				data &= (*(reinterpret_cast<unsigned char *>(&mask_data) + 1));
+				data |= (*(reinterpret_cast<unsigned char *>(&bitmap_data) + 1));
 				Arduboy2Base::sBuffer[ofs + WIDTH] = data;
 			}
 			++ofs;
