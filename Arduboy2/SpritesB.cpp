@@ -105,7 +105,8 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
     start_h = 0;
   }
 
-  loop_h = h / 8 + (h % 8 > 0 ? 1 : 0); // divide, then round up
+  // divide, then round up
+  loop_h = h / 8 + (h % 8 > 0 ? 1 : 0); 
 
   // if (sRow + loop_h - 1 > (HEIGHT/8)-1)
   if (sRow + loop_h > (HEIGHT / 8)) {

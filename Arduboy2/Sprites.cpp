@@ -104,7 +104,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
     start_h = 0;
   }
 
-  loop_h = h / 8 + (h % 8 > 0 ? 1 : 0); // divide, then round up
+  // divide, then round up
+  loop_h = h / 8 + (h % 8 > 0 ? 1 : 0); 
 
   // if (sRow + loop_h - 1 > (HEIGHT/8)-1)
   if (sRow + loop_h > (HEIGHT / 8)) {
@@ -238,13 +239,17 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
       // *2 because we use double the bits (mask + bitmap)
       bofs = (uint8_t *)(bitmap + ((start_h * w) + xOffset) * 2);
 
-      uint8_t xi = rendered_width; // counter for x loop below
+      // counter for x loop below
+      uint8_t xi = rendered_width; 
 
       asm volatile(
-        "push r28\n" // save Y
+        // save Y
+        "push r28\n" 
         "push r29\n"
-        "movw r28, %[buffer_ofs]\n" // Y = buffer_ofs_2
-        "adiw r28, 63\n" // buffer_ofs_2 = buffer_ofs + 128
+        // Y = buffer_ofs_2
+        "movw r28, %[buffer_ofs]\n" 
+        // buffer_ofs_2 = buffer_ofs + 128
+        "adiw r28, 63\n" 
         "adiw r28, 63\n"
         "adiw r28, 2\n"
         "loop_y:\n"
@@ -267,7 +272,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
         "brge end_second_page\n"
         // then
         "ld %[data], Y\n"
-        "com %B[mask_data]\n" // invert high byte of mask
+        // invert high byte of mask
+        "com %B[mask_data]\n" 
         "and %[data], %B[mask_data]\n"
         "or %[data], %B[bitmap_data]\n"
         // update buffer, increment
@@ -303,7 +309,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
         "next_loop_y:\n"
         "dec %[yi]\n"
         "breq finished\n"
-        "mov %[xi], %[x_count]\n" // reset x counter
+        // reset x counter
+        "mov %[xi], %[x_count]\n" 
         // sRow++;
         "inc %[sRow]\n"
         "clr __zero_reg__\n"
@@ -322,24 +329,31 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
         // put the Y register back in place
         "pop r29\n"
         "pop r28\n"
-        "clr __zero_reg__\n" // just in case
+        // just in case
+        "clr __zero_reg__\n" 
         : [xi] "+&a" (xi),
         [yi] "+&a" (loop_h),
-        [sRow] "+&a" (sRow), // CPI requires an upper register (r16-r23)
+        // CPI requires an upper register (r16-r23)
+        [sRow] "+&a" (sRow), 
         [data] "=&l" (data),
         [mask_data] "=&l" (mask_data),
         [bitmap_data] "=&l" (bitmap_data)
         :
         [screen_width] "M" (WIDTH),
-        [x_count] "l" (rendered_width), // lower register
+        // lower register
+        [x_count] "l" (rendered_width), 
         [sprite_ofs] "z" (bofs),
         [buffer_ofs] "x" (Arduboy2Base::sBuffer+ofs),
-        [buffer_ofs_jump] "a" (WIDTH-rendered_width), // upper reg (r16-r23)
-        [sprite_ofs_jump] "a" ((w-rendered_width)*2), // upper reg (r16-r23)
+        // upper reg (r16-r23)
+        [buffer_ofs_jump] "a" (WIDTH-rendered_width), 
+        // upper reg (r16-r23)
+        [sprite_ofs_jump] "a" ((w-rendered_width)*2), 
 
         // [sprite_ofs_jump] "r" (0),
-        [yOffset] "l" (yOffset), // lower register
-        [mul_amt] "l" (mul_amt) // lower register
+        // lower register
+        [yOffset] "l" (yOffset), 
+        // lower register
+        [mul_amt] "l" (mul_amt) 
         // NOTE: We also clobber r28 and r29 (y) but sometimes the compiler
         // won't allow us, so in order to make this work we don't tell it
         // that we clobber them. Instead, we push/pop to preserve them.
@@ -347,7 +361,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
         // our own variables into r28/r29.
         // We do that by specifying all the inputs and outputs use either
         // lower registers (l) or simple (r16-r23) upper registers (a).
-        : // pushes/clobbers/pops r28 and r29 (y)
+        // pushes/clobbers/pops r28 and r29 (y)
+        : 
       );
       break;
   }
