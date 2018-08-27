@@ -401,8 +401,7 @@ void Arduboy2Base::drawCircle(int16_t x0, int16_t y0, uint8_t r, uint8_t color)
   }
 }
 
-void Arduboy2Base::drawCircleHelper
-(int16_t x0, int16_t y0, uint8_t r, uint8_t corners, uint8_t color)
+void Arduboy2Base::drawCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t corners, uint8_t color)
 {
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
@@ -452,9 +451,7 @@ void Arduboy2Base::fillCircle(int16_t x0, int16_t y0, uint8_t r, uint8_t color)
   fillCircleHelper(x0, y0, r, 3, 0, color);
 }
 
-void Arduboy2Base::fillCircleHelper
-(int16_t x0, int16_t y0, uint8_t r, uint8_t sides, int16_t delta,
- uint8_t color)
+void Arduboy2Base::fillCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t sides, int16_t delta, uint8_t color)
 {
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
@@ -489,8 +486,7 @@ void Arduboy2Base::fillCircleHelper
   }
 }
 
-void Arduboy2Base::drawLine
-(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t color)
+void Arduboy2Base::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t color)
 {
   // bresenham's algorithm - thx wikpedia
   bool steep = abs(y1 - y0) > abs(x1 - x0);
@@ -540,8 +536,7 @@ void Arduboy2Base::drawLine
   }
 }
 
-void Arduboy2Base::drawRect
-(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color)
+void Arduboy2Base::drawRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color)
 {
   drawFastHLine(x, y, w, color);
   drawFastHLine(x, y+h-1, w, color);
@@ -549,8 +544,7 @@ void Arduboy2Base::drawRect
   drawFastVLine(x+w-1, y, h, color);
 }
 
-void Arduboy2Base::drawFastVLine
-(int16_t x, int16_t y, uint8_t h, uint8_t color)
+void Arduboy2Base::drawFastVLine(int16_t x, int16_t y, uint8_t h, uint8_t color)
 {
   int end = y+h;
   for (int a = max(0,y); a < min(end,HEIGHT); a++)
@@ -559,8 +553,7 @@ void Arduboy2Base::drawFastVLine
   }
 }
 
-void Arduboy2Base::drawFastHLine
-(int16_t x, int16_t y, uint8_t w, uint8_t color)
+void Arduboy2Base::drawFastHLine(int16_t x, int16_t y, uint8_t w, uint8_t color)
 {
   int16_t xEnd; // last x point + 1
 
@@ -610,8 +603,7 @@ void Arduboy2Base::drawFastHLine
   }
 }
 
-void Arduboy2Base::fillRect
-(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color)
+void Arduboy2Base::fillRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t color)
 {
   // stupidest version - update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++)
@@ -668,8 +660,7 @@ void Arduboy2Base::fillScreen(uint8_t color)
   );
 }
 
-void Arduboy2Base::drawRoundRect
-(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t color)
+void Arduboy2Base::drawRoundRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t color)
 {
   // smarter version
   drawFastHLine(x+r, y, w-2*r, color); // Top
@@ -683,8 +674,7 @@ void Arduboy2Base::drawRoundRect
   drawCircleHelper(x+r, y+h-r-1, r, 8, color);
 }
 
-void Arduboy2Base::fillRoundRect
-(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t color)
+void Arduboy2Base::fillRoundRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t color)
 {
   // smarter version
   fillRect(x+r, y, w-2*r, h, color);
@@ -694,16 +684,14 @@ void Arduboy2Base::fillRoundRect
   fillCircleHelper(x+r, y+r, r, 2, h-2*r-1, color);
 }
 
-void Arduboy2Base::drawTriangle
-(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t color)
+void Arduboy2Base::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t color)
 {
   drawLine(x0, y0, x1, y1, color);
   drawLine(x1, y1, x2, y2, color);
   drawLine(x2, y2, x0, y0, color);
 }
 
-void Arduboy2Base::fillTriangle
-(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t color)
+void Arduboy2Base::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t color)
 {
 
   int16_t a, b, y, last;
@@ -805,9 +793,7 @@ void Arduboy2Base::fillTriangle
   }
 }
 
-void Arduboy2Base::drawBitmap
-(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h,
- uint8_t color)
+void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color)
 {
   // no need to draw at all if we're offscreen
   if (x+w < 0 || x > WIDTH-1 || y+h < 0 || y > HEIGHT-1)
@@ -851,8 +837,7 @@ void Arduboy2Base::drawBitmap
 }
 
 
-void Arduboy2Base::drawSlowXYBitmap
-(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color)
+void Arduboy2Base::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color)
 {
   // no need to draw at all of we're offscreen
   if (x+w < 0 || x > WIDTH-1 || y+h < 0 || y > HEIGHT-1)
@@ -1263,8 +1248,7 @@ size_t Arduboy2::write(uint8_t c)
   return 1;
 }
 
-void Arduboy2::drawChar
-  (int16_t x, int16_t y, unsigned char c, uint8_t color, uint8_t bg, uint8_t size)
+void Arduboy2::drawChar(int16_t x, int16_t y, unsigned char c, uint8_t color, uint8_t bg, uint8_t size)
 {
   uint8_t line;
   bool draw_background = bg != color;
