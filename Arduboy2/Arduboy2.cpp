@@ -939,8 +939,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
         int bRow = startRow + rowOffset;
 
         //if (byte) // possible optimisation
-        if ((bRow <= (HEIGHT / 8) - 1) && (bRow > -2) &&
-            (columnOffset + sx <= (WIDTH - 1)) && (columnOffset + sx >= 0))
+        if ((bRow <= (HEIGHT / 8) - 1) && (bRow > -2) && (columnOffset + sx <= (WIDTH - 1)) && (columnOffset + sx >= 0))
         {
           int16_t offset = (bRow * WIDTH) + sx + columnOffset;
           if (bRow >= 0)
@@ -1026,22 +1025,17 @@ bool Arduboy2Base::justReleased(uint8_t button)
 
 bool Arduboy2Base::collide(Point point, Rect rect)
 {
-  return ((point.x >= rect.x) && (point.x < rect.x + rect.width) &&
-      (point.y >= rect.y) && (point.y < rect.y + rect.height));
+  return ((point.x >= rect.x) && (point.x < rect.x + rect.width) && (point.y >= rect.y) && (point.y < rect.y + rect.height));
 }
 
 bool Arduboy2Base::collide(Rect rect1, Rect rect2)
 {
-  return !(rect2.x                >= rect1.x + rect1.width  ||
-           rect2.x + rect2.width  <= rect1.x                ||
-           rect2.y                >= rect1.y + rect1.height ||
-           rect2.y + rect2.height <= rect1.y);
+  return !(rect2.x >= rect1.x + rect1.width || rect2.x + rect2.width <= rect1.x || rect2.y >= rect1.y + rect1.height || rect2.y + rect2.height <= rect1.y);
 }
 
 uint16_t Arduboy2Base::readUnitID()
 {
-  return EEPROM.read(EEPROM_UNIT_ID) |
-         (((uint16_t)(EEPROM.read(EEPROM_UNIT_ID + 1))) << 8);
+  return EEPROM.read(EEPROM_UNIT_ID) | (((uint16_t)(EEPROM.read(EEPROM_UNIT_ID + 1))) << 8);
 }
 
 void Arduboy2Base::writeUnitID(uint16_t id)
@@ -1254,11 +1248,7 @@ void Arduboy2::drawChar(int16_t x, int16_t y, unsigned char c, uint8_t color, ui
   bool draw_background = bg != color;
   const unsigned char* bitmap = font + c * 5;
 
-  if ((x >= WIDTH) ||              // Clip right
-      (y >= HEIGHT) ||             // Clip bottom
-      ((x + 5 * size - 1) < 0) ||  // Clip left
-      ((y + 8 * size - 1) < 0)     // Clip top
-     )
+  if ((x >= WIDTH) || (y >= HEIGHT) || ((x + 5 * size - 1) < 0) || ((y + 8 * size - 1) < 0))
   {
     return;
   }

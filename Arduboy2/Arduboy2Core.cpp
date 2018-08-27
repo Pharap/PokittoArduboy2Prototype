@@ -113,14 +113,12 @@ void Arduboy2Core::bootPins()
 #ifdef ARDUBOY_10
 
   // Port B INPUT_PULLUP or HIGH
-  PORTB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) |
-           _BV(B_BUTTON_BIT);
+  PORTB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(B_BUTTON_BIT);
   // Port B INPUT or LOW (none)
   // Port B inputs
   DDRB &= ~(_BV(B_BUTTON_BIT) | _BV(SPI_MISO_BIT));
   // Port B outputs
-  DDRB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) |
-          _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT);
+  DDRB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT);
 
   // Port C
   // Speaker: Not set here. Controlled by audio class
@@ -141,28 +139,22 @@ void Arduboy2Core::bootPins()
   // Port E outputs (none)
 
   // Port F INPUT_PULLUP or HIGH
-  PORTF |= _BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) |
-           _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT);
+  PORTF |= _BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT);
   // Port F INPUT or LOW
   PORTF &= ~(_BV(RAND_SEED_IN_BIT));
   // Port F inputs
-  DDRF &= ~(_BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) |
-            _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) |
-            _BV(RAND_SEED_IN_BIT));
+  DDRF &= ~(_BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
   // Port F outputs (none)
 
 #elif defined(AB_DEVKIT)
 
   // Port B INPUT_PULLUP or HIGH
-  PORTB |= _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) |
-           _BV(BLUE_LED_BIT);
+  PORTB |= _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(BLUE_LED_BIT);
   // Port B INPUT or LOW (none)
   // Port B inputs
-  DDRB &= ~(_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) |
-            _BV(SPI_MISO_BIT));
+  DDRB &= ~(_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(SPI_MISO_BIT));
   // Port B outputs
-  DDRB |= _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT) |
-          _BV(BLUE_LED_BIT);
+  DDRB |= _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT) | _BV(BLUE_LED_BIT);
 
   // Port C INPUT_PULLUP or HIGH
   PORTC |= _BV(RIGHT_BUTTON_BIT);
@@ -531,17 +523,14 @@ uint8_t Arduboy2Core::buttonsState()
 
 #ifdef ARDUBOY_10
   // up, right, left, down
-  buttons = ((~PINF) &
-              (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) |
-               _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
+  buttons = ((~PINF) & (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
   // A
   if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
   // B
   if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
 #elif defined(AB_DEVKIT)
   // down, left, up
-  buttons = ((~PINB) &
-              (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
+  buttons = ((~PINB) & (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
   // right
   if (bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0) { buttons |= RIGHT_BUTTON; }
   // A
