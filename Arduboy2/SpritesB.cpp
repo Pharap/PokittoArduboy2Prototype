@@ -44,22 +44,21 @@ void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, 
 	uint8_t width = pgm_read_byte(bitmap);
 	uint8_t height = pgm_read_byte(++bitmap);
 	bitmap++;
-	if (frame > 0 || sprite_frame > 0) {
+	if (frame > 0 || sprite_frame > 0)
+	{
 		frame_offset = (width * ( height / 8 + ( height % 8 == 0 ? 0 : 1)));
 		// sprite plus mask uses twice as much space for each frame
-		if (drawMode == SPRITE_PLUS_MASK) {
+		if (drawMode == SPRITE_PLUS_MASK)
 			frame_offset *= 2;
-		} else if (mask != NULL) {
+		else if (mask != NULL)
 			mask += sprite_frame * frame_offset;
-		}
 		bitmap += frame * frame_offset;
 	}
 
 	// if we're detecting the draw mode then base it on whether a mask
 	// was passed as a separate object
-	if (drawMode == SPRITE_AUTO_MODE) {
+	if (drawMode == SPRITE_AUTO_MODE)
 		drawMode = mask == NULL ? SPRITE_UNMASKED : SPRITE_MASKED;
-	}
 
 	drawBitmap(x, y, bitmap, mask, width, height, drawMode);
 }
@@ -80,38 +79,33 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 	int8_t sRow = y / 8;
 	uint8_t loop_h, start_h, rendered_width;
 
-	if (y < 0 && yOffset > 0) {
+	if (y < 0 && yOffset > 0)
 		sRow--;
-	}
 
 	// if the left side of the render is offscreen skip those loops
-	if (x < 0) {
+	if (x < 0)
 		xOffset = abs(x);
-	} else {
+	else
 		xOffset = 0;
-	}
 
 	// if the right side of the render is offscreen skip those loops
-	if (x + w > WIDTH - 1) {
+	if (x + w > WIDTH - 1)
 		rendered_width = ((WIDTH - x) - xOffset);
-	} else {
+	else
 		rendered_width = (w - xOffset);
-	}
 
 	// if the top side of the render is offscreen skip those loops
-	if (sRow < -1) {
+	if (sRow < -1)
 		start_h = abs(sRow) - 1;
-	} else {
+	else
 		start_h = 0;
-	}
 
 	// divide, then round up
 	loop_h = h / 8 + (h % 8 > 0 ? 1 : 0); 
 
 	// if (sRow + loop_h - 1 > (HEIGHT/8)-1)
-	if (sRow + loop_h > (HEIGHT / 8)) {
+	if (sRow + loop_h > (HEIGHT / 8))
 		loop_h = (HEIGHT / 8) - sRow;
-	}
 
 	// prepare variables for loops later so we can compare with 0
 	// instead of comparing two variables
@@ -132,28 +126,31 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 	const uint8_t *mask_ofs = !mask ? bitmap : mask;
 	mask_ofs += initial_bofs + ofs_step - 1;
 
-	for (uint8_t a = 0; a < loop_h; a++) {
-		for (uint8_t iCol = 0; iCol < rendered_width; iCol++) {
+	for (uint8_t a = 0; a < loop_h; a++)
+	{
+		for (uint8_t iCol = 0; iCol < rendered_width; iCol++)
+		{
 			uint8_t data;
 
 			bitmap_data = pgm_read_byte(bofs) * mul_amt;
 			mask_data = ~bitmap_data;
 
-			if (draw_mode == SPRITE_UNMASKED) {
+			if (draw_mode == SPRITE_UNMASKED)
 				mask_data = ~(0xFF * mul_amt);
-			} else if (draw_mode == SPRITE_IS_MASK_ERASE) {
+			else if (draw_mode == SPRITE_IS_MASK_ERASE)
 				bitmap_data = 0;
-			} else {
+			else
 				mask_data = ~(pgm_read_byte(mask_ofs) * mul_amt);
-			}
 
-			if (sRow >= 0) {
+			if (sRow >= 0)
+			{
 				data = Arduboy2Base::sBuffer[ofs];
 				data &= (uint8_t)(mask_data);
 				data |= (uint8_t)(bitmap_data);
 				Arduboy2Base::sBuffer[ofs] = data;
 			}
-			if (yOffset != 0 && sRow < 7) {
+			if (yOffset != 0 && sRow < 7)
+			{
 				data = Arduboy2Base::sBuffer[ofs + WIDTH];
 				data &= (*((unsigned char *) (&mask_data) + 1));
 				data |= (*((unsigned char *) (&bitmap_data) + 1));

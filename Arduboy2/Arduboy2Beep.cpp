@@ -36,10 +36,9 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 
 void BeepPin1::timer()
 {
-	if (duration && (--duration == 0)) {
+	if (duration && (--duration == 0))
 		// set normal mode (which disconnects the pin)
-		TCCR3A = 0; 
-	}
+		TCCR3A = 0;
 }
 
 void BeepPin1::noTone()
@@ -86,10 +85,9 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 
 void BeepPin2::timer()
 {
-	if (duration && (--duration == 0)) {
+	if (duration && (--duration == 0))
 		// set normal mode (which disconnects the pin)
-		TCCR4A = 0; 
-	}
+		TCCR4A = 0;
 }
 
 void BeepPin2::noTone()
@@ -127,9 +125,8 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 
 void BeepPin1::timer()
 {
-	if (duration) {
+	if (duration)
 		--duration;
-	}
 }
 
 void BeepPin1::noTone()
@@ -159,9 +156,8 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 
 void BeepPin2::timer()
 {
-	if (duration) {
+	if (duration)
 		--duration;
-	}
 }
 
 void BeepPin2::noTone()
