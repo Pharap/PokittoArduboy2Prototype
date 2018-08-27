@@ -954,7 +954,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
 	int width = static_cast<int>(cs.readBits(8)) + 1;
 	int height = static_cast<int>(cs.readBits(8)) + 1;
 	// starting colour
-	uint8_t spanColour = (uint8_t)cs.readBits(1); 
+	uint8_t spanColour = static_cast<uint8_t>(cs.readBits(1));
 
 	// no need to draw at all if we're offscreen
 	if((sx + width < 0) || (sx > WIDTH - 1) || (sy + height < 0) || (sy > HEIGHT - 1))
@@ -1119,7 +1119,7 @@ uint8_t Arduboy2Base::readUnitName(char* name)
 		val = EEPROM.read(src);
 		name[dest] = val;
 		++src;
-		if(val == 0x00 || (byte)val == 0xFF)
+		if(val == 0x00 || static_cast<byte>(val) == 0xFF)
 			break;
 	}
 
