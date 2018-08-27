@@ -39,72 +39,72 @@
  */
 class SpritesB
 {
-  public:
-    /** \brief
-     * Draw a sprite using a separate image and mask array.
-     *
-     * \param x,y The coordinates of the top left pixel location.
-     * \param bitmap A pointer to the array containing the image frames.
-     * \param mask A pointer to the array containing the mask frames.
-     * \param frame The frame number of the image to draw.
-     * \param mask_frame The frame number for the mask to use (can be different
-     * from the image frame number).
-     *
-     * \see Sprites::drawExternalMask()
-     */
-    static void drawExternalMask(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t frame, uint8_t mask_frame);
+	public:
+		/** \brief
+		 * Draw a sprite using a separate image and mask array.
+		 *
+		 * \param x,y The coordinates of the top left pixel location.
+		 * \param bitmap A pointer to the array containing the image frames.
+		 * \param mask A pointer to the array containing the mask frames.
+		 * \param frame The frame number of the image to draw.
+		 * \param mask_frame The frame number for the mask to use (can be different
+		 * from the image frame number).
+		 *
+		 * \see Sprites::drawExternalMask()
+		 */
+		static void drawExternalMask(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t frame, uint8_t mask_frame);
 
-    /** \brief
-     * Draw a sprite using an array containing both image and mask values.
-     *
-     * \param x,y The coordinates of the top left pixel location.
-     * \param bitmap A pointer to the array containing the image/mask frames.
-     * \param frame The frame number of the image to draw.
-     *
-     * \see Sprites::drawPlusMask()
-     */
-    static void drawPlusMask(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
+		/** \brief
+		 * Draw a sprite using an array containing both image and mask values.
+		 *
+		 * \param x,y The coordinates of the top left pixel location.
+		 * \param bitmap A pointer to the array containing the image/mask frames.
+		 * \param frame The frame number of the image to draw.
+		 *
+		 * \see Sprites::drawPlusMask()
+		 */
+		static void drawPlusMask(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
 
-    /** \brief
-     * Draw a sprite by replacing the existing content completely.
-     *
-     * \param x,y The coordinates of the top left pixel location.
-     * \param bitmap A pointer to the array containing the image frames.
-     * \param frame The frame number of the image to draw.
-     *
-     * \see Sprites::drawOverwrite()
-     */
-    static void drawOverwrite(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
+		/** \brief
+		 * Draw a sprite by replacing the existing content completely.
+		 *
+		 * \param x,y The coordinates of the top left pixel location.
+		 * \param bitmap A pointer to the array containing the image frames.
+		 * \param frame The frame number of the image to draw.
+		 *
+		 * \see Sprites::drawOverwrite()
+		 */
+		static void drawOverwrite(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
 
-    /** \brief
-     * "Erase" a sprite.
-     *
-     * \param x,y The coordinates of the top left pixel location.
-     * \param bitmap A pointer to the array containing the image frames.
-     * \param frame The frame number of the image to erase.
-     *
-     * \see Sprites::drawErase()
-     */
-    static void drawErase(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
+		/** \brief
+		 * "Erase" a sprite.
+		 *
+		 * \param x,y The coordinates of the top left pixel location.
+		 * \param bitmap A pointer to the array containing the image frames.
+		 * \param frame The frame number of the image to erase.
+		 *
+		 * \see Sprites::drawErase()
+		 */
+		static void drawErase(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
 
-    /** \brief
-     * Draw a sprite using only the bits set to 1.
-     *
-     * \param x,y The coordinates of the top left pixel location.
-     * \param bitmap A pointer to the array containing the image frames.
-     * \param frame The frame number of the image to draw.
-     *
-     * \see Sprites::drawSelfMasked()
-     */
-    static void drawSelfMasked(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
+		/** \brief
+		 * Draw a sprite using only the bits set to 1.
+		 *
+		 * \param x,y The coordinates of the top left pixel location.
+		 * \param bitmap A pointer to the array containing the image frames.
+		 * \param frame The frame number of the image to draw.
+		 *
+		 * \see Sprites::drawSelfMasked()
+		 */
+		static void drawSelfMasked(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);
 
-    // Master function. Needs to be abstracted into separate function for
-    // every render type.
-    // (Not officially part of the API)
-    static void draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, const uint8_t *mask, uint8_t sprite_frame, uint8_t drawMode);
+		// Master function. Needs to be abstracted into separate function for
+		// every render type.
+		// (Not officially part of the API)
+		static void draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, const uint8_t *mask, uint8_t sprite_frame, uint8_t drawMode);
 
-    // (Not officially part of the API)
-    static void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t w, uint8_t h, uint8_t draw_mode);
+		// (Not officially part of the API)
+		static void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t w, uint8_t h, uint8_t draw_mode);
 };
 
 #endif

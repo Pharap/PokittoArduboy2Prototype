@@ -7,67 +7,67 @@
 #include "Arduboy2Core.h"
 
 const uint8_t PROGMEM lcdBootProgram[] = {
-  // boot defaults are commented out but left here in case they
-  // might prove useful for reference
-  //
-  // Further reading: https://www.adafruit.com/datasheets/SSD1306.pdf
-  //
-  // Display Off
-  // 0xAE,
+	// boot defaults are commented out but left here in case they
+	// might prove useful for reference
+	//
+	// Further reading: https://www.adafruit.com/datasheets/SSD1306.pdf
+	//
+	// Display Off
+	// 0xAE,
 
-  // Set Display Clock Divisor v = 0xF0
-  // default is 0x80
-  0xD5, 0xF0,
+	// Set Display Clock Divisor v = 0xF0
+	// default is 0x80
+	0xD5, 0xF0,
 
-  // Set Multiplex Ratio v = 0x3F
-  // 0xA8, 0x3F,
+	// Set Multiplex Ratio v = 0x3F
+	// 0xA8, 0x3F,
 
-  // Set Display Offset v = 0
-  // 0xD3, 0x00,
+	// Set Display Offset v = 0
+	// 0xD3, 0x00,
 
-  // Set Start Line (0)
-  // 0x40,
+	// Set Start Line (0)
+	// 0x40,
 
-  // Charge Pump Setting v = enable (0x14)
-  // default is disabled
-  0x8D, 0x14,
+	// Charge Pump Setting v = enable (0x14)
+	// default is disabled
+	0x8D, 0x14,
 
-  // Set Segment Re-map (A0) | (b0001)
-  // default is (b0000)
-  0xA1,
+	// Set Segment Re-map (A0) | (b0001)
+	// default is (b0000)
+	0xA1,
 
-  // Set COM Output Scan Direction
-  0xC8,
+	// Set COM Output Scan Direction
+	0xC8,
 
-  // Set COM Pins v
-  // 0xDA, 0x12,
+	// Set COM Pins v
+	// 0xDA, 0x12,
 
-  // Set Contrast v = 0xCF
-  0x81, 0xCF,
+	// Set Contrast v = 0xCF
+	0x81, 0xCF,
 
-  // Set Precharge = 0xF1
-  0xD9, 0xF1,
+	// Set Precharge = 0xF1
+	0xD9, 0xF1,
 
-  // Set VCom Detect
-  // 0xDB, 0x40,
+	// Set VCom Detect
+	// 0xDB, 0x40,
 
-  // Entire Display ON
-  // 0xA4,
+	// Entire Display ON
+	// 0xA4,
 
-  // Set normal/inverse display
-  // 0xA6,
+	// Set normal/inverse display
+	// 0xA6,
 
-  // Display On
-  0xAF,
+	// Display On
+	0xAF,
 
-  // set display mode = horizontal addressing mode (0x00)
-  0x20, 0x00,
+	// set display mode = horizontal addressing mode (0x00)
+	0x20, 0x00,
 
-  // set col address range
-  // 0x21, 0x00, COLUMN_ADDRESS_END,
+	// set col address range
+	// 0x21, 0x00, COLUMN_ADDRESS_END,
 
-  // set page address range
-  // 0x22, 0x00, PAGE_ADDRESS_END
+	// set page address range
+	// 0x22, 0x00, PAGE_ADDRESS_END
 };
 
 
@@ -75,18 +75,18 @@ Arduboy2Core::Arduboy2Core() { }
 
 void Arduboy2Core::boot()
 {
-  #ifdef ARDUBOY_SET_CPU_8MHZ
-  // ARDUBOY_SET_CPU_8MHZ will be set by the IDE using boards.txt
-  setCPUSpeed8MHz();
-  #endif
+	#ifdef ARDUBOY_SET_CPU_8MHZ
+	// ARDUBOY_SET_CPU_8MHZ will be set by the IDE using boards.txt
+	setCPUSpeed8MHz();
+	#endif
 
-  // Select the ADC input here so a delay isn't required in initRandomSeed()
-  ADMUX = RAND_SEED_IN_ADMUX;
+	// Select the ADC input here so a delay isn't required in initRandomSeed()
+	ADMUX = RAND_SEED_IN_ADMUX;
 
-  bootPins();
-  bootSPI();
-  bootOLED();
-  bootPowerSaving();
+	bootPins();
+	bootSPI();
+	bootOLED();
+	bootPowerSaving();
 }
 
 #ifdef ARDUBOY_SET_CPU_8MHZ
@@ -96,19 +96,19 @@ void Arduboy2Core::boot()
 // likely will have incorrectly set it for an 8MHz hardware clock.
 void Arduboy2Core::setCPUSpeed8MHz()
 {
-  uint8_t oldSREG = SREG;
-  // suspend interrupts
-  cli();                
-  // dissable the PLL and set prescale for 16MHz)
-  PLLCSR = _BV(PINDIV); 
-  // allow reprogramming clock
-  CLKPR = _BV(CLKPCE);  
-  // set clock divisor to 2 (0b0001)
-  CLKPR = 1;            
-  // enable the PLL (with 16MHz prescale)
-  PLLCSR = _BV(PLLE) | _BV(PINDIV); 
-  // restore interrupts
-  SREG = oldSREG;       
+	uint8_t oldSREG = SREG;
+	// suspend interrupts
+	cli();                
+	// dissable the PLL and set prescale for 16MHz)
+	PLLCSR = _BV(PINDIV); 
+	// allow reprogramming clock
+	CLKPR = _BV(CLKPCE);  
+	// set clock divisor to 2 (0b0001)
+	CLKPR = 1;            
+	// enable the PLL (with 16MHz prescale)
+	PLLCSR = _BV(PLLE) | _BV(PINDIV); 
+	// restore interrupts
+	SREG = oldSREG;       
 }
 #endif
 
@@ -118,149 +118,149 @@ void Arduboy2Core::bootPins()
 {
 #ifdef ARDUBOY_10
 
-  // Port B INPUT_PULLUP or HIGH
-  PORTB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(B_BUTTON_BIT);
-  // Port B INPUT or LOW (none)
-  // Port B inputs
-  DDRB &= ~(_BV(B_BUTTON_BIT) | _BV(SPI_MISO_BIT));
-  // Port B outputs
-  DDRB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT);
+	// Port B INPUT_PULLUP or HIGH
+	PORTB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(B_BUTTON_BIT);
+	// Port B INPUT or LOW (none)
+	// Port B inputs
+	DDRB &= ~(_BV(B_BUTTON_BIT) | _BV(SPI_MISO_BIT));
+	// Port B outputs
+	DDRB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT);
 
-  // Port C
-  // Speaker: Not set here. Controlled by audio class
+	// Port C
+	// Speaker: Not set here. Controlled by audio class
 
-  // Port D INPUT_PULLUP or HIGH
-  PORTD |= _BV(CS_BIT);
-  // Port D INPUT or LOW
-  PORTD &= ~(_BV(RST_BIT));
-  // Port D inputs (none)
-  // Port D outputs
-  DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
+	// Port D INPUT_PULLUP or HIGH
+	PORTD |= _BV(CS_BIT);
+	// Port D INPUT or LOW
+	PORTD &= ~(_BV(RST_BIT));
+	// Port D inputs (none)
+	// Port D outputs
+	DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
 
-  // Port E INPUT_PULLUP or HIGH
-  PORTE |= _BV(A_BUTTON_BIT);
-  // Port E INPUT or LOW (none)
-  // Port E inputs
-  DDRE &= ~(_BV(A_BUTTON_BIT));
-  // Port E outputs (none)
+	// Port E INPUT_PULLUP or HIGH
+	PORTE |= _BV(A_BUTTON_BIT);
+	// Port E INPUT or LOW (none)
+	// Port E inputs
+	DDRE &= ~(_BV(A_BUTTON_BIT));
+	// Port E outputs (none)
 
-  // Port F INPUT_PULLUP or HIGH
-  PORTF |= _BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT);
-  // Port F INPUT or LOW
-  PORTF &= ~(_BV(RAND_SEED_IN_BIT));
-  // Port F inputs
-  DDRF &= ~(_BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
-  // Port F outputs (none)
+	// Port F INPUT_PULLUP or HIGH
+	PORTF |= _BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT);
+	// Port F INPUT or LOW
+	PORTF &= ~(_BV(RAND_SEED_IN_BIT));
+	// Port F inputs
+	DDRF &= ~(_BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
+	// Port F outputs (none)
 
 #elif defined(AB_DEVKIT)
 
-  // Port B INPUT_PULLUP or HIGH
-  PORTB |= _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(BLUE_LED_BIT);
-  // Port B INPUT or LOW (none)
-  // Port B inputs
-  DDRB &= ~(_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(SPI_MISO_BIT));
-  // Port B outputs
-  DDRB |= _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT) | _BV(BLUE_LED_BIT);
+	// Port B INPUT_PULLUP or HIGH
+	PORTB |= _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(BLUE_LED_BIT);
+	// Port B INPUT or LOW (none)
+	// Port B inputs
+	DDRB &= ~(_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(SPI_MISO_BIT));
+	// Port B outputs
+	DDRB |= _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT) | _BV(BLUE_LED_BIT);
 
-  // Port C INPUT_PULLUP or HIGH
-  PORTC |= _BV(RIGHT_BUTTON_BIT);
-  // Port C INPUT or LOW (none)
-  // Port C inputs
-  DDRC &= ~(_BV(RIGHT_BUTTON_BIT));
-  // Port C outputs (none)
+	// Port C INPUT_PULLUP or HIGH
+	PORTC |= _BV(RIGHT_BUTTON_BIT);
+	// Port C INPUT or LOW (none)
+	// Port C inputs
+	DDRC &= ~(_BV(RIGHT_BUTTON_BIT));
+	// Port C outputs (none)
 
-  // Port D INPUT_PULLUP or HIGH
-  PORTD |= _BV(CS_BIT);
-  // Port D INPUT or LOW
-  PORTD &= ~(_BV(RST_BIT));
-  // Port D inputs (none)
-  // Port D outputs
-  DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
+	// Port D INPUT_PULLUP or HIGH
+	PORTD |= _BV(CS_BIT);
+	// Port D INPUT or LOW
+	PORTD &= ~(_BV(RST_BIT));
+	// Port D inputs (none)
+	// Port D outputs
+	DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
 
-  // Port E (none)
+	// Port E (none)
 
-  // Port F INPUT_PULLUP or HIGH
-  PORTF |= _BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT);
-  // Port F INPUT or LOW
-  PORTF &= ~(_BV(RAND_SEED_IN_BIT));
-  // Port F inputs
-  DDRF &= ~(_BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
-  // Port F outputs (none)
-  // Speaker: Not set here. Controlled by audio class
+	// Port F INPUT_PULLUP or HIGH
+	PORTF |= _BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT);
+	// Port F INPUT or LOW
+	PORTF &= ~(_BV(RAND_SEED_IN_BIT));
+	// Port F inputs
+	DDRF &= ~(_BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
+	// Port F outputs (none)
+	// Speaker: Not set here. Controlled by audio class
 
 #endif
 }
 
 void Arduboy2Core::bootOLED()
 {
-  // reset the display
-  // reset pin should be low here. let it stay low a while
-  delayShort(5); 
-  // set high to come out of reset
-  bitSet(RST_PORT, RST_BIT); 
-  // wait a while
-  delayShort(5); 
+	// reset the display
+	// reset pin should be low here. let it stay low a while
+	delayShort(5); 
+	// set high to come out of reset
+	bitSet(RST_PORT, RST_BIT); 
+	// wait a while
+	delayShort(5); 
 
-  // select the display (permanently, since nothing else is using SPI)
-  bitClear(CS_PORT, CS_BIT);
+	// select the display (permanently, since nothing else is using SPI)
+	bitClear(CS_PORT, CS_BIT);
 
-  // run our customized boot-up command sequence against the
-  // OLED to initialize it properly for Arduboy
-  LCDCommandMode();
-  for (uint8_t i = 0; i < sizeof(lcdBootProgram); i++) {
-    SPItransfer(pgm_read_byte(lcdBootProgram + i));
-  }
-  LCDDataMode();
+	// run our customized boot-up command sequence against the
+	// OLED to initialize it properly for Arduboy
+	LCDCommandMode();
+	for (uint8_t i = 0; i < sizeof(lcdBootProgram); i++) {
+		SPItransfer(pgm_read_byte(lcdBootProgram + i));
+	}
+	LCDDataMode();
 }
 
 void Arduboy2Core::LCDDataMode()
 {
-  bitSet(DC_PORT, DC_BIT);
+	bitSet(DC_PORT, DC_BIT);
 }
 
 void Arduboy2Core::LCDCommandMode()
 {
-  bitClear(DC_PORT, DC_BIT);
+	bitClear(DC_PORT, DC_BIT);
 }
 
 // Initialize the SPI interface for the display
 void Arduboy2Core::bootSPI()
 {
 // master, mode 0, MSB first, CPU clock / 2 (8MHz)
-  SPCR = _BV(SPE) | _BV(MSTR);
-  SPSR = _BV(SPI2X);
+	SPCR = _BV(SPE) | _BV(MSTR);
+	SPSR = _BV(SPI2X);
 }
 
 // Write to the SPI bus (MOSI pin)
 void Arduboy2Core::SPItransfer(uint8_t data)
 {
-  SPDR = data;
-  /*
-   * The following NOP introduces a small delay that can prevent the wait
-   * loop form iterating when running at the maximum speed. This gives
-   * about 10% more speed, even if it seems counter-intuitive. At lower
-   * speeds it is unnoticed.
-   */
-  asm volatile("nop");
-  // wait
-  while (!(SPSR & _BV(SPIF))) { } 
+	SPDR = data;
+	/*
+	 * The following NOP introduces a small delay that can prevent the wait
+	 * loop form iterating when running at the maximum speed. This gives
+	 * about 10% more speed, even if it seems counter-intuitive. At lower
+	 * speeds it is unnoticed.
+	 */
+	asm volatile("nop");
+	// wait
+	while (!(SPSR & _BV(SPIF))) { } 
 }
 
 void Arduboy2Core::safeMode()
 {
-  if (buttonsState() == UP_BUTTON)
-  {
-    digitalWriteRGB(RED_LED, RGB_ON);
+	if (buttonsState() == UP_BUTTON)
+	{
+		digitalWriteRGB(RED_LED, RGB_ON);
 
 // for Arduboy core timer 0 should remain enabled
 #ifndef ARDUBOY_CORE 
-    // prevent the bootloader magic number from being overwritten by timer 0
-    // when a timer variable overlaps the magic number location
-    power_timer0_disable();
+		// prevent the bootloader magic number from being overwritten by timer 0
+		// when a timer variable overlaps the magic number location
+		power_timer0_disable();
 #endif
 
-    while (true) { }
-  }
+		while (true) { }
+	}
 }
 
 
@@ -268,41 +268,41 @@ void Arduboy2Core::safeMode()
 
 void Arduboy2Core::idle()
 {
-  // select idle mode and enable sleeping
-  SMCR = _BV(SE); 
-  sleep_cpu();
-  // disable sleeping
-  SMCR = 0; 
+	// select idle mode and enable sleeping
+	SMCR = _BV(SE); 
+	sleep_cpu();
+	// disable sleeping
+	SMCR = 0; 
 }
 
 void Arduboy2Core::bootPowerSaving()
 {
-  // disable Two Wire Interface (I2C) and the ADC
-  // All other bits will be written with 0 so will be enabled
-  PRR0 = _BV(PRTWI) | _BV(PRADC);
-  // disable USART1
-  PRR1 |= _BV(PRUSART1);
+	// disable Two Wire Interface (I2C) and the ADC
+	// All other bits will be written with 0 so will be enabled
+	PRR0 = _BV(PRTWI) | _BV(PRADC);
+	// disable USART1
+	PRR1 |= _BV(PRUSART1);
 }
 
 // Shut down the display
 void Arduboy2Core::displayOff()
 {
-  LCDCommandMode();
-  // display off
-  SPItransfer(0xAE); 
-  // charge pump:
-  SPItransfer(0x8D); 
-  //   disable
-  SPItransfer(0x10); 
-  delayShort(250);
-  // set display reset pin low (reset state)
-  bitClear(RST_PORT, RST_BIT); 
+	LCDCommandMode();
+	// display off
+	SPItransfer(0xAE); 
+	// charge pump:
+	SPItransfer(0x8D); 
+	//   disable
+	SPItransfer(0x10); 
+	delayShort(250);
+	// set display reset pin low (reset state)
+	bitClear(RST_PORT, RST_BIT); 
 }
 
 // Restart the display after a displayOff()
 void Arduboy2Core::displayOn()
 {
-  bootOLED();
+	bootOLED();
 }
 
 uint8_t Arduboy2Core::width() { return WIDTH; }
@@ -314,15 +314,15 @@ uint8_t Arduboy2Core::height() { return HEIGHT; }
 
 void Arduboy2Core::paint8Pixels(uint8_t pixels)
 {
-  SPItransfer(pixels);
+	SPItransfer(pixels);
 }
 
 void Arduboy2Core::paintScreen(const uint8_t *image)
 {
-  for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
-  {
-    SPItransfer(pgm_read_byte(image + i));
-  }
+	for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
+	{
+		SPItransfer(pgm_read_byte(image + i));
+	}
 }
 
 // paint from a memory buffer, this should be FAST as it's likely what
@@ -333,123 +333,125 @@ void Arduboy2Core::paintScreen(const uint8_t *image)
 // It is specifically tuned for a 16MHz CPU clock and SPI clocking at 8MHz.
 void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
-  uint16_t count;
+	uint16_t count;
 
-  asm volatile (
-    //for (len = WIDTH * HEIGHT / 8)
-    "   ldi   %A[count], %[len_lsb]               \n\t" 
-    "   ldi   %B[count], %[len_msb]               \n\t"
-    //tmp = *(image)
-    "1: ld    __tmp_reg__, %a[ptr]      ;2        \n\t" 
-    //SPDR = tmp
-    "   out   %[spdr], __tmp_reg__      ;1        \n\t" 
-    //if (clear) tmp = 0;
-    "   cpse  %[clear], __zero_reg__    ;1/2      \n\t" 
-    "   mov   __tmp_reg__, __zero_reg__ ;1        \n\t"
-    //len --
-    "2: sbiw  %A[count], 1              ;2        \n\t" 
-    //loop twice for cheap delay
-    "   sbrc  %A[count], 0              ;1/2      \n\t" 
-    "   rjmp  2b                        ;2        \n\t"
-    //*(image++) = tmp
-    "   st    %a[ptr]+, __tmp_reg__     ;2        \n\t" 
-    //len > 0
-    "   brne  1b                        ;1/2 :18  \n\t" 
-    //read SPSR to clear SPIF
-    "   in    __tmp_reg__, %[spsr]                \n\t" 
-    : [ptr]     "+&e" (image),
-      [count]   "=&w" (count)
-    : [spdr]    "I"   (_SFR_IO_ADDR(SPDR)),
-      [spsr]    "I"   (_SFR_IO_ADDR(SPSR)),
-      // 8: pixels per byte
-      [len_msb] "M"   (WIDTH * (HEIGHT / 8 * 2) >> 8),   
-      // 2: for delay loop multiplier
-      [len_lsb] "M"   (WIDTH * (HEIGHT / 8 * 2) & 0xFF), 
-      [clear]   "r"   (clear)
-  );
+	asm volatile (
+		//for (len = WIDTH * HEIGHT / 8)
+		"   ldi   %A[count], %[len_lsb]               \n\t" 
+		"   ldi   %B[count], %[len_msb]               \n\t"
+		//tmp = *(image)
+		"1: ld    __tmp_reg__, %a[ptr]      ;2        \n\t" 
+		//SPDR = tmp
+		"   out   %[spdr], __tmp_reg__      ;1        \n\t" 
+		//if (clear) tmp = 0;
+		"   cpse  %[clear], __zero_reg__    ;1/2      \n\t" 
+		"   mov   __tmp_reg__, __zero_reg__ ;1        \n\t"
+		//len --
+		"2: sbiw  %A[count], 1              ;2        \n\t" 
+		//loop twice for cheap delay
+		"   sbrc  %A[count], 0              ;1/2      \n\t" 
+		"   rjmp  2b                        ;2        \n\t"
+		//*(image++) = tmp
+		"   st    %a[ptr]+, __tmp_reg__     ;2        \n\t" 
+		//len > 0
+		"   brne  1b                        ;1/2 :18  \n\t" 
+		//read SPSR to clear SPIF
+		"   in    __tmp_reg__, %[spsr]                \n\t" 
+		:
+		[ptr]     "+&e" (image),
+		[count]   "=&w" (count)
+		:
+		[spdr]    "I"   (_SFR_IO_ADDR(SPDR)),
+		[spsr]    "I"   (_SFR_IO_ADDR(SPSR)),
+		// 8: pixels per byte
+		[len_msb] "M"   (WIDTH * (HEIGHT / 8 * 2) >> 8),   
+		// 2: for delay loop multiplier
+		[len_lsb] "M"   (WIDTH * (HEIGHT / 8 * 2) & 0xFF), 
+		[clear]   "r"   (clear)
+	);
 }
 #if 0
 // For reference, this is the "closed loop" C++ version of paintScreen()
 // used prior to the above version.
 void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
-  uint8_t c;
-  int i = 0;
+	uint8_t c;
+	int i = 0;
 
-  if (clear)
-  {
-    // set the first SPI data byte to get things started
-    SPDR = image[i]; 
-    // clear the first image byte
-    image[i++] = 0;  
-  }
-  else
-    SPDR = image[i++];
+	if (clear)
+	{
+		// set the first SPI data byte to get things started
+		SPDR = image[i]; 
+		// clear the first image byte
+		image[i++] = 0;  
+	}
+	else
+		SPDR = image[i++];
 
-  // the code to iterate the loop and get the next byte from the buffer is
-  // executed while the previous byte is being sent out by the SPI controller
-  while (i < (HEIGHT * WIDTH) / 8)
-  {
-    // get the next byte. It's put in a local variable so it can be sent as
-    // as soon as possible after the sending of the previous byte has completed
-    if (clear)
-    {
-      c = image[i];
-      // clear the byte in the image buffer
-      image[i++] = 0;
-    }
-    else
-      c = image[i++];
+	// the code to iterate the loop and get the next byte from the buffer is
+	// executed while the previous byte is being sent out by the SPI controller
+	while (i < (HEIGHT * WIDTH) / 8)
+	{
+		// get the next byte. It's put in a local variable so it can be sent as
+		// as soon as possible after the sending of the previous byte has completed
+		if (clear)
+		{
+			c = image[i];
+			// clear the byte in the image buffer
+			image[i++] = 0;
+		}
+		else
+			c = image[i++];
 
-    // wait for the previous byte to be sent
-    while (!(SPSR & _BV(SPIF))) { } 
+		// wait for the previous byte to be sent
+		while (!(SPSR & _BV(SPIF))) { } 
 
-    // put the next byte in the SPI data register. The SPI controller will
-    // clock it out while the loop continues and gets the next byte ready
-    SPDR = c;
-  }
-  // wait for the last byte to be sent
-  while (!(SPSR & _BV(SPIF))) { } 
+		// put the next byte in the SPI data register. The SPI controller will
+		// clock it out while the loop continues and gets the next byte ready
+		SPDR = c;
+	}
+	// wait for the last byte to be sent
+	while (!(SPSR & _BV(SPIF))) { } 
 }
 #endif
 
 void Arduboy2Core::blank()
 {
-  for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
-    SPItransfer(0x00);
+	for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
+		SPItransfer(0x00);
 }
 
 void Arduboy2Core::sendLCDCommand(uint8_t command)
 {
-  LCDCommandMode();
-  SPItransfer(command);
-  LCDDataMode();
+	LCDCommandMode();
+	SPItransfer(command);
+	LCDDataMode();
 }
 
 // invert the display or set to normal
 // when inverted, a pixel set to 0 will be on
 void Arduboy2Core::invert(bool inverse)
 {
-  sendLCDCommand(inverse ? OLED_PIXELS_INVERTED : OLED_PIXELS_NORMAL);
+	sendLCDCommand(inverse ? OLED_PIXELS_INVERTED : OLED_PIXELS_NORMAL);
 }
 
 // turn all display pixels on, ignoring buffer contents
 // or set to normal buffer display
 void Arduboy2Core::allPixelsOn(bool on)
 {
-  sendLCDCommand(on ? OLED_ALL_PIXELS_ON : OLED_PIXELS_FROM_RAM);
+	sendLCDCommand(on ? OLED_ALL_PIXELS_ON : OLED_PIXELS_FROM_RAM);
 }
 
 // flip the display vertically or set to normal
 void Arduboy2Core::flipVertical(bool flipped)
 {
-  sendLCDCommand(flipped ? OLED_VERTICAL_FLIPPED : OLED_VERTICAL_NORMAL);
+	sendLCDCommand(flipped ? OLED_VERTICAL_FLIPPED : OLED_VERTICAL_NORMAL);
 }
 
 // flip the display horizontally or set to normal
 void Arduboy2Core::flipHorizontal(bool flipped)
 {
-  sendLCDCommand(flipped ? OLED_HORIZ_FLIPPED : OLED_HORIZ_NORMAL);
+	sendLCDCommand(flipped ? OLED_HORIZ_FLIPPED : OLED_HORIZ_NORMAL);
 }
 
 /* RGB LED */
@@ -458,97 +460,97 @@ void Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 {
 // RGB, all the pretty colors
 #ifdef ARDUBOY_10 
-  // timer 0: Fast PWM, OC0A clear on compare / set at top
-  // We must stay in Fast PWM mode because timer 0 is used for system timing.
-  // We can't use "inverted" mode because it won't allow full shut off.
-  TCCR0A = _BV(COM0A1) | _BV(WGM01) | _BV(WGM00);
-  OCR0A = 255 - green;
-  // timer 1: Phase correct PWM 8 bit
-  // OC1A and OC1B set on up-counting / clear on down-counting (inverted). This
-  // allows the value to be directly loaded into the OCR with common anode LED.
-  TCCR1A = _BV(COM1A1) | _BV(COM1A0) | _BV(COM1B1) | _BV(COM1B0) | _BV(WGM10);
-  OCR1AL = blue;
-  OCR1BL = red;
+	// timer 0: Fast PWM, OC0A clear on compare / set at top
+	// We must stay in Fast PWM mode because timer 0 is used for system timing.
+	// We can't use "inverted" mode because it won't allow full shut off.
+	TCCR0A = _BV(COM0A1) | _BV(WGM01) | _BV(WGM00);
+	OCR0A = 255 - green;
+	// timer 1: Phase correct PWM 8 bit
+	// OC1A and OC1B set on up-counting / clear on down-counting (inverted). This
+	// allows the value to be directly loaded into the OCR with common anode LED.
+	TCCR1A = _BV(COM1A1) | _BV(COM1A0) | _BV(COM1B1) | _BV(COM1B0) | _BV(WGM10);
+	OCR1AL = blue;
+	OCR1BL = red;
 #elif defined(AB_DEVKIT)
-  // only blue on DevKit, which is not PWM capable
-  // parameter unused
-  (void)red;    
-  // parameter unused
-  (void)green;  
-  bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue ? RGB_ON : RGB_OFF);
+	// only blue on DevKit, which is not PWM capable
+	// parameter unused
+	(void)red;    
+	// parameter unused
+	(void)green;  
+	bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue ? RGB_ON : RGB_OFF);
 #endif
 }
 
 void Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 {
 #ifdef ARDUBOY_10
-  if (color == RED_LED)
-  {
-    OCR1BL = val;
-  }
-  else if (color == GREEN_LED)
-  {
-    OCR0A = 255 - val;
-  }
-  else if (color == BLUE_LED)
-  {
-    OCR1AL = val;
-  }
+	if (color == RED_LED)
+	{
+		OCR1BL = val;
+	}
+	else if (color == GREEN_LED)
+	{
+		OCR0A = 255 - val;
+	}
+	else if (color == BLUE_LED)
+	{
+		OCR1AL = val;
+	}
 #elif defined(AB_DEVKIT)
-  // only blue on DevKit, which is not PWM capable
-  if (color == BLUE_LED)
-  {
-    bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val ? RGB_ON : RGB_OFF);
-  }
+	// only blue on DevKit, which is not PWM capable
+	if (color == BLUE_LED)
+	{
+		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val ? RGB_ON : RGB_OFF);
+	}
 #endif
 }
 
 void Arduboy2Core::freeRGBled()
 {
 #ifdef ARDUBOY_10
-  // clear the COM bits to return the pins to normal I/O mode
-  TCCR0A = _BV(WGM01) | _BV(WGM00);
-  TCCR1A = _BV(WGM10);
+	// clear the COM bits to return the pins to normal I/O mode
+	TCCR0A = _BV(WGM01) | _BV(WGM00);
+	TCCR1A = _BV(WGM10);
 #endif
 }
 
 void Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
 {
 #ifdef ARDUBOY_10
-  bitWrite(RED_LED_PORT, RED_LED_BIT, red);
-  bitWrite(GREEN_LED_PORT, GREEN_LED_BIT, green);
-  bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue);
+	bitWrite(RED_LED_PORT, RED_LED_BIT, red);
+	bitWrite(GREEN_LED_PORT, GREEN_LED_BIT, green);
+	bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue);
 #elif defined(AB_DEVKIT)
-  // only blue on DevKit
-  // parameter unused
-  (void)red;    
-  // parameter unused
-  (void)green;  
-  bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue);
+	// only blue on DevKit
+	// parameter unused
+	(void)red;    
+	// parameter unused
+	(void)green;  
+	bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue);
 #endif
 }
 
 void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 {
 #ifdef ARDUBOY_10
-  if (color == RED_LED)
-  {
-    bitWrite(RED_LED_PORT, RED_LED_BIT, val);
-  }
-  else if (color == GREEN_LED)
-  {
-    bitWrite(GREEN_LED_PORT, GREEN_LED_BIT, val);
-  }
-  else if (color == BLUE_LED)
-  {
-    bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
-  }
+	if (color == RED_LED)
+	{
+		bitWrite(RED_LED_PORT, RED_LED_BIT, val);
+	}
+	else if (color == GREEN_LED)
+	{
+		bitWrite(GREEN_LED_PORT, GREEN_LED_BIT, val);
+	}
+	else if (color == BLUE_LED)
+	{
+		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
+	}
 #elif defined(AB_DEVKIT)
-  // only blue on DevKit
-  if (color == BLUE_LED)
-  {
-    bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
-  }
+	// only blue on DevKit
+	if (color == BLUE_LED)
+	{
+		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
+	}
 #endif
 }
 
@@ -556,48 +558,48 @@ void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 
 uint8_t Arduboy2Core::buttonsState()
 {
-  uint8_t buttons;
+	uint8_t buttons;
 
 #ifdef ARDUBOY_10
-  // up, right, left, down
-  buttons = ((~PINF) & (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
-  // A
-  if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
-  // B
-  if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
+	// up, right, left, down
+	buttons = ((~PINF) & (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
+	// A
+	if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
+	// B
+	if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
 #elif defined(AB_DEVKIT)
-  // down, left, up
-  buttons = ((~PINB) & (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
-  // right
-  if (bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0) { buttons |= RIGHT_BUTTON; }
-  // A
-  if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
-  // B
-  if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
+	// down, left, up
+	buttons = ((~PINB) & (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
+	// right
+	if (bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0) { buttons |= RIGHT_BUTTON; }
+	// A
+	if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0) { buttons |= A_BUTTON; }
+	// B
+	if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0) { buttons |= B_BUTTON; }
 #endif
 
-  return buttons;
+	return buttons;
 }
 
 // delay in ms with 16 bit duration
 void Arduboy2Core::delayShort(uint16_t ms)
 {
-  delay((unsigned long) ms);
+	delay((unsigned long) ms);
 }
 
 void Arduboy2Core::exitToBootloader()
 {
-  cli();
-  // set bootloader magic key
-  // storing two uint8_t instead of one uint16_t saves an instruction
-  //  when high and low bytes of the magic key are the same
-  *(uint8_t *)MAGIC_KEY_POS = lowByte(MAGIC_KEY);
-  *(uint8_t *)(MAGIC_KEY_POS + 1) = highByte(MAGIC_KEY);
-  // enable watchdog timer reset, with 16ms timeout
-  wdt_reset();
-  WDTCSR = (_BV(WDCE) | _BV(WDE));
-  WDTCSR = _BV(WDE);
-  while (true) { }
+	cli();
+	// set bootloader magic key
+	// storing two uint8_t instead of one uint16_t saves an instruction
+	//  when high and low bytes of the magic key are the same
+	*(uint8_t *)MAGIC_KEY_POS = lowByte(MAGIC_KEY);
+	*(uint8_t *)(MAGIC_KEY_POS + 1) = highByte(MAGIC_KEY);
+	// enable watchdog timer reset, with 16ms timeout
+	wdt_reset();
+	WDTCSR = (_BV(WDCE) | _BV(WDE));
+	WDTCSR = _BV(WDE);
+	while (true) { }
 }
 
 // Replacement main() that eliminates the USB stack code.
@@ -606,39 +608,39 @@ void Arduboy2Core::exitToBootloader()
 
 void Arduboy2Core::mainNoUSB()
 {
-  // disable USB
-  UDCON = _BV(DETACH);
-  UDIEN = 0;
-  UDINT = 0;
-  USBCON = _BV(FRZCLK);
-  UHWCON = 0;
-  power_usb_disable();
+	// disable USB
+	UDCON = _BV(DETACH);
+	UDIEN = 0;
+	UDINT = 0;
+	USBCON = _BV(FRZCLK);
+	UHWCON = 0;
+	power_usb_disable();
 
-  init();
+	init();
 
-  // This would normally be done in the USB code that uses the TX and RX LEDs
-  TX_RX_LED_INIT;
-  TXLED0;
-  RXLED0;
+	// This would normally be done in the USB code that uses the TX and RX LEDs
+	TX_RX_LED_INIT;
+	TXLED0;
+	RXLED0;
 
-  // Set the DOWN button pin for INPUT_PULLUP
-  bitSet(DOWN_BUTTON_PORT, DOWN_BUTTON_BIT);
-  bitClear(DOWN_BUTTON_DDR, DOWN_BUTTON_BIT);
+	// Set the DOWN button pin for INPUT_PULLUP
+	bitSet(DOWN_BUTTON_PORT, DOWN_BUTTON_BIT);
+	bitClear(DOWN_BUTTON_DDR, DOWN_BUTTON_BIT);
 
-  // Delay to give time for the pin to be pulled high if it was floating
-  delayShort(10);
+	// Delay to give time for the pin to be pulled high if it was floating
+	delayShort(10);
 
-  // if the DOWN button is pressed
-  if (bitRead(DOWN_BUTTON_PORTIN, DOWN_BUTTON_BIT) == 0) {
-    exitToBootloader();
-  }
+	// if the DOWN button is pressed
+	if (bitRead(DOWN_BUTTON_PORTIN, DOWN_BUTTON_BIT) == 0) {
+		exitToBootloader();
+	}
 
-  // The remainder is a copy of the Arduino main() function with the
-  // USB code and other unneeded code commented out.
-  // init() was called above.
-  // The call to function initVariant() is commented out to fix compiler
-  // error: "multiple definition of 'main'".
-  // The return statement is removed since this function is type void.
+	// The remainder is a copy of the Arduino main() function with the
+	// USB code and other unneeded code commented out.
+	// init() was called above.
+	// The call to function initVariant() is commented out to fix compiler
+	// error: "multiple definition of 'main'".
+	// The return statement is removed since this function is type void.
 
 //  init();
 
@@ -648,12 +650,12 @@ void Arduboy2Core::mainNoUSB()
 //  USBDevice.attach();
 //#endif
 
-  setup();
+	setup();
 
-  for (;;) {
-    loop();
+	for (;;) {
+		loop();
 //    if (serialEventRun) serialEventRun();
-  }
+	}
 
 //  return 0;
 }

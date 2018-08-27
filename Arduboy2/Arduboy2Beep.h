@@ -121,136 +121,136 @@ class BeepPin1
 {
  public:
 
-  /** \brief
-   * The counter used by the `timer()` function to time the duration of a tone.
-   *
-   * \details
-   * This variable is set by the `dur` parameter of the `tone()` function.
-   * It is then decremented each time the `timer()` function is called, if its
-   * value isn't 0. When `timer()` decrements it to 0, a tone that is playing
-   * will be stopped.
-   *
-   * A sketch can determine if a tone is currently playing by testing if
-   * this variable is non-zero (assuming it's a timed tone, not a continuous
-   * tone).
-   *
-   * Example:
-   * \code{.cpp}
-   * beep.tone(beep.freq(1000), 15);
-   * while (beep.duration != 0) { } // wait for the tone to stop playing
-   * \endcode
-   *
-   * It can also be manipulated directly by the sketch, although this should
-   * seldom be necessary.
-   */
-  static uint8_t duration;
+	/** \brief
+	 * The counter used by the `timer()` function to time the duration of a tone.
+	 *
+	 * \details
+	 * This variable is set by the `dur` parameter of the `tone()` function.
+	 * It is then decremented each time the `timer()` function is called, if its
+	 * value isn't 0. When `timer()` decrements it to 0, a tone that is playing
+	 * will be stopped.
+	 *
+	 * A sketch can determine if a tone is currently playing by testing if
+	 * this variable is non-zero (assuming it's a timed tone, not a continuous
+	 * tone).
+	 *
+	 * Example:
+	 * \code{.cpp}
+	 * beep.tone(beep.freq(1000), 15);
+	 * while (beep.duration != 0) { } // wait for the tone to stop playing
+	 * \endcode
+	 *
+	 * It can also be manipulated directly by the sketch, although this should
+	 * seldom be necessary.
+	 */
+	static uint8_t duration;
 
-  /** \brief
-   * Set up the hardware.
-   *
-   * \details
-   * Prepare the hardware for playing tones.
-   * This function must be called (usually in `setup()`) before using any of
-   * the other functions in this class.
-   */
-  static void begin();
+	/** \brief
+	 * Set up the hardware.
+	 *
+	 * \details
+	 * Prepare the hardware for playing tones.
+	 * This function must be called (usually in `setup()`) before using any of
+	 * the other functions in this class.
+	 */
+	static void begin();
 
-  /** \brief
-   * Play a tone continually, until replaced by a new tone or stopped.
-   *
-   * \param count The count to be loaded into the timer/counter to play
-   *              the desired frequency.
-   *
-   * \details
-   * A tone is played indefinitely, until replaced by another tone or stopped
-   * using `noTone()`.
-   *
-   * The tone's frequency is determined by the specified count, which is loaded
-   * into the timer/counter that generates the tone. A desired frequency can be
-   * converted into the required count value using the `freq()` function.
-   *
-   * \see freq() timer() noTone()
-   */
-  static void tone(uint16_t count);
+	/** \brief
+	 * Play a tone continually, until replaced by a new tone or stopped.
+	 *
+	 * \param count The count to be loaded into the timer/counter to play
+	 *              the desired frequency.
+	 *
+	 * \details
+	 * A tone is played indefinitely, until replaced by another tone or stopped
+	 * using `noTone()`.
+	 *
+	 * The tone's frequency is determined by the specified count, which is loaded
+	 * into the timer/counter that generates the tone. A desired frequency can be
+	 * converted into the required count value using the `freq()` function.
+	 *
+	 * \see freq() timer() noTone()
+	 */
+	static void tone(uint16_t count);
 
-  /** \brief
-   * Play a tone for a given duration.
-   *
-   * \param count The count to be loaded into the timer/counter to play
-   *              the desired frequency.
-   * \param dur The duration of the tone, used by `timer()`.
-   *
-   * \details
-   * A tone is played for the specified duration, or until replaced by another
-   * tone or stopped using `noTone()`.
-   *
-   * The tone's frequency is determined by the specified count, which is loaded
-   * into the timer/counter that generates the tone. A desired frequency can be
-   * converted into the required count value using the `freq()` function.
-   *
-   * The duration value is the number of times the `timer()` function must be
-   * called before the tone is stopped.
-   *
-   * \see freq() timer() noTone()
-   */
-  static void tone(uint16_t count, uint8_t dur);
+	/** \brief
+	 * Play a tone for a given duration.
+	 *
+	 * \param count The count to be loaded into the timer/counter to play
+	 *              the desired frequency.
+	 * \param dur The duration of the tone, used by `timer()`.
+	 *
+	 * \details
+	 * A tone is played for the specified duration, or until replaced by another
+	 * tone or stopped using `noTone()`.
+	 *
+	 * The tone's frequency is determined by the specified count, which is loaded
+	 * into the timer/counter that generates the tone. A desired frequency can be
+	 * converted into the required count value using the `freq()` function.
+	 *
+	 * The duration value is the number of times the `timer()` function must be
+	 * called before the tone is stopped.
+	 *
+	 * \see freq() timer() noTone()
+	 */
+	static void tone(uint16_t count, uint8_t dur);
 
-  /** \brief
-   * Handle the duration that a tone plays for.
-   *
-   * \details
-   * This function must be called at a constant interval, which would normally
-   * be once per frame, in order to stop a tone after the desired tone duration
-   * has elapsed.
-   *
-   * If the value of the `duration` variable is not 0, it will be decremented.
-   * When the `duration` variable is decremented to 0, a playing tone will be
-   * stopped.
-   */
-  static void timer();
+	/** \brief
+	 * Handle the duration that a tone plays for.
+	 *
+	 * \details
+	 * This function must be called at a constant interval, which would normally
+	 * be once per frame, in order to stop a tone after the desired tone duration
+	 * has elapsed.
+	 *
+	 * If the value of the `duration` variable is not 0, it will be decremented.
+	 * When the `duration` variable is decremented to 0, a playing tone will be
+	 * stopped.
+	 */
+	static void timer();
 
-  /** \brief
-   * Stop a tone that is playing.
-   *
-   * \details
-   * If a tone is playing it will be stopped. It's safe to call this function
-   * even if a tone isn't currently playing.
-   *
-   * \see tone()
-   */
-  static void noTone();
+	/** \brief
+	 * Stop a tone that is playing.
+	 *
+	 * \details
+	 * If a tone is playing it will be stopped. It's safe to call this function
+	 * even if a tone isn't currently playing.
+	 *
+	 * \see tone()
+	 */
+	static void noTone();
 
-  /** \brief
-   * Convert a frequency to the required count.
-   *
-   * \param hz The frequency, in hertz (cycles per second), to be converted
-   *           to a count.
-   *
-   * \return The required count to be loaded into the timer/counter for the
-   *         given frequency.
-   *
-   * \details
-   * This helper function will convert a desired tone frequency to the closest
-   * value required by the `tone()` function's `count` parameter.
-   * The calculated count is rounded up or down to the nearest integer,
-   * if necessary.
-   *
-   * Example:
-   * \code{.cpp}
-   * beep.tone(beep.freq(440)); // play a 440Hz tone until stopped or replaced
-   * \endcode
-   *
-   * \note
-   * It is intended that `freq()` only be called with constant values.
-   * If `freq()` is called with a variable, code to perform floating point math
-   * will be included in the sketch, which will likely greatly increase the
-   * sketch's code size unless the sketch also uses floating point math for
-   * other purposes.
-   */
-  static constexpr uint16_t freq(const float hz)
-  {
-    return (uint16_t) (((F_CPU / 8 / 2) + (hz / 2)) / hz) - 1;
-  }
+	/** \brief
+	 * Convert a frequency to the required count.
+	 *
+	 * \param hz The frequency, in hertz (cycles per second), to be converted
+	 *           to a count.
+	 *
+	 * \return The required count to be loaded into the timer/counter for the
+	 *         given frequency.
+	 *
+	 * \details
+	 * This helper function will convert a desired tone frequency to the closest
+	 * value required by the `tone()` function's `count` parameter.
+	 * The calculated count is rounded up or down to the nearest integer,
+	 * if necessary.
+	 *
+	 * Example:
+	 * \code{.cpp}
+	 * beep.tone(beep.freq(440)); // play a 440Hz tone until stopped or replaced
+	 * \endcode
+	 *
+	 * \note
+	 * It is intended that `freq()` only be called with constant values.
+	 * If `freq()` is called with a variable, code to perform floating point math
+	 * will be included in the sketch, which will likely greatly increase the
+	 * sketch's code size unless the sketch also uses floating point math for
+	 * other purposes.
+	 */
+	static constexpr uint16_t freq(const float hz)
+	{
+		return (uint16_t) (((F_CPU / 8 / 2) + (hz / 2)) / hz) - 1;
+	}
 };
 
 
@@ -283,79 +283,79 @@ class BeepPin2
 {
  public:
 
-  /** \brief
-   * The counter used by the `timer()` function to time the duration of a tone
-   * played on speaker pin 2.
-   *
-   * \details
-   * For details see `BeepPin1::duration`.
-   */
-  static uint8_t duration;
+	/** \brief
+	 * The counter used by the `timer()` function to time the duration of a tone
+	 * played on speaker pin 2.
+	 *
+	 * \details
+	 * For details see `BeepPin1::duration`.
+	 */
+	static uint8_t duration;
 
-  /** \brief
-   * Set up the hardware for playing tones using speaker pin 2.
-   *
-   * \details
-   * For details see `BeepPin1::begin()`.
-   */
-  static void begin();
+	/** \brief
+	 * Set up the hardware for playing tones using speaker pin 2.
+	 *
+	 * \details
+	 * For details see `BeepPin1::begin()`.
+	 */
+	static void begin();
 
-  /** \brief
-   * Play a tone on speaker pin 2 continually, until replaced by a new tone
-   * or stopped.
-   *
-   * \param count The count to be loaded into the timer/counter to play
-   *              the desired frequency.
-   *
-   * \details
-   * For details see `BeepPin1::tone(uint16_t)`.
-   */
-  static void tone(uint16_t count);
+	/** \brief
+	 * Play a tone on speaker pin 2 continually, until replaced by a new tone
+	 * or stopped.
+	 *
+	 * \param count The count to be loaded into the timer/counter to play
+	 *              the desired frequency.
+	 *
+	 * \details
+	 * For details see `BeepPin1::tone(uint16_t)`.
+	 */
+	static void tone(uint16_t count);
 
-  /** \brief
-   * Play a tone on speaker pin 2 for a given duration.
-   *
-   * \param count The count to be loaded into the timer/counter to play
-   *              the desired frequency.
-   * \param dur The duration of the tone, used by `timer()`.
-   *
-   * \details
-   * For details see `BeepPin1::tone(uint16_t, uint8_t)`.
-   */
-  static void tone(uint16_t count, uint8_t dur);
+	/** \brief
+	 * Play a tone on speaker pin 2 for a given duration.
+	 *
+	 * \param count The count to be loaded into the timer/counter to play
+	 *              the desired frequency.
+	 * \param dur The duration of the tone, used by `timer()`.
+	 *
+	 * \details
+	 * For details see `BeepPin1::tone(uint16_t, uint8_t)`.
+	 */
+	static void tone(uint16_t count, uint8_t dur);
 
-  /** \brief
-   * Handle the duration that a tone on speaker pin 2 plays for.
-   *
-   * \details
-   * For details see `BeepPin1::timer()`.
-   */
-  static void timer();
+	/** \brief
+	 * Handle the duration that a tone on speaker pin 2 plays for.
+	 *
+	 * \details
+	 * For details see `BeepPin1::timer()`.
+	 */
+	static void timer();
 
-  /** \brief
-   * Stop a tone that is playing on speaker pin 2.
-   *
-   * \details
-   * For details see `BeepPin1::noTone()`.
-   */
-  static void noTone();
+	/** \brief
+	 * Stop a tone that is playing on speaker pin 2.
+	 *
+	 * \details
+	 * For details see `BeepPin1::noTone()`.
+	 */
+	static void noTone();
 
-  /** \brief
-   * Convert a frequency to the required count for speaker pin 2.
-   *
-   * \param hz The frequency, in hertz (cycles per second), to be converted
-   *           to a count.
-   *
-   * \return The required count to be loaded into the timer/counter for the
-   *         given frequency.
-   *
-   * \details
-   * For details see `BeepPin1::freq()`.
-   */
-  static constexpr uint16_t freq(const float hz)
-  {
-    return (uint16_t) (((F_CPU / 128 / 2) + (hz / 2)) / hz) - 1;
-  }
+	/** \brief
+	 * Convert a frequency to the required count for speaker pin 2.
+	 *
+	 * \param hz The frequency, in hertz (cycles per second), to be converted
+	 *           to a count.
+	 *
+	 * \return The required count to be loaded into the timer/counter for the
+	 *         given frequency.
+	 *
+	 * \details
+	 * For details see `BeepPin1::freq()`.
+	 */
+	static constexpr uint16_t freq(const float hz)
+	{
+		return (uint16_t) (((F_CPU / 128 / 2) + (hz / 2)) / hz) - 1;
+	}
 };
 
 #endif

@@ -75,87 +75,87 @@ class Arduboy2Audio
  friend class Arduboy2Ex;
 
  public:
-  /** \brief
-   * Initialize the speaker based on the current mute setting.
-   *
-   * \details
-   * The speaker is initialized based on the current mute setting saved in
-   * system EEPROM. This function is called by `Arduboy2Base::begin()` so it
-   * isn't normally required to call it within a sketch. However, if
-   * `Arduboy2Core::boot()` is used instead of `Arduboy2Base::begin()` and the
-   * sketch includes sound, then this function should be called after `boot()`.
-   */
-  void static begin();
+	/** \brief
+	 * Initialize the speaker based on the current mute setting.
+	 *
+	 * \details
+	 * The speaker is initialized based on the current mute setting saved in
+	 * system EEPROM. This function is called by `Arduboy2Base::begin()` so it
+	 * isn't normally required to call it within a sketch. However, if
+	 * `Arduboy2Core::boot()` is used instead of `Arduboy2Base::begin()` and the
+	 * sketch includes sound, then this function should be called after `boot()`.
+	 */
+	void static begin();
 
-  /** \brief
-   * Turn sound on.
-   *
-   * \details
-   * The system is configured to generate sound. This function sets the sound
-   * mode only until the unit is powered off. To save the current mode use
-   * `saveOnOff()`.
-   *
-   * \see off() toggle() saveOnOff()
-   */
-  void static on();
+	/** \brief
+	 * Turn sound on.
+	 *
+	 * \details
+	 * The system is configured to generate sound. This function sets the sound
+	 * mode only until the unit is powered off. To save the current mode use
+	 * `saveOnOff()`.
+	 *
+	 * \see off() toggle() saveOnOff()
+	 */
+	void static on();
 
-  /** \brief
-   * Turn sound off (mute).
-   *
-   * \details
-   * The system is configured to not produce sound (mute). This function sets
-   * the sound mode only until the unit is powered off. To save the current
-   * mode use `saveOnOff()`.
-   *
-   * \see on() toggle() saveOnOff()
-   */
-  void static off();
+	/** \brief
+	 * Turn sound off (mute).
+	 *
+	 * \details
+	 * The system is configured to not produce sound (mute). This function sets
+	 * the sound mode only until the unit is powered off. To save the current
+	 * mode use `saveOnOff()`.
+	 *
+	 * \see on() toggle() saveOnOff()
+	 */
+	void static off();
 
-  /** \brief
-   * Toggle the sound on/off state.
-   *
-   * \details
-   * If the system is configured for sound on, it will be changed to sound off
-   * (mute). If sound is off, it will be changed to on. This function sets
-   * the sound mode only until the unit is powered off. To save the current
-   * mode use `saveOnOff()`.
-   *
-   * \see on() off() saveOnOff()
-   */
-  void static toggle();
+	/** \brief
+	 * Toggle the sound on/off state.
+	 *
+	 * \details
+	 * If the system is configured for sound on, it will be changed to sound off
+	 * (mute). If sound is off, it will be changed to on. This function sets
+	 * the sound mode only until the unit is powered off. To save the current
+	 * mode use `saveOnOff()`.
+	 *
+	 * \see on() off() saveOnOff()
+	 */
+	void static toggle();
 
-  /** \brief
-   * Save the current sound state in EEPROM.
-   *
-   * \details
-   * The current sound state, set by `on()` or `off()`, is saved to the
-   * reserved system area in EEPROM. This allows the state to carry over between
-   * power cycles and after uploading a different sketch.
-   *
-   * \note
-   * EEPROM is limited in the number of times it can be written to. Sketches
-   * should not continuously change and then save the state rapidly.
-   *
-   * \see on() off() toggle()
-   */
-  void static saveOnOff();
+	/** \brief
+	 * Save the current sound state in EEPROM.
+	 *
+	 * \details
+	 * The current sound state, set by `on()` or `off()`, is saved to the
+	 * reserved system area in EEPROM. This allows the state to carry over between
+	 * power cycles and after uploading a different sketch.
+	 *
+	 * \note
+	 * EEPROM is limited in the number of times it can be written to. Sketches
+	 * should not continuously change and then save the state rapidly.
+	 *
+	 * \see on() off() toggle()
+	 */
+	void static saveOnOff();
 
-  /** \brief
-   * Get the current sound state.
-   *
-   * \return `true` if sound is currently enabled (not muted).
-   *
-   * \details
-   * This function should be used by code that actually generates sound.
-   * If `true` is returned, sound can be produced. If `false` is returned,
-   * sound should be muted.
-   *
-   * \see on() off() toggle()
-   */
-  bool static enabled();
+	/** \brief
+	 * Get the current sound state.
+	 *
+	 * \return `true` if sound is currently enabled (not muted).
+	 *
+	 * \details
+	 * This function should be used by code that actually generates sound.
+	 * If `true` is returned, sound can be produced. If `false` is returned,
+	 * sound should be muted.
+	 *
+	 * \see on() off() toggle()
+	 */
+	bool static enabled();
 
  protected:
-  bool static audio_enabled;
+	bool static audio_enabled;
 };
 
 #endif
