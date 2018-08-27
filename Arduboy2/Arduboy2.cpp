@@ -257,7 +257,7 @@ bool Arduboy2Base::everyXFrames(uint8_t frames)
 
 bool Arduboy2Base::nextFrame()
 {
-	uint8_t now = (uint8_t) millis();
+	uint8_t now = static_cast<uint8_t>(millis());
 	uint8_t frameDurationMs = now - thisFrameStart;
 
 	if(justRendered)
@@ -315,7 +315,7 @@ void Arduboy2Base::initRandomSeed()
 	// wait for conversion complete
 	while(bit_is_set(ADCSRA, ADSC));
 
-	randomSeed(((unsigned long)ADC << 16) + micros());
+	randomSeed((static_cast<unsigned long>(ADC) << 16) + micros());
 
 	// ADC off
 	power_adc_disable(); 
@@ -951,8 +951,8 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
 	BitStreamReader cs = BitStreamReader(bitmap);
 
 	// read header
-	int width = (int)cs.readBits(8) + 1;
-	int height = (int)cs.readBits(8) + 1;
+	int width = static_cast<int>(cs.readBits(8)) + 1;
+	int height = static_cast<int>(cs.readBits(8)) + 1;
 	// starting colour
 	uint8_t spanColour = (uint8_t)cs.readBits(1); 
 

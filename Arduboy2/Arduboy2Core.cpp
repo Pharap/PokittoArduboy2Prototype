@@ -588,7 +588,7 @@ uint8_t Arduboy2Core::buttonsState()
 // delay in ms with 16 bit duration
 void Arduboy2Core::delayShort(uint16_t ms)
 {
-	delay((unsigned long) ms);
+	delay(static_cast<unsigned long>(ms));
 }
 
 void Arduboy2Core::exitToBootloader()
