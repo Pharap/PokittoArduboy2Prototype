@@ -210,7 +210,7 @@ void Arduboy2Core::bootOLED()
 	// run our customized boot-up command sequence against the
 	// OLED to initialize it properly for Arduboy
 	LCDCommandMode();
-	for (uint8_t i = 0; i < sizeof(lcdBootProgram); ++i)
+	for(uint8_t i = 0; i < sizeof(lcdBootProgram); ++i)
 		SPItransfer(pgm_read_byte(lcdBootProgram + i));
 	LCDDataMode();
 }
@@ -245,12 +245,12 @@ void Arduboy2Core::SPItransfer(uint8_t data)
 	 */
 	asm volatile("nop");
 	// wait
-	while (!(SPSR & _BV(SPIF)));
+	while(!(SPSR & _BV(SPIF)));
 }
 
 void Arduboy2Core::safeMode()
 {
-	if (buttonsState() == UP_BUTTON)
+	if(buttonsState() == UP_BUTTON)
 	{
 		digitalWriteRGB(RED_LED, RGB_ON);
 
@@ -261,7 +261,7 @@ void Arduboy2Core::safeMode()
 		power_timer0_disable();
 #endif
 
-		while (true);
+		while(true);
 	}
 }
 
@@ -327,7 +327,7 @@ void Arduboy2Core::paint8Pixels(uint8_t pixels)
 
 void Arduboy2Core::paintScreen(const uint8_t *image)
 {
-	for (int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
+	for(int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
 		SPItransfer(pgm_read_byte(image + i));
 }
 
@@ -343,14 +343,14 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 	asm volatile
 	(
-		//for (len = WIDTH * HEIGHT / 8)
+		//for(len = WIDTH * HEIGHT / 8)
 		"   ldi   %A[count], %[len_lsb]               \n\t" 
 		"   ldi   %B[count], %[len_msb]               \n\t"
 		//tmp = *(image)
 		"1: ld    __tmp_reg__, %a[ptr]      ;2        \n\t" 
 		//SPDR = tmp
 		"   out   %[spdr], __tmp_reg__      ;1        \n\t" 
-		//if (clear) tmp = 0;
+		//if(clear) tmp = 0;
 		"   cpse  %[clear], __zero_reg__    ;1/2      \n\t" 
 		"   mov   __tmp_reg__, __zero_reg__ ;1        \n\t"
 		//len --
@@ -385,7 +385,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 	uint8_t c;
 	int i = 0;
 
-	if (clear)
+	if(clear)
 	{
 		// set the first SPI data byte to get things started
 		SPDR = image[i]; 
@@ -401,11 +401,11 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 	// the code to iterate the loop and get the next byte from the buffer is
 	// executed while the previous byte is being sent out by the SPI controller
-	while (i < (HEIGHT * WIDTH) / 8)
+	while(i < (HEIGHT * WIDTH) / 8)
 	{
 		// get the next byte. It's put in a local variable so it can be sent as
 		// as soon as possible after the sending of the previous byte has completed
-		if (clear)
+		if(clear)
 		{
 			c = image[i];
 			// clear the byte in the image buffer
@@ -419,20 +419,20 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 		}
 
 		// wait for the previous byte to be sent
-		while (!(SPSR & _BV(SPIF)));
+		while(!(SPSR & _BV(SPIF)));
 
 		// put the next byte in the SPI data register. The SPI controller will
 		// clock it out while the loop continues and gets the next byte ready
 		SPDR = c;
 	}
 	// wait for the last byte to be sent
-	while (!(SPSR & _BV(SPIF)));
+	while(!(SPSR & _BV(SPIF)));
 }
 #endif
 
 void Arduboy2Core::blank()
 {
-	for (int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
+	for(int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
 		SPItransfer(0x00);
 }
 
@@ -499,15 +499,15 @@ void Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 void Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 {
 #ifdef ARDUBOY_10
-	if (color == RED_LED)
+	if(color == RED_LED)
 		OCR1BL = val;
-	else if (color == GREEN_LED)
+	else if(color == GREEN_LED)
 		OCR0A = 255 - val;
-	else if (color == BLUE_LED)
+	else if(color == BLUE_LED)
 		OCR1AL = val;
 #elif defined(AB_DEVKIT)
 	// only blue on DevKit, which is not PWM capable
-	if (color == BLUE_LED)
+	if(color == BLUE_LED)
 		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val ? RGB_ON : RGB_OFF);
 #endif
 }
@@ -540,15 +540,15 @@ void Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
 void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 {
 #ifdef ARDUBOY_10
-	if (color == RED_LED)
+	if(color == RED_LED)
 		bitWrite(RED_LED_PORT, RED_LED_BIT, val);
-	else if (color == GREEN_LED)
+	else if(color == GREEN_LED)
 		bitWrite(GREEN_LED_PORT, GREEN_LED_BIT, val);
-	else if (color == BLUE_LED)
+	else if(color == BLUE_LED)
 		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
 #elif defined(AB_DEVKIT)
 	// only blue on DevKit
-	if (color == BLUE_LED)
+	if(color == BLUE_LED)
 		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
 #endif
 }
@@ -563,22 +563,22 @@ uint8_t Arduboy2Core::buttonsState()
 	// up, right, left, down
 	buttons = ((~PINF) & (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
 	// A
-	if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0)
+	if(bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0)
 		buttons |= A_BUTTON;
 	// B
-	if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0)
+	if(bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0)
 		buttons |= B_BUTTON;
 #elif defined(AB_DEVKIT)
 	// down, left, up
 	buttons = ((~PINB) & (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
 	// right
-	if (bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0)
+	if(bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0)
 		buttons |= RIGHT_BUTTON;
 	// A
-	if (bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0)
+	if(bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0)
 		buttons |= A_BUTTON;
 	// B
-	if (bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0)
+	if(bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0)
 		buttons |= B_BUTTON;
 #endif
 
@@ -603,7 +603,7 @@ void Arduboy2Core::exitToBootloader()
 	wdt_reset();
 	WDTCSR = (_BV(WDCE) | _BV(WDE));
 	WDTCSR = _BV(WDE);
-	while (true);
+	while(true);
 }
 
 // Replacement main() that eliminates the USB stack code.
@@ -635,7 +635,7 @@ void Arduboy2Core::mainNoUSB()
 	delayShort(10);
 
 	// if the DOWN button is pressed
-	if (bitRead(DOWN_BUTTON_PORTIN, DOWN_BUTTON_BIT) == 0)
+	if(bitRead(DOWN_BUTTON_PORTIN, DOWN_BUTTON_BIT) == 0)
 		exitToBootloader();
 
 	// The remainder is a copy of the Arduino main() function with the
@@ -655,9 +655,9 @@ void Arduboy2Core::mainNoUSB()
 
 	setup();
 
-	for (;;) {
+	for(;;) {
 		loop();
-//    if (serialEventRun) serialEventRun();
+//    if(serialEventRun) serialEventRun();
 	}
 
 //  return 0;
