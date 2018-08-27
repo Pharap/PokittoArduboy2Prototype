@@ -99,7 +99,7 @@ void Arduboy2Core::boot()
 // likely will have incorrectly set it for an 8MHz hardware clock.
 void Arduboy2Core::setCPUSpeed8MHz()
 {
-	uint8_t oldSREG = SREG;
+	const uint8_t oldSREG = SREG;
 	// suspend interrupts
 	cli();                
 	// dissable the PLL and set prescale for 16MHz)
@@ -382,41 +382,24 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 // used prior to the above version.
 void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
-	uint8_t c;
-	int i = 0;
-
+	// set the first SPI data byte to get things started
+	SPDR = image[0];
+	
+	// clear the first image byte
 	if(clear)
-	{
-		// set the first SPI data byte to get things started
-		SPDR = image[i]; 
-		// clear the first image byte
-		image[i] = 0;  
-		++i;
-	}
-	else
-	{
-		SPDR = image[i];
-		++i;
-	}
+		image[0] = 0;
 
 	// the code to iterate the loop and get the next byte from the buffer is
 	// executed while the previous byte is being sent out by the SPI controller
-	while(i < (HEIGHT * WIDTH) / 8)
+	for(int i = 1; i < (HEIGHT * WIDTH) / 8; ++i)
 	{
 		// get the next byte. It's put in a local variable so it can be sent as
 		// as soon as possible after the sending of the previous byte has completed
+		uint8_t c = image[i];
+		
+		// clear the byte in the image buffer
 		if(clear)
-		{
-			c = image[i];
-			// clear the byte in the image buffer
-			image[i] = 0;  
-			++i;
-		}
-		else
-		{
-			c = image[i];
-			++i;
-		}
+			image[i] = 0;
 
 		// wait for the previous byte to be sent
 		while((SPSR & _BV(SPIF)) == 0);
