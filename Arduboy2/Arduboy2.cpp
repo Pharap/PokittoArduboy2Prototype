@@ -235,7 +235,7 @@ void Arduboy2Base::waitNoButtons()
 		// simple button debounce
 		delayShort(50); 
 	}
-	while(buttonsState());
+	while(buttonsState() != 0);
 }
 
 /* Frame management */
@@ -388,7 +388,7 @@ void Arduboy2Base::drawPixel(int16_t x, int16_t y, uint8_t color)
 		:
 	);
 
-	if(color)
+	if(color != 0)
 		sBuffer[row_offset] |=   bit;
 	else
 		sBuffer[row_offset] &= ~ bit;
@@ -460,25 +460,25 @@ void Arduboy2Base::drawCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t c
 		f += ddF_x;
 
 		// lower right
-		if(corners & 0x4) 
+		if((corners & 0x4) != 0)
 		{
 			drawPixel(x0 + x, y0 + y, color);
 			drawPixel(x0 + y, y0 + x, color);
 		}
 		// upper right
-		if(corners & 0x2) 
+		if((corners & 0x2) != 0)
 		{
 			drawPixel(x0 + x, y0 - y, color);
 			drawPixel(x0 + y, y0 - x, color);
 		}
 		// lower left
-		if(corners & 0x8) 
+		if((corners & 0x8) != 0)
 		{
 			drawPixel(x0 - y, y0 + x, color);
 			drawPixel(x0 - x, y0 + y, color);
 		}
 		// upper left
-		if(corners & 0x1) 
+		if((corners & 0x1) != 0)
 		{
 			drawPixel(x0 - y, y0 - x, color);
 			drawPixel(x0 - x, y0 - y, color);
@@ -514,14 +514,14 @@ void Arduboy2Base::fillCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t s
 		f += ddF_x;
 
 		// right side
-		if(sides & 0x1) 
+		if((sides & 0x1) != 0)
 		{
 			drawFastVLine(x0+x, y0-y, 2*y+1+delta, color);
 			drawFastVLine(x0+y, y0-x, 2*x+1+delta, color);
 		}
 
 		// left side
-		if(sides & 0x2) 
+		if((sides & 0x2) != 0)
 		{
 			drawFastVLine(x0-x, y0-y, 2*y+1+delta, color);
 			drawFastVLine(x0-y, y0-x, 2*x+1+delta, color);
@@ -880,7 +880,7 @@ void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8
 						else
 							sBuffer[(bRow*WIDTH) + x + iCol] ^= pgm_read_byte(bitmap+(a*w)+iCol) << yOffset;
 					}
-					if(yOffset && bRow<(HEIGHT/8)-1 && bRow > -2)
+					if(yOffset != 0 && bRow<(HEIGHT/8)-1 && bRow > -2)
 					{
 						if(color == WHITE)
 							sBuffer[((bRow+1)*WIDTH) + x + iCol] |= pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset);
@@ -1079,12 +1079,12 @@ void Arduboy2Base::pollButtons()
 
 bool Arduboy2Base::justPressed(uint8_t button)
 {
-	return (!(previousButtonState & button) && (currentButtonState & button));
+	return (((previousButtonState & button) == 0) && ((currentButtonState & button) != 0));
 }
 
 bool Arduboy2Base::justReleased(uint8_t button)
 {
-	return ((previousButtonState & button) && !(currentButtonState & button));
+	return (((previousButtonState & button) != 0) && ((currentButtonState & button) == 0));
 }
 
 bool Arduboy2Base::collide(Point point, Rect rect)
@@ -1144,7 +1144,7 @@ void Arduboy2Base::writeUnitName(char* name)
 
 bool Arduboy2Base::readShowBootLogoFlag()
 {
-	return (EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_SHOW_LOGO_MASK);
+	return ((EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_SHOW_LOGO_MASK) != 0);
 }
 
 void Arduboy2Base::writeShowBootLogoFlag(bool val)
@@ -1157,7 +1157,7 @@ void Arduboy2Base::writeShowBootLogoFlag(bool val)
 
 bool Arduboy2Base::readShowUnitNameFlag()
 {
-	return (EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_UNAME_MASK);
+	return ((EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_UNAME_MASK) != 0);
 }
 
 void Arduboy2Base::writeShowUnitNameFlag(bool val)
@@ -1170,7 +1170,7 @@ void Arduboy2Base::writeShowUnitNameFlag(bool val)
 
 bool Arduboy2Base::readShowBootLogoLEDsFlag()
 {
-	return (EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_SHOW_LOGO_LEDS_MASK);
+	return ((EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_SHOW_LOGO_LEDS_MASK) != 0);
 }
 
 void Arduboy2Base::writeShowBootLogoLEDsFlag(bool val)
@@ -1329,7 +1329,7 @@ void Arduboy2::drawChar(int16_t x, int16_t y, unsigned char c, uint8_t color, ui
 		{
 			uint8_t draw_color = (line & 0x1) ? color : bg;
 
-			if(draw_color || draw_background)
+			if(draw_color != 0 || draw_background)
 				for(uint8_t a = 0; a < size; ++a)
 					for(uint8_t b = 0; b < size; ++b)
 						drawPixel(x + (i * size) + a, y + (j * size) + b, draw_color);
