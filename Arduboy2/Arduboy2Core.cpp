@@ -419,14 +419,14 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 		}
 
 		// wait for the previous byte to be sent
-		while(!(SPSR & _BV(SPIF)));
+		while((SPSR & _BV(SPIF)) == 0);
 
 		// put the next byte in the SPI data register. The SPI controller will
 		// clock it out while the loop continues and gets the next byte ready
 		SPDR = c;
 	}
 	// wait for the last byte to be sent
-	while(!(SPSR & _BV(SPIF)));
+	while((SPSR & _BV(SPIF)) == 0);
 }
 #endif
 
