@@ -245,7 +245,7 @@ void Arduboy2Core::SPItransfer(uint8_t data)
 	 */
 	asm volatile("nop");
 	// wait
-	while(!(SPSR & _BV(SPIF)));
+	while((SPSR & _BV(SPIF)) == 0);
 }
 
 void Arduboy2Core::safeMode()
