@@ -7,8 +7,7 @@
 
 #include "SpritesB.h"
 
-void SpritesB::drawExternalMask(int16_t x, int16_t y, const uint8_t *bitmap,
-                               const uint8_t *mask, uint8_t frame, uint8_t mask_frame)
+void SpritesB::drawExternalMask(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t frame, uint8_t mask_frame)
 {
   draw(x, y, bitmap, frame, mask, mask_frame, SPRITE_MASKED);
 }
@@ -35,10 +34,7 @@ void SpritesB::drawPlusMask(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t
 
 
 //common functions
-void SpritesB::draw(int16_t x, int16_t y,
-                   const uint8_t *bitmap, uint8_t frame,
-                   const uint8_t *mask, uint8_t sprite_frame,
-                   uint8_t drawMode)
+void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, const uint8_t *mask, uint8_t sprite_frame, uint8_t drawMode)
 {
   unsigned int frame_offset;
 
@@ -68,9 +64,7 @@ void SpritesB::draw(int16_t x, int16_t y,
   drawBitmap(x, y, bitmap, mask, width, height, drawMode);
 }
 
-void SpritesB::drawBitmap(int16_t x, int16_t y,
-                         const uint8_t *bitmap, const uint8_t *mask,
-                         uint8_t w, uint8_t h, uint8_t draw_mode)
+void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t w, uint8_t h, uint8_t draw_mode)
 {
   // no need to draw at all of we're offscreen
   if (x + w <= 0 || x > WIDTH - 1 || y + h <= 0 || y > HEIGHT - 1)
