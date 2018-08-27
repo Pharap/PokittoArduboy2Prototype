@@ -210,7 +210,7 @@ void Arduboy2Core::bootOLED()
 	// run our customized boot-up command sequence against the
 	// OLED to initialize it properly for Arduboy
 	LCDCommandMode();
-	for (uint8_t i = 0; i < sizeof(lcdBootProgram); i++)
+	for (uint8_t i = 0; i < sizeof(lcdBootProgram); ++i)
 		SPItransfer(pgm_read_byte(lcdBootProgram + i));
 	LCDDataMode();
 }
@@ -327,7 +327,7 @@ void Arduboy2Core::paint8Pixels(uint8_t pixels)
 
 void Arduboy2Core::paintScreen(const uint8_t *image)
 {
-	for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
+	for (int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
 		SPItransfer(pgm_read_byte(image + i));
 }
 
@@ -390,10 +390,14 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 		// set the first SPI data byte to get things started
 		SPDR = image[i]; 
 		// clear the first image byte
-		image[i++] = 0;  
+		image[i] = 0;  
+		++i;
 	}
 	else
-		SPDR = image[i++];
+	{
+		SPDR = image[i];
+		++i;
+	}
 
 	// the code to iterate the loop and get the next byte from the buffer is
 	// executed while the previous byte is being sent out by the SPI controller
@@ -405,10 +409,14 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 		{
 			c = image[i];
 			// clear the byte in the image buffer
-			image[i++] = 0;
+			image[i] = 0;  
+			++i;
 		}
 		else
-			c = image[i++];
+		{
+			c = image[i];
+			++i;
+		}
 
 		// wait for the previous byte to be sent
 		while (!(SPSR & _BV(SPIF)));
@@ -424,7 +432,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 void Arduboy2Core::blank()
 {
-	for (int i = 0; i < (HEIGHT*WIDTH)/8; i++)
+	for (int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
 		SPItransfer(0x00);
 }
 
