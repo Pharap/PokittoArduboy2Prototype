@@ -29,7 +29,8 @@
  *     // #define ARDUBOY_10
  *     #define AB_DEVKIT
  */
-#define ARDUBOY_10   //< compile for the production Arduboy v1.0
+//< compile for the production Arduboy v1.0
+#define ARDUBOY_10   
 // #define AB_DEVKIT    //< compile for the official dev kit
 #endif
 
@@ -39,17 +40,26 @@
 // ----- Arduboy pins -----
 #ifdef ARDUBOY_10
 
-#define PIN_CS 12       // Display CS Arduino pin number
-#define CS_PORT PORTD   // Display CS port
-#define CS_BIT PORTD6   // Display CS physical bit number
+// Display CS Arduino pin number
+#define PIN_CS 12       
+// Display CS port
+#define CS_PORT PORTD   
+// Display CS physical bit number
+#define CS_BIT PORTD6   
 
-#define PIN_DC 4        // Display D/C Arduino pin number
-#define DC_PORT PORTD   // Display D/C port
-#define DC_BIT PORTD4   // Display D/C physical bit number
+// Display D/C Arduino pin number
+#define PIN_DC 4        
+// Display D/C port
+#define DC_PORT PORTD   
+// Display D/C physical bit number
+#define DC_BIT PORTD4   
 
-#define PIN_RST 6       // Display reset Arduino pin number
-#define RST_PORT PORTD  // Display reset port
-#define RST_BIT PORTD7  // Display reset physical bit number
+// Display reset Arduino pin number
+#define PIN_RST 6       
+// Display reset port
+#define RST_PORT PORTD  
+// Display reset physical bit number
+#define RST_BIT PORTD7  
 
 #define RED_LED 10   /**< The pin number for the red color in the RGB LED. */
 #define GREEN_LED 11 /**< The pin number for the greem color in the RGB LED. */
@@ -124,17 +134,26 @@
 // ----- DevKit pins -----
 #elif defined(AB_DEVKIT)
 
-#define PIN_CS 6        // Display CS Arduino pin number
-#define CS_PORT PORTD   // Display CS port
-#define CS_BIT PORTD7   // Display CS physical bit number
+// Display CS Arduino pin number
+#define PIN_CS 6        
+// Display CS port
+#define CS_PORT PORTD   
+// Display CS physical bit number
+#define CS_BIT PORTD7   
 
-#define PIN_DC 4        // Display D/C Arduino pin number
-#define DC_PORT PORTD   // Display D/C port
-#define DC_BIT PORTD4   // Display D/C physical bit number
+// Display D/C Arduino pin number
+#define PIN_DC 4        
+// Display D/C port
+#define DC_PORT PORTD   
+// Display D/C physical bit number
+#define DC_BIT PORTD4   
 
-#define PIN_RST 12      // Display reset Arduino pin number
-#define RST_PORT PORTD  // Display reset port
-#define RST_BIT PORTD6  // Display reset physical bit number
+// Display reset Arduino pin number
+#define PIN_RST 12      
+// Display reset port
+#define RST_PORT PORTD  
+// Display reset physical bit number
+#define RST_BIT PORTD6  
 
 #define SPI_MOSI_PORT PORTB
 #define SPI_MOSI_BIT PORTB2
@@ -233,25 +252,35 @@
 
 // OLED hardware (SSD1306)
 
-#define OLED_PIXELS_INVERTED 0xA7 // All pixels inverted
-#define OLED_PIXELS_NORMAL 0xA6 // All pixels normal
+// All pixels inverted
+#define OLED_PIXELS_INVERTED 0xA7 
+// All pixels normal
+#define OLED_PIXELS_NORMAL 0xA6 
 
-#define OLED_ALL_PIXELS_ON 0xA5 // all pixels on
-#define OLED_PIXELS_FROM_RAM 0xA4 // pixels mapped to display RAM contents
+// all pixels on
+#define OLED_ALL_PIXELS_ON 0xA5 
+// pixels mapped to display RAM contents
+#define OLED_PIXELS_FROM_RAM 0xA4 
 
-#define OLED_VERTICAL_FLIPPED 0xC0 // reversed COM scan direction
-#define OLED_VERTICAL_NORMAL 0xC8 // normal COM scan direction
+// reversed COM scan direction
+#define OLED_VERTICAL_FLIPPED 0xC0 
+// normal COM scan direction
+#define OLED_VERTICAL_NORMAL 0xC8 
 
-#define OLED_HORIZ_FLIPPED 0xA0 // reversed segment re-map
-#define OLED_HORIZ_NORMAL 0xA1 // normal segment re-map
+// reversed segment re-map
+#define OLED_HORIZ_FLIPPED 0xA0 
+// normal segment re-map
+#define OLED_HORIZ_NORMAL 0xA1 
 
 // -----
 
 #define WIDTH 128 /**< The width of the display in pixels */
 #define HEIGHT 64 /**< The height of the display in pixels */
 
-#define COLUMN_ADDRESS_END (WIDTH - 1) & 127   // 128 pixels wide
-#define PAGE_ADDRESS_END ((HEIGHT/8)-1) & 7    // 8 pages high
+// 128 pixels wide
+#define COLUMN_ADDRESS_END (WIDTH - 1) & 127   
+// 8 pages high
+#define PAGE_ADDRESS_END ((HEIGHT/8)-1) & 7    
 
 /** \brief
  * Eliminate the USB stack to free up code space.
