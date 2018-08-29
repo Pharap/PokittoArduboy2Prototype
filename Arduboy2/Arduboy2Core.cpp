@@ -131,6 +131,7 @@ void Arduboy2Core::bootPins()
 	PORTB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(B_BUTTON_BIT);
 
 	// Port B INPUT or LOW (none)
+
 	// Port B inputs
 	DDRB &= ~(_BV(B_BUTTON_BIT) | _BV(SPI_MISO_BIT));
 
@@ -147,6 +148,7 @@ void Arduboy2Core::bootPins()
 	PORTD &= ~(_BV(RST_BIT));
 
 	// Port D inputs (none)
+
 	// Port D outputs
 	DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
 
@@ -154,8 +156,10 @@ void Arduboy2Core::bootPins()
 	PORTE |= _BV(A_BUTTON_BIT);
 
 	// Port E INPUT or LOW (none)
+
 	// Port E inputs
 	DDRE &= ~(_BV(A_BUTTON_BIT));
+
 	// Port E outputs (none)
 
 	// Port F INPUT_PULLUP or HIGH
@@ -166,6 +170,7 @@ void Arduboy2Core::bootPins()
 
 	// Port F inputs
 	DDRF &= ~(_BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
+
 	// Port F outputs (none)
 
 #elif defined(AB_DEVKIT)
@@ -174,6 +179,7 @@ void Arduboy2Core::bootPins()
 	PORTB |= _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(BLUE_LED_BIT);
 
 	// Port B INPUT or LOW (none)
+
 	// Port B inputs
 	DDRB &= ~(_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(SPI_MISO_BIT));
 
@@ -184,6 +190,7 @@ void Arduboy2Core::bootPins()
 	PORTC |= _BV(RIGHT_BUTTON_BIT);
 
 	// Port C INPUT or LOW (none)
+
 	// Port C inputs
 	DDRC &= ~(_BV(RIGHT_BUTTON_BIT));
 	// Port C outputs (none)
@@ -195,6 +202,7 @@ void Arduboy2Core::bootPins()
 	PORTD &= ~(_BV(RST_BIT));
 
 	// Port D inputs (none)
+
 	// Port D outputs
 	DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
 
@@ -208,6 +216,7 @@ void Arduboy2Core::bootPins()
 
 	// Port F inputs
 	DDRF &= ~(_BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT) | _BV(RAND_SEED_IN_BIT));
+
 	// Port F outputs (none)
 	// Speaker: Not set here. Controlled by audio class
 
@@ -582,16 +591,20 @@ void Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
 void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 {
 #ifdef ARDUBOY_10
+
 	if(color == RED_LED)
 		bitWrite(RED_LED_PORT, RED_LED_BIT, val);
 	else if(color == GREEN_LED)
 		bitWrite(GREEN_LED_PORT, GREEN_LED_BIT, val);
 	else if(color == BLUE_LED)
 		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
+
 #elif defined(AB_DEVKIT)
+
 	// only blue on DevKit
 	if(color == BLUE_LED)
 		bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, val);
+
 #endif
 }
 
@@ -649,8 +662,8 @@ void Arduboy2Core::exitToBootloader()
 	// set bootloader magic key
 	// storing two uint8_t instead of one uint16_t saves an instruction
 	//  when high and low bytes of the magic key are the same
-	*(uint8_t *)MAGIC_KEY_POS = lowByte(MAGIC_KEY);
-	*(uint8_t *)(MAGIC_KEY_POS + 1) = highByte(MAGIC_KEY);
+	*reinterpret_cast<uint8_t *>(MAGIC_KEY_POS) = lowByte(MAGIC_KEY);
+	*reinterpret_cast<uint8_t *>(MAGIC_KEY_POS + 1) = highByte(MAGIC_KEY);
 
 	// enable watchdog timer reset, with 16ms timeout
 	wdt_reset();

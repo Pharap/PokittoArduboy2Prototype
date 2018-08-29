@@ -16,6 +16,7 @@ uint8_t BeepPin1::duration = 0;
 void BeepPin1::begin()
 {
 	TCCR3A = 0;
+
 	// CTC mode. Divide by 8 clock prescale
 	TCCR3B = (bit(WGM32) | bit(CS31));
 }
