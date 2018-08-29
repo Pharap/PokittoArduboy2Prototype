@@ -44,23 +44,23 @@ void Sprites::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, c
 	const uint8_t height = pgm_read_byte(bitmap);
 	++bitmap;
 
-	if(frame > 0 || sprite_frame > 0)
+	if((frame > 0) || (sprite_frame > 0))
 	{
-		unsigned int frame_offset = (width * ( height / 8 + ( height % 8 == 0 ? 0 : 1)));
+		unsigned int frame_offset = (width * ((height / 8) + (((height % 8) == 0) ? 0 : 1)));
 
 		// sprite plus mask uses twice as much space for each frame
 		if(drawMode == SPRITE_PLUS_MASK)
 			frame_offset *= 2;
 		else if(mask != NULL)
-			mask += sprite_frame * frame_offset;
+			mask += (sprite_frame * frame_offset);
 
-		bitmap += frame * frame_offset;
+		bitmap += (frame * frame_offset);
 	}
 
 	// if we're detecting the draw mode then base it on whether a mask
 	// was passed as a separate object
 	if(drawMode == SPRITE_AUTO_MODE)
-		drawMode = mask == NULL ? SPRITE_UNMASKED : SPRITE_MASKED;
+		drawMode = (mask == NULL) ? SPRITE_UNMASKED : SPRITE_MASKED;
 
 	drawBitmap(x, y, bitmap, mask, width, height, drawMode);
 }
@@ -68,7 +68,7 @@ void Sprites::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, c
 void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t w, uint8_t h, uint8_t draw_mode)
 {
 	// no need to draw at all of we're offscreen
-	if(x + w <= 0 || x > WIDTH - 1 || y + h <= 0 || y > HEIGHT - 1)
+	if(((x + w) <= 0) || (x > (WIDTH - 1)) || ((y + h) <= 0) || (y > (HEIGHT - 1)))
 		return;
 
 	if(bitmap == NULL)
@@ -80,31 +80,31 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 	const uint16_t xOffset = (x < 0) ? abs(x) : 0;
 
 	// if the right side of the render is offscreen skip those loops
-	const uint8_t rendered_width = (x + w > WIDTH - 1) ? ((WIDTH - x) - xOffset) : (w - xOffset);
+	const uint8_t rendered_width = ((x + w) > (WIDTH - 1)) ? ((WIDTH - x) - xOffset) : (w - xOffset);
 
-	const int8_t yOffset = y & 7;
-	const int8_t tempSRow = y / 8;
-	int8_t sRow = (y < 0 && yOffset > 0) ? tempSRow - 1 : tempSRow;
+	const int8_t yOffset = (y & 7);
+	const int8_t tempSRow = (y / 8);
+	int8_t sRow = ((y < 0) && (yOffset > 0)) ? (tempSRow - 1) : tempSRow;
 
 	// if the top side of the render is offscreen skip those loops
-	const uint8_t start_h = (sRow < -1) ? abs(sRow) - 1 : 0;
+	const uint8_t start_h = (sRow < -1) ? (abs(sRow) - 1) : 0;
 
 	// divide, then round up
-	const uint8_t rows = h / 8;
+	const uint8_t rows = (h / 8);
 	uint8_t loop_h = ((h % 8) > 0) ? (rows + 1) : rows;
 
 	// if(sRow + loop_h - 1 > (HEIGHT/8)-1)
-	if(sRow + loop_h > (HEIGHT / 8))
-		loop_h = (HEIGHT / 8) - sRow;
+	if((sRow + loop_h) > (HEIGHT / 8))
+		loop_h = ((HEIGHT / 8) - sRow);
 
 	// prepare variables for loops later so we can compare with 0
 	// instead of comparing two variables
 	loop_h -= start_h;
 	sRow += start_h;
 
-	const uint8_t mul_amt = 1 << yOffset;
-	uint16_t ofs = (sRow * WIDTH) + x + xOffset;
-	const uint8_t * bofs = bitmap + (start_h * w) + xOffset;
+	const uint8_t mul_amt = (1 << yOffset);
+	uint16_t ofs = ((sRow * WIDTH) + x + xOffset);
+	const uint8_t * bofs = &bitmap[(start_h * w) + xOffset];
 
 	switch (draw_mode)
 	{
@@ -119,7 +119,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 			{
 				for(uint8_t iCol = 0; iCol < rendered_width; ++iCol)
 				{
-					const uint16_t bitmap_data = pgm_read_byte(bofs) * mul_amt;
+					const uint16_t bitmap_data = (pgm_read_byte(bofs) * mul_amt);
 
 					if(sRow >= 0)
 					{
@@ -132,8 +132,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 					if(yOffset != 0 && sRow < 7)
 					{
 						uint8_t data = Arduboy2Base::sBuffer[ofs + WIDTH];
-						data &= (*(reinterpret_cast<const unsigned char *>(&mask_data) + 1));
-						data |= (*(reinterpret_cast<const unsigned char *>(&bitmap_data) + 1));
+						data &= (reinterpret_cast<const unsigned char *>(&mask_data)[1]);
+						data |= (reinterpret_cast<const unsigned char *>(&bitmap_data)[1]);
 						Arduboy2Base::sBuffer[ofs + WIDTH] = data;
 					}
 
@@ -142,8 +142,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				}
 
 				++sRow;
-				bofs += w - rendered_width;
-				ofs += WIDTH - rendered_width;
+				bofs += (w - rendered_width);
+				ofs += (WIDTH - rendered_width);
 			}
 			break;
 		}
@@ -154,21 +154,21 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 			{
 				for(uint8_t iCol = 0; iCol < rendered_width; ++iCol)
 				{
-					const uint16_t bitmap_data = pgm_read_byte(bofs) * mul_amt;
+					const uint16_t bitmap_data = (pgm_read_byte(bofs) * mul_amt);
 
 					if(sRow >= 0)
 						Arduboy2Base::sBuffer[ofs] |= static_cast<uint8_t>(bitmap_data);
 
 					if(yOffset != 0 && sRow < 7)
-						Arduboy2Base::sBuffer[ofs + WIDTH] |= (*(reinterpret_cast<const unsigned char *>(&bitmap_data) + 1));
+						Arduboy2Base::sBuffer[ofs + WIDTH] |= (reinterpret_cast<const unsigned char *>(&bitmap_data)[1]);
 
 					++ofs;
 					++bofs;
 				}
 
 				++sRow;
-				bofs += w - rendered_width;
-				ofs += WIDTH - rendered_width;
+				bofs += (w - rendered_width);
+				ofs += (WIDTH - rendered_width);
 			}
 			break;
 		}
@@ -179,28 +179,28 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 			{
 				for(uint8_t iCol = 0; iCol < rendered_width; ++iCol)
 				{
-					const uint16_t bitmap_data = pgm_read_byte(bofs) * mul_amt;
+					const uint16_t bitmap_data = (pgm_read_byte(bofs) * mul_amt);
 
 					if(sRow >= 0)
 						Arduboy2Base::sBuffer[ofs]  &= ~static_cast<uint8_t>(bitmap_data);
 
 					if(yOffset != 0 && sRow < 7)
-						Arduboy2Base::sBuffer[ofs + WIDTH] &= ~(*(reinterpret_cast<const unsigned char *>(&bitmap_data) + 1));
+						Arduboy2Base::sBuffer[ofs + WIDTH] &= ~(reinterpret_cast<const unsigned char *>(&bitmap_data)[1]);
 
 					++ofs;
 					++bofs;
 				}
 
 				++sRow;
-				bofs += w - rendered_width;
-				ofs += WIDTH - rendered_width;
+				bofs += (w - rendered_width);
+				ofs += (WIDTH - rendered_width);
 			}
 			break;
 		}
 
 		case SPRITE_MASKED:
 		{
-			const uint8_t *mask_ofs = mask + (start_h * w) + xOffset;
+			const uint8_t * mask_ofs = (mask + (start_h * w) + xOffset);
 
 			for(uint8_t a = 0; a < loop_h; ++a)
 			{
@@ -215,7 +215,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 					// load data and bit shift
 					// mask needs to be bit flipped
 					const uint16_t mask_data = ~(pgm_read_byte(mask_ofs) * mul_amt);
-					const uint16_t bitmap_data = pgm_read_byte(bofs) * mul_amt;
+					const uint16_t bitmap_data = (pgm_read_byte(bofs) * mul_amt);
 
 					if(sRow >= 0)
 					{
@@ -228,8 +228,8 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 					if(yOffset != 0 && sRow < 7)
 					{
 						uint8_t data = Arduboy2Base::sBuffer[ofs + WIDTH];
-						data &= (*(reinterpret_cast<const unsigned char *>(&mask_data) + 1));
-						data |= (*(reinterpret_cast<const unsigned char *>(&bitmap_data) + 1));
+						data &= (reinterpret_cast<const unsigned char *>(&mask_data)[1]);
+						data |= (reinterpret_cast<const unsigned char *>(&bitmap_data)[1]);
 						Arduboy2Base::sBuffer[ofs + WIDTH] = data;
 					}
 
@@ -239,9 +239,9 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				}
 
 				++sRow;
-				bofs += w - rendered_width;
-				mask_ofs += w - rendered_width;
-				ofs += WIDTH - rendered_width;
+				bofs += (w - rendered_width);
+				mask_ofs += (w - rendered_width);
+				ofs += (WIDTH - rendered_width);
 			}
 			break;
 		}
@@ -249,7 +249,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 		case SPRITE_PLUS_MASK:
 		{
 			// *2 because we use double the bits (mask + bitmap)
-			bofs = reinterpret_cast<const uint8_t *>(bitmap + ((start_h * w) + xOffset) * 2);
+			bofs = reinterpret_cast<const uint8_t *>(&bitmap[((start_h * w) + xOffset) * 2]);
 
 			// counter for x loop below
 			uint8_t xi = rendered_width;
@@ -360,11 +360,11 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				// lower register
 				[x_count] "l" (rendered_width),
 				[sprite_ofs] "z" (bofs),
-				[buffer_ofs] "x" (Arduboy2Base::sBuffer+ofs),
+				[buffer_ofs] "x" (&Arduboy2Base::sBuffer[ofs]),
 				// upper reg (r16-r23)
-				[buffer_ofs_jump] "a" (WIDTH-rendered_width),
+				[buffer_ofs_jump] "a" (WIDTH - rendered_width),
 				// upper reg (r16-r23)
-				[sprite_ofs_jump] "a" ((w-rendered_width)*2),
+				[sprite_ofs_jump] "a" ((w - rendered_width) * 2),
 
 				// [sprite_ofs_jump] "r" (0),
 				// lower register

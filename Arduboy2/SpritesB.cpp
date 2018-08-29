@@ -47,21 +47,21 @@ void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, 
 
 	if(frame > 0 || sprite_frame > 0)
 	{
-		unsigned int frame_offset = (width * ( height / 8 + ( height % 8 == 0 ? 0 : 1)));
+		unsigned int frame_offset = (width * ((height / 8) + (((height % 8) == 0) ? 0 : 1)));
 
 		// sprite plus mask uses twice as much space for each frame
 		if(drawMode == SPRITE_PLUS_MASK)
 			frame_offset *= 2;
 		else if(mask != NULL)
-			mask += sprite_frame * frame_offset;
+			mask += (sprite_frame * frame_offset);
 
-		bitmap += frame * frame_offset;
+		bitmap += (frame * frame_offset);
 	}
 
 	// if we're detecting the draw mode then base it on whether a mask
 	// was passed as a separate object
 	if(drawMode == SPRITE_AUTO_MODE)
-		drawMode = mask == NULL ? SPRITE_UNMASKED : SPRITE_MASKED;
+		drawMode = (mask == NULL) ? SPRITE_UNMASKED : SPRITE_MASKED;
 
 	drawBitmap(x, y, bitmap, mask, width, height, drawMode);
 }
@@ -69,7 +69,7 @@ void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, 
 void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t w, uint8_t h, uint8_t draw_mode)
 {
 	// no need to draw at all of we're offscreen
-	if(x + w <= 0 || x > WIDTH - 1 || y + h <= 0 || y > HEIGHT - 1)
+	if(((x + w) <= 0) || (x > (WIDTH - 1)) || ((y + h) <= 0) || (y > (HEIGHT - 1)))
 		return;
 
 	if(bitmap == NULL)
@@ -81,43 +81,44 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 	const uint16_t xOffset = (x < 0) ? abs(x) : 0;
 
 	// if the right side of the render is offscreen skip those loops
-	const uint8_t rendered_width = (x + w > WIDTH - 1) ? ((WIDTH - x) - xOffset) : (w - xOffset);
+	const uint8_t rendered_width = ((x + w) > (WIDTH - 1)) ? ((WIDTH - x) - xOffset) : (w - xOffset);
 
-	const int8_t yOffset = y & 7;
-	const int8_t tempSRow = y / 8;
-	int8_t sRow = (y < 0 && yOffset > 0) ? tempSRow - 1 : tempSRow;
+	const int8_t yOffset = (y % 8);
+	const int8_t tempSRow = (y / 8);
+	int8_t sRow = ((y < 0) && (yOffset > 0)) ? (tempSRow - 1) : tempSRow;
 
 	// if the top side of the render is offscreen skip those loops
-	const uint8_t start_h = (sRow < -1) ? abs(sRow) - 1 : 0;
+	const uint8_t start_h = (sRow < -1) ? (abs(sRow) - 1) : 0;
 
 	// divide, then round up
-	const uint8_t rows = h / 8;
+	const uint8_t rows = (h / 8);
 	uint8_t loop_h = ((h % 8) > 0) ? (rows + 1) : rows;
 
 	// if(sRow + loop_h - 1 > (HEIGHT/8)-1)
 	if(sRow + loop_h > (HEIGHT / 8))
-		loop_h = (HEIGHT / 8) - sRow;
+		loop_h = ((HEIGHT / 8) - sRow);
 
 	// prepare variables for loops later so we can compare with 0
 	// instead of comparing two variables
 	loop_h -= start_h;
 	sRow += start_h;
 
-	const uint8_t mul_amt = 1 << yOffset;
+	const uint8_t mul_amt = (1 << yOffset);
 
 	const uint8_t ofs_step = (draw_mode == SPRITE_PLUS_MASK) ? 2 : 1;
-	const uint8_t ofs_stride = (w - rendered_width) * ofs_step;
-	const uint16_t initial_bofs = ((start_h * w) + xOffset) * ofs_step;
+	const uint8_t ofs_stride = ((w - rendered_width) * ofs_step);
+	const uint16_t initial_bofs = (((start_h * w) + xOffset) * ofs_step);
 
-	uint16_t ofs = (sRow * WIDTH) + x + xOffset;
-	const uint8_t * bofs = bitmap + initial_bofs;
-	const uint8_t * mask_ofs = ((mask == NULL) ? bitmap : mask) + initial_bofs + ofs_step - 1;
+	uint16_t ofs = ((sRow * WIDTH) + x + xOffset);
+	const uint8_t * bofs = (bitmap + initial_bofs);
+	const uint8_t * mask_source = ((mask == NULL) ? &bitmap[0] : &mask[0]);
+	const uint8_t * mask_ofs = &mask_source[initial_bofs + ofs_step - 1];
 
 	for(uint8_t a = 0; a < loop_h; ++a)
 	{
 		for(uint8_t iCol = 0; iCol < rendered_width; ++iCol)
 		{
-			uint16_t bitmap_data = pgm_read_byte(bofs) * mul_amt;
+			uint16_t bitmap_data = (pgm_read_byte(bofs) * mul_amt);
 			uint16_t mask_data = ~(pgm_read_byte(mask_ofs) * mul_amt);
 
 			if(draw_mode == SPRITE_IS_MASK_ERASE)
@@ -139,8 +140,8 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 			if(yOffset != 0 && sRow < 7)
 			{
 				uint8_t data = Arduboy2Base::sBuffer[ofs + WIDTH];
-				data &= (*(reinterpret_cast<unsigned char *>(&mask_data) + 1));
-				data |= (*(reinterpret_cast<unsigned char *>(&bitmap_data) + 1));
+				data &= (reinterpret_cast<const unsigned char *>(&mask_data)[1]);
+				data |= (reinterpret_cast<const unsigned char *>(&bitmap_data)[1]);
 				Arduboy2Base::sBuffer[ofs + WIDTH] = data;
 			}
 
