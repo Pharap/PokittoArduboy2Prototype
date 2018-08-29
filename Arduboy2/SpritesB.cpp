@@ -41,16 +41,20 @@ void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, 
 
 	const uint8_t width = pgm_read_byte(bitmap);
 	++bitmap;
+
 	const uint8_t height = pgm_read_byte(bitmap);
 	++bitmap;
+
 	if(frame > 0 || sprite_frame > 0)
 	{
 		unsigned int frame_offset = (width * ( height / 8 + ( height % 8 == 0 ? 0 : 1)));
+
 		// sprite plus mask uses twice as much space for each frame
 		if(drawMode == SPRITE_PLUS_MASK)
 			frame_offset *= 2;
 		else if(mask != NULL)
 			mask += sprite_frame * frame_offset;
+
 		bitmap += frame * frame_offset;
 	}
 
@@ -131,6 +135,7 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 				data |= static_cast<uint8_t>(bitmap_data);
 				Arduboy2Base::sBuffer[ofs] = data;
 			}
+
 			if(yOffset != 0 && sRow < 7)
 			{
 				uint8_t data = Arduboy2Base::sBuffer[ofs + WIDTH];
@@ -138,10 +143,12 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 				data |= (*(reinterpret_cast<unsigned char *>(&bitmap_data) + 1));
 				Arduboy2Base::sBuffer[ofs + WIDTH] = data;
 			}
+
 			++ofs;
 			mask_ofs += ofs_step;
 			bofs += ofs_step;
 		}
+
 		++sRow;
 		bofs += ofs_stride;
 		mask_ofs += ofs_stride;
