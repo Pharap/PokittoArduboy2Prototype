@@ -46,11 +46,11 @@ void Arduboy2Base::begin()
 	bootLogo();
 	// alternative logo functions. Work the same as bootLogo() but may reduce
 	// memory size if the sketch uses the same bitmap drawing function
-//  bootLogoCompressed();
-//  bootLogoSpritesSelfMasked();
-//  bootLogoSpritesOverwrite();
-//  bootLogoSpritesBSelfMasked();
-//  bootLogoSpritesBOverwrite();
+	//  bootLogoCompressed();
+	//  bootLogoSpritesSelfMasked();
+	//  bootLogoSpritesOverwrite();
+	//  bootLogoSpritesBSelfMasked();
+	//  bootLogoSpritesBOverwrite();
 
 	// wait for all buttons to be released
 	waitNoButtons();
@@ -216,6 +216,7 @@ void Arduboy2Base::bootLogoShell(void (*drawLogo)(int16_t))
 		// blue LED on
 		digitalWriteRGB(BLUE_LED, RGB_ON);
 	}
+
 	delayShort(400);
 	digitalWriteRGB(BLUE_LED, RGB_OFF);
 
@@ -266,7 +267,8 @@ bool Arduboy2Base::nextFrame()
 		justRendered = false;
 		return false;
 	}
-	else if(frameDurationMs < eachFrameMillis)
+
+	if(frameDurationMs < eachFrameMillis)
 	{
 		// Only idle if at least a full millisecond remains, since idle() may
 		// sleep the processor until the next millisecond timer interrupt.
@@ -295,6 +297,7 @@ bool Arduboy2Base::nextFrameDEV()
 		else
 			TXLED0;
 	}
+
 	return ret;
 }
 
@@ -397,6 +400,7 @@ uint8_t Arduboy2Base::getPixel(uint8_t x, uint8_t y)
 {
 	const uint8_t row = y / 8;
 	const uint8_t bit_position = y % 8;
+
 	return (sBuffer[(row*WIDTH) + x] & _BV(bit_position)) >> bit_position;
 }
 
@@ -464,18 +468,21 @@ void Arduboy2Base::drawCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t c
 			drawPixel(x0 + x, y0 + y, color);
 			drawPixel(x0 + y, y0 + x, color);
 		}
+
 		// upper right
 		if((corners & 0x2) != 0)
 		{
 			drawPixel(x0 + x, y0 - y, color);
 			drawPixel(x0 + y, y0 - x, color);
 		}
+
 		// lower left
 		if((corners & 0x8) != 0)
 		{
 			drawPixel(x0 - y, y0 + x, color);
 			drawPixel(x0 - x, y0 + y, color);
 		}
+
 		// upper left
 		if((corners & 0x1) != 0)
 		{
@@ -532,6 +539,7 @@ void Arduboy2Base::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint
 {
 	// bresenham's algorithm - thx wikpedia
 	const bool steep = abs(y1 - y0) > abs(x1 - x0);
+
 	if(steep)
 	{
 		swap(x0, y0);
@@ -562,6 +570,7 @@ void Arduboy2Base::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint
 		}
 
 		err -= dy;
+
 		if(err < 0)
 		{
 			y += ystep;
@@ -736,11 +745,13 @@ void Arduboy2Base::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
 		swap(y0, y1);
 		swap(x0, x1);
 	}
+
 	if(y1 > y2)
 	{
 		swap(y2, y1);
 		swap(x2, x1);
 	}
+
 	if(y0 > y1)
 	{
 		swap(y0, y1);
@@ -752,6 +763,7 @@ void Arduboy2Base::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
 	{
 		int16_t a = x0;
 		int16_t b = x0;
+
 		if(x1 < a)
 		{
 			a = x1;
@@ -760,6 +772,7 @@ void Arduboy2Base::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
 		{
 			b = x1;
 		}
+
 		if(x2 < a)
 		{
 			a = x2;
@@ -768,6 +781,7 @@ void Arduboy2Base::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
 		{
 			b = x2;
 		}
+
 		drawFastHLine(a, y0, b-a+1, color);
 		return;
 	}
@@ -847,35 +861,39 @@ void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8
 	for(int a = 0; a < rows; ++a)
 	{
 		const int bRow = sRow + a;
+
 		if(bRow > (HEIGHT/8)-1)
 			break;
-		if(bRow > -2)
+
+		if(bRow <= -2)
+			continue;
+
+		for(int iCol = 0; iCol<w; ++iCol)
 		{
-			for(int iCol = 0; iCol<w; ++iCol)
+			if(iCol + x > (WIDTH-1))
+				break;
+
+			if(iCol + x < 0)
+				continue;
+
+			if(bRow >= 0)
 			{
-				if(iCol + x > (WIDTH-1))
-					break;
-				if(iCol + x >= 0)
-				{
-					if(bRow >= 0)
-					{
-						if(color == WHITE)
-							sBuffer[(bRow*WIDTH) + x + iCol] |= pgm_read_byte(bitmap+(a*w)+iCol) << yOffset;
-						else if(color == BLACK)
-							sBuffer[(bRow*WIDTH) + x + iCol] &= ~(pgm_read_byte(bitmap+(a*w)+iCol) << yOffset);
-						else
-							sBuffer[(bRow*WIDTH) + x + iCol] ^= pgm_read_byte(bitmap+(a*w)+iCol) << yOffset;
-					}
-					if(yOffset != 0 && bRow<(HEIGHT/8)-1 && bRow > -2)
-					{
-						if(color == WHITE)
-							sBuffer[((bRow+1)*WIDTH) + x + iCol] |= pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset);
-						else if(color == BLACK)
-							sBuffer[((bRow+1)*WIDTH) + x + iCol] &= ~(pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset));
-						else
-							sBuffer[((bRow+1)*WIDTH) + x + iCol] ^= pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset);
-					}
-				}
+				if(color == WHITE)
+					sBuffer[(bRow*WIDTH) + x + iCol] |= pgm_read_byte(bitmap+(a*w)+iCol) << yOffset;
+				else if(color == BLACK)
+					sBuffer[(bRow*WIDTH) + x + iCol] &= ~(pgm_read_byte(bitmap+(a*w)+iCol) << yOffset);
+				else
+					sBuffer[(bRow*WIDTH) + x + iCol] ^= pgm_read_byte(bitmap+(a*w)+iCol) << yOffset;
+			}
+
+			if(yOffset != 0 && bRow<(HEIGHT/8)-1 && bRow > -2)
+			{
+				if(color == WHITE)
+					sBuffer[((bRow+1)*WIDTH) + x + iCol] |= pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset);
+				else if(color == BLACK)
+					sBuffer[((bRow+1)*WIDTH) + x + iCol] &= ~(pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset));
+				else
+					sBuffer[((bRow+1)*WIDTH) + x + iCol] ^= pgm_read_byte(bitmap+(a*w)+iCol) >> (8-yOffset);
 			}
 		}
 	}
@@ -889,6 +907,7 @@ void Arduboy2Base::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
 		return;
 
 	const int16_t byteWidth = (w + 7) / 8;
+
 	for(int16_t yi = 0; yi < h; ++yi)
 		for(int16_t xi = 0; xi < w; ++xi)
 			if(pgm_read_byte(bitmap + yi * byteWidth + xi / 8) & (128 >> (xi & 7)))
@@ -912,6 +931,7 @@ struct BitStreamReader
 	uint16_t readBits(uint16_t bitCount)
 	{
 		uint16_t result = 0;
+
 		for(uint16_t i = 0; i < bitCount; ++i)
 		{
 			if(this->bitBuffer == 0)
@@ -922,11 +942,12 @@ struct BitStreamReader
 			}
 
 			if((this->byteBuffer & this->bitBuffer) != 0)
-				// result |= bitshift_left[i];
 				result |= (1 << i);
+				// result |= bitshift_left[i];
 
 			this->bitBuffer <<= 1;
 		}
+
 		return result;
 	}
 };
@@ -965,6 +986,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
 	while(rowOffset < rows)
 	{
 		uint16_t bitLength = 1;
+
 		while(cs.readBits(1) == 0)
 			bitLength += 2;
 
@@ -976,52 +998,55 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
 		{
 			if(spanColour != 0)
 				byte |= bit;
+
 			bit <<= 1;
 
 			// reached end of byte
-			if(bit == 0)
+			if(bit != 0)
+				continue;
+
+			// draw
+			const int bRow = startRow + rowOffset;
+
+			//if(byte) // possible optimisation
+			if((bRow <= (HEIGHT / 8) - 1) && (bRow > -2) && (columnOffset + sx <= (WIDTH - 1)) && (columnOffset + sx >= 0))
 			{
-				// draw
-				const int bRow = startRow + rowOffset;
+				const int16_t offset = (bRow * WIDTH) + sx + columnOffset;
 
-				//if(byte) // possible optimisation
-				if((bRow <= (HEIGHT / 8) - 1) && (bRow > -2) && (columnOffset + sx <= (WIDTH - 1)) && (columnOffset + sx >= 0))
+				if(bRow >= 0)
 				{
-					const int16_t offset = (bRow * WIDTH) + sx + columnOffset;
-					if(bRow >= 0)
-					{
-						const int16_t index = offset;
-						const uint8_t value = byte << yOffset;
+					const int16_t index = offset;
+					const uint8_t value = byte << yOffset;
 
-						if(color != 0)
-							sBuffer[index] |= value;
-						else
-							sBuffer[index] &= ~value;
-					}
-					if((yOffset != 0) && (bRow < (HEIGHT / 8) - 1))
-					{
-						const int16_t index = offset + WIDTH;
-						const uint8_t value = byte >> (8 - yOffset);
-
-						if(color != 0)
-							sBuffer[index] |= value;
-						else
-							sBuffer[index] &= ~value;
-					}
+					if(color != 0)
+						sBuffer[index] |= value;
+					else
+						sBuffer[index] &= ~value;
 				}
 
-				// iterate
-				++columnOffset;
-				if(columnOffset >= width)
+				if((yOffset != 0) && (bRow < (HEIGHT / 8) - 1))
 				{
-					columnOffset = 0;
-					++rowOffset;
-				}
+					const int16_t index = offset + WIDTH;
+					const uint8_t value = byte >> (8 - yOffset);
 
-				// reset byte
-				byte = 0x00;
-				bit = 0x01;
+					if(color != 0)
+						sBuffer[index] |= value;
+					else
+						sBuffer[index] &= ~value;
+				}
 			}
+
+			// iterate
+			++columnOffset;
+			if(columnOffset >= width)
+			{
+				columnOffset = 0;
+				++rowOffset;
+			}
+
+			// reset byte
+			byte = 0x00;
+			bit = 0x01;
 		}
 
 		// toggle colour bit (bit 0) for next span
@@ -1097,6 +1122,7 @@ uint8_t Arduboy2Base::readUnitName(char* name)
 	{
 		const char val = EEPROM.read(src);
 		name[dest] = val;
+
 		if(val == 0x00 || static_cast<byte>(val) == 0xFF)
 		{
 			name[dest] = 0x00;
@@ -1115,6 +1141,7 @@ void Arduboy2Base::writeUnitName(char* name)
 	{
 		if(name[src] == 0x00)
 			done = true;
+
 		// write character or 0 pad if finished
 		EEPROM.update(dest, done ? 0x00 : name[src]);
 	}
@@ -1206,6 +1233,7 @@ void Arduboy2::bootLogoText()
 		{
 			// red LED off
 			digitalWriteRGB(RED_LED, RGB_OFF);
+
 			// green LED on
 			digitalWriteRGB(GREEN_LED, RGB_ON);
 		}
@@ -1213,11 +1241,14 @@ void Arduboy2::bootLogoText()
 		// Using display(CLEAR_BUFFER) instead of clear() may save code space.
 		// The extra time it takes to repaint the previous logo isn't an issue.
 		display(CLEAR_BUFFER);
+
 		cursor_x = 23;
 		cursor_y = y;
+
 		textSize = 2;
 		print(F("ARDUBOY"));
 		textSize = 1;
+
 		display();
 		delayShort(11);
 	}
@@ -1229,6 +1260,7 @@ void Arduboy2::bootLogoText()
 		// blue LED on
 		digitalWriteRGB(BLUE_LED, RGB_ON);
 	}
+
 	delayShort(400);
 	digitalWriteRGB(BLUE_LED, RGB_OFF);
 
@@ -1275,7 +1307,9 @@ size_t Arduboy2::write(uint8_t c)
 	else
 	{
 		drawChar(cursor_x, cursor_y, c, textColor, textBackground, textSize);
+
 		cursor_x += textSize * 6;
+
 		if(textWrap && (cursor_x > (WIDTH - textSize * 6)))
 		{
 			// calling ourselves recursively for 'newline' is
@@ -1307,6 +1341,7 @@ void Arduboy2::drawChar(int16_t x, int16_t y, unsigned char c, uint8_t color, ui
 				for(uint8_t a = 0; a < size; ++a)
 					for(uint8_t b = 0; b < size; ++b)
 						drawPixel(x + (i * size) + a, y + (j * size) + b, draw_color);
+
 			line >>= 1;
 		}
 	}
