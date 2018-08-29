@@ -17,7 +17,7 @@ void BeepPin1::begin()
 {
 	TCCR3A = 0;
 	// CTC mode. Divide by 8 clock prescale
-	TCCR3B = (bit(WGM32) | bit(CS31)); 
+	TCCR3B = (bit(WGM32) | bit(CS31));
 }
 
 void BeepPin1::tone(uint16_t count)
@@ -29,9 +29,9 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 {
 	duration = dur;
 	// set toggle on compare mode (which connects the pin)
-	TCCR3A = bit(COM3A0); 
+	TCCR3A = bit(COM3A0);
 	// load the count (16 bits), which determines the frequency
-	OCR3A = count; 
+	OCR3A = count;
 }
 
 void BeepPin1::timer()
@@ -49,7 +49,7 @@ void BeepPin1::noTone()
 {
 	duration = 0;
 	// set normal mode (which disconnects the pin)
-	TCCR3A = 0; 
+	TCCR3A = 0;
 }
 
 
@@ -60,15 +60,15 @@ uint8_t BeepPin2::duration = 0;
 void BeepPin2::begin()
 {
 	// normal mode. Disable PWM
-	TCCR4A = 0; 
+	TCCR4A = 0;
 	// divide by 128 clock prescale
-	TCCR4B = bit(CS43); 
+	TCCR4B = bit(CS43);
 	// normal mode
-	TCCR4D = 0; 
+	TCCR4D = 0;
 	// toggle pin at count = 0
-	TC4H = 0;  
+	TC4H = 0;
 	//  "
-	OCR4A = 0; 
+	OCR4A = 0;
 }
 
 void BeepPin2::tone(uint16_t count)
@@ -80,11 +80,11 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 {
 	duration = dur;
 	// set toggle on compare mode (which connects the pin)
-	TCCR4A = bit(COM4A0); 
+	TCCR4A = bit(COM4A0);
 	// load the count (10 bits),
-	TC4H = highByte(count); 
+	TC4H = highByte(count);
 	//  which determines the frequency
-	OCR4C = lowByte(count); 
+	OCR4C = lowByte(count);
 }
 
 void BeepPin2::timer()
@@ -102,7 +102,7 @@ void BeepPin2::noTone()
 {
 	duration = 0;
 	// set normal mode (which disconnects the pin)
-	TCCR4A = 0; 
+	TCCR4A = 0;
 }
 
 
@@ -126,7 +126,7 @@ void BeepPin1::tone(uint16_t count)
 void BeepPin1::tone(uint16_t count, uint8_t dur)
 {
 	// parameter not used
-	(void) count; 
+	(void) count;
 
 	duration = dur;
 }
@@ -157,7 +157,7 @@ void BeepPin2::tone(uint16_t count)
 void BeepPin2::tone(uint16_t count, uint8_t dur)
 {
 	// parameter not used
-	(void) count; 
+	(void) count;
 
 	duration = dur;
 }

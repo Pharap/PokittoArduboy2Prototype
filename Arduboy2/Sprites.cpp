@@ -77,7 +77,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 
 	// if the right side of the render is offscreen skip those loops
 	const uint8_t rendered_width = (x + w > WIDTH - 1) ? ((WIDTH - x) - xOffset) : (w - xOffset);
-		
+
 	const int8_t yOffset = y & 7;
 	const int8_t tempSRow = y / 8;
 	int8_t sRow = (y < 0 && yOffset > 0) ? tempSRow - 1 : tempSRow;
@@ -241,12 +241,12 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 			asm volatile
 			(
 				// save Y
-				"push r28\n" 
+				"push r28\n"
 				"push r29\n"
 				// Y = buffer_ofs_2
-				"movw r28, %[buffer_ofs]\n" 
+				"movw r28, %[buffer_ofs]\n"
 				// buffer_ofs_2 = buffer_ofs + 128
-				"adiw r28, 63\n" 
+				"adiw r28, 63\n"
 				"adiw r28, 63\n"
 				"adiw r28, 2\n"
 				"loop_y:\n"
@@ -270,7 +270,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				// then
 				"ld %[data], Y\n"
 				// invert high byte of mask
-				"com %B[mask_data]\n" 
+				"com %B[mask_data]\n"
 				"and %[data], %B[mask_data]\n"
 				"or %[data], %B[bitmap_data]\n"
 				// update buffer, increment
@@ -307,7 +307,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				"dec %[yi]\n"
 				"breq finished\n"
 				// reset x counter
-				"mov %[xi], %[x_count]\n" 
+				"mov %[xi], %[x_count]\n"
 				// sRow++;
 				"inc %[sRow]\n"
 				"clr __zero_reg__\n"
@@ -327,31 +327,31 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				"pop r29\n"
 				"pop r28\n"
 				// just in case
-				"clr __zero_reg__\n" 
+				"clr __zero_reg__\n"
 				:
 				[xi] "+&a" (xi),
 				[yi] "+&a" (loop_h),
 				// CPI requires an upper register (r16-r23)
-				[sRow] "+&a" (sRow), 
+				[sRow] "+&a" (sRow),
 				[data] "=&l" (data),
 				[mask_data] "=&l" (mask_data),
 				[bitmap_data] "=&l" (bitmap_data)
 				:
 				[screen_width] "M" (WIDTH),
 				// lower register
-				[x_count] "l" (rendered_width), 
+				[x_count] "l" (rendered_width),
 				[sprite_ofs] "z" (bofs),
 				[buffer_ofs] "x" (Arduboy2Base::sBuffer+ofs),
 				// upper reg (r16-r23)
-				[buffer_ofs_jump] "a" (WIDTH-rendered_width), 
+				[buffer_ofs_jump] "a" (WIDTH-rendered_width),
 				// upper reg (r16-r23)
-				[sprite_ofs_jump] "a" ((w-rendered_width)*2), 
+				[sprite_ofs_jump] "a" ((w-rendered_width)*2),
 
 				// [sprite_ofs_jump] "r" (0),
 				// lower register
-				[yOffset] "l" (yOffset), 
+				[yOffset] "l" (yOffset),
 				// lower register
-				[mul_amt] "l" (mul_amt) 
+				[mul_amt] "l" (mul_amt)
 				// NOTE: We also clobber r28 and r29 (y) but sometimes the compiler
 				// won't allow us, so in order to make this work we don't tell it
 				// that we clobber them. Instead, we push/pop to preserve them.
@@ -360,7 +360,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint
 				// We do that by specifying all the inputs and outputs use either
 				// lower registers (l) or simple (r16-r23) upper registers (a).
 				// pushes/clobbers/pops r28 and r29 (y)
-				: 
+				:
 			);
 			break;
 		}

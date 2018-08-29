@@ -78,7 +78,7 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 
 	// if the right side of the render is offscreen skip those loops
 	const uint8_t rendered_width = (x + w > WIDTH - 1) ? ((WIDTH - x) - xOffset) : (w - xOffset);
-	
+
 	const int8_t yOffset = y & 7;
 	const int8_t tempSRow = y / 8;
 	int8_t sRow = (y < 0 && yOffset > 0) ? tempSRow - 1 : tempSRow;
@@ -98,7 +98,7 @@ void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uin
 	// instead of comparing two variables
 	loop_h -= start_h;
 	sRow += start_h;
-	
+
 	const uint8_t mul_amt = 1 << yOffset;
 
 	const uint8_t ofs_step = (draw_mode == SPRITE_PLUS_MASK) ? 2 : 1;
