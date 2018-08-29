@@ -43,21 +43,21 @@
 #define EEPROM_SYS_FLAGS 1
 #define EEPROM_AUDIO_ON_OFF 2
 // A uint16_t binary unit ID
-#define EEPROM_UNIT_ID 8    
+#define EEPROM_UNIT_ID 8
 // An up to 6 character unit name. Cannot contain
 // 0x00 or 0xFF. Lengths less than 6 are padded
 // with 0x00
-#define EEPROM_UNIT_NAME 10 
+#define EEPROM_UNIT_NAME 10
 
 // EEPROM_SYS_FLAGS values
 // Display the unit name on the logo screen
-#define SYS_FLAG_UNAME 0           
+#define SYS_FLAG_UNAME 0
 #define SYS_FLAG_UNAME_MASK _BV(SYS_FLAG_UNAME)
 // Show the logo sequence during boot up
-#define SYS_FLAG_SHOW_LOGO 1       
+#define SYS_FLAG_SHOW_LOGO 1
 #define SYS_FLAG_SHOW_LOGO_MASK _BV(SYS_FLAG_SHOW_LOGO)
 // Flash the RGB led during the boot logo
-#define SYS_FLAG_SHOW_LOGO_LEDS 2  
+#define SYS_FLAG_SHOW_LOGO_LEDS 2
 #define SYS_FLAG_SHOW_LOGO_LEDS_MASK _BV(SYS_FLAG_SHOW_LOGO_LEDS)
 
 /** \brief

@@ -101,17 +101,17 @@ void Arduboy2Core::setCPUSpeed8MHz()
 {
 	const uint8_t oldSREG = SREG;
 	// suspend interrupts
-	cli();                
+	cli();
 	// dissable the PLL and set prescale for 16MHz)
-	PLLCSR = _BV(PINDIV); 
+	PLLCSR = _BV(PINDIV);
 	// allow reprogramming clock
-	CLKPR = _BV(CLKPCE);  
+	CLKPR = _BV(CLKPCE);
 	// set clock divisor to 2 (0b0001)
-	CLKPR = 1;            
+	CLKPR = 1;
 	// enable the PLL (with 16MHz prescale)
-	PLLCSR = _BV(PLLE) | _BV(PINDIV); 
+	PLLCSR = _BV(PLLE) | _BV(PINDIV);
 	// restore interrupts
-	SREG = oldSREG;       
+	SREG = oldSREG;
 }
 #endif
 
@@ -198,11 +198,11 @@ void Arduboy2Core::bootOLED()
 {
 	// reset the display
 	// reset pin should be low here. let it stay low a while
-	delayShort(5); 
+	delayShort(5);
 	// set high to come out of reset
-	bitSet(RST_PORT, RST_BIT); 
+	bitSet(RST_PORT, RST_BIT);
 	// wait a while
-	delayShort(5); 
+	delayShort(5);
 
 	// select the display (permanently, since nothing else is using SPI)
 	bitClear(CS_PORT, CS_BIT);
@@ -255,7 +255,7 @@ void Arduboy2Core::safeMode()
 		digitalWriteRGB(RED_LED, RGB_ON);
 
 // for Arduboy core timer 0 should remain enabled
-#ifndef ARDUBOY_CORE 
+#ifndef ARDUBOY_CORE
 		// prevent the bootloader magic number from being overwritten by timer 0
 		// when a timer variable overlaps the magic number location
 		power_timer0_disable();
@@ -271,10 +271,10 @@ void Arduboy2Core::safeMode()
 void Arduboy2Core::idle()
 {
 	// select idle mode and enable sleeping
-	SMCR = _BV(SE); 
+	SMCR = _BV(SE);
 	sleep_cpu();
 	// disable sleeping
-	SMCR = 0; 
+	SMCR = 0;
 }
 
 void Arduboy2Core::bootPowerSaving()
@@ -291,14 +291,14 @@ void Arduboy2Core::displayOff()
 {
 	LCDCommandMode();
 	// display off
-	SPItransfer(0xAE); 
+	SPItransfer(0xAE);
 	// charge pump:
-	SPItransfer(0x8D); 
+	SPItransfer(0x8D);
 	//   disable
-	SPItransfer(0x10); 
+	SPItransfer(0x10);
 	delayShort(250);
 	// set display reset pin low (reset state)
-	bitClear(RST_PORT, RST_BIT); 
+	bitClear(RST_PORT, RST_BIT);
 }
 
 // Restart the display after a displayOff()
@@ -344,26 +344,26 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 	asm volatile
 	(
 		//for(len = WIDTH * HEIGHT / 8)
-		"   ldi   %A[count], %[len_lsb]               \n\t" 
+		"   ldi   %A[count], %[len_lsb]               \n\t"
 		"   ldi   %B[count], %[len_msb]               \n\t"
 		//tmp = *(image)
-		"1: ld    __tmp_reg__, %a[ptr]      ;2        \n\t" 
+		"1: ld    __tmp_reg__, %a[ptr]      ;2        \n\t"
 		//SPDR = tmp
-		"   out   %[spdr], __tmp_reg__      ;1        \n\t" 
+		"   out   %[spdr], __tmp_reg__      ;1        \n\t"
 		//if(clear) tmp = 0;
-		"   cpse  %[clear], __zero_reg__    ;1/2      \n\t" 
+		"   cpse  %[clear], __zero_reg__    ;1/2      \n\t"
 		"   mov   __tmp_reg__, __zero_reg__ ;1        \n\t"
 		//len --
-		"2: sbiw  %A[count], 1              ;2        \n\t" 
+		"2: sbiw  %A[count], 1              ;2        \n\t"
 		//loop twice for cheap delay
-		"   sbrc  %A[count], 0              ;1/2      \n\t" 
+		"   sbrc  %A[count], 0              ;1/2      \n\t"
 		"   rjmp  2b                        ;2        \n\t"
 		//*(image++) = tmp
-		"   st    %a[ptr]+, __tmp_reg__     ;2        \n\t" 
+		"   st    %a[ptr]+, __tmp_reg__     ;2        \n\t"
 		//len > 0
-		"   brne  1b                        ;1/2 :18  \n\t" 
+		"   brne  1b                        ;1/2 :18  \n\t"
 		//read SPSR to clear SPIF
-		"   in    __tmp_reg__, %[spsr]                \n\t" 
+		"   in    __tmp_reg__, %[spsr]                \n\t"
 		:
 		[ptr]     "+&e" (image),
 		[count]   "=&w" (count)
@@ -371,9 +371,9 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 		[spdr]    "I"   (_SFR_IO_ADDR(SPDR)),
 		[spsr]    "I"   (_SFR_IO_ADDR(SPSR)),
 		// 8: pixels per byte
-		[len_msb] "M"   (WIDTH * (HEIGHT / 8 * 2) >> 8),   
+		[len_msb] "M"   (WIDTH * (HEIGHT / 8 * 2) >> 8),
 		// 2: for delay loop multiplier
-		[len_lsb] "M"   (WIDTH * (HEIGHT / 8 * 2) & 0xFF), 
+		[len_lsb] "M"   (WIDTH * (HEIGHT / 8 * 2) & 0xFF),
 		[clear]   "r"   (clear)
 	);
 }
@@ -384,7 +384,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
 	// set the first SPI data byte to get things started
 	SPDR = image[0];
-	
+
 	// clear the first image byte
 	if(clear)
 		image[0] = 0;
@@ -396,7 +396,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 		// get the next byte. It's put in a local variable so it can be sent as
 		// as soon as possible after the sending of the previous byte has completed
 		uint8_t c = image[i];
-		
+
 		// clear the byte in the image buffer
 		if(clear)
 			image[i] = 0;
@@ -457,7 +457,7 @@ void Arduboy2Core::flipHorizontal(bool flipped)
 void Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 {
 // RGB, all the pretty colors
-#ifdef ARDUBOY_10 
+#ifdef ARDUBOY_10
 	// timer 0: Fast PWM, OC0A clear on compare / set at top
 	// We must stay in Fast PWM mode because timer 0 is used for system timing.
 	// We can't use "inverted" mode because it won't allow full shut off.
@@ -472,9 +472,9 @@ void Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 #elif defined(AB_DEVKIT)
 	// only blue on DevKit, which is not PWM capable
 	// parameter unused
-	(void)red;    
+	(void)red;
 	// parameter unused
-	(void)green;  
+	(void)green;
 	bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue ? RGB_ON : RGB_OFF);
 #endif
 }
@@ -513,9 +513,9 @@ void Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
 #elif defined(AB_DEVKIT)
 	// only blue on DevKit
 	// parameter unused
-	(void)red;    
+	(void)red;
 	// parameter unused
-	(void)green;  
+	(void)green;
 	bitWrite(BLUE_LED_PORT, BLUE_LED_BIT, blue);
 #endif
 }
