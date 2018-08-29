@@ -114,7 +114,7 @@ void Arduboy2Core::setCPUSpeed8MHz()
 	CLKPR = 1;
 
 	// enable the PLL (with 16MHz prescale)
-	PLLCSR = _BV(PLLE) | _BV(PINDIV);
+	PLLCSR = (_BV(PLLE) | _BV(PINDIV));
 
 	// restore interrupts
 	SREG = oldSREG;
@@ -128,7 +128,7 @@ void Arduboy2Core::bootPins()
 #ifdef ARDUBOY_10
 
 	// Port B INPUT_PULLUP or HIGH
-	PORTB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(B_BUTTON_BIT);
+	PORTB |= (_BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(B_BUTTON_BIT));
 
 	// Port B INPUT or LOW (none)
 
@@ -136,7 +136,7 @@ void Arduboy2Core::bootPins()
 	DDRB &= ~(_BV(B_BUTTON_BIT) | _BV(SPI_MISO_BIT));
 
 	// Port B outputs
-	DDRB |= _BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT);
+	DDRB |= (_BV(RED_LED_BIT) | _BV(GREEN_LED_BIT) | _BV(BLUE_LED_BIT) | _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT));
 
 	// Port C
 	// Speaker: Not set here. Controlled by audio class
@@ -150,7 +150,7 @@ void Arduboy2Core::bootPins()
 	// Port D inputs (none)
 
 	// Port D outputs
-	DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
+	DDRD |= (_BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT));
 
 	// Port E INPUT_PULLUP or HIGH
 	PORTE |= _BV(A_BUTTON_BIT);
@@ -163,7 +163,7 @@ void Arduboy2Core::bootPins()
 	// Port E outputs (none)
 
 	// Port F INPUT_PULLUP or HIGH
-	PORTF |= _BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT);
+	PORTF |= (_BV(LEFT_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT));
 
 	// Port F INPUT or LOW
 	PORTF &= ~(_BV(RAND_SEED_IN_BIT));
@@ -176,7 +176,7 @@ void Arduboy2Core::bootPins()
 #elif defined(AB_DEVKIT)
 
 	// Port B INPUT_PULLUP or HIGH
-	PORTB |= _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(BLUE_LED_BIT);
+	PORTB |= (_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(BLUE_LED_BIT));
 
 	// Port B INPUT or LOW (none)
 
@@ -184,7 +184,7 @@ void Arduboy2Core::bootPins()
 	DDRB &= ~(_BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT) | _BV(SPI_MISO_BIT));
 
 	// Port B outputs
-	DDRB |= _BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT) | _BV(BLUE_LED_BIT);
+	DDRB |= (_BV(SPI_MOSI_BIT) | _BV(SPI_SCK_BIT) | _BV(SPI_SS_BIT) | _BV(BLUE_LED_BIT));
 
 	// Port C INPUT_PULLUP or HIGH
 	PORTC |= _BV(RIGHT_BUTTON_BIT);
@@ -204,12 +204,12 @@ void Arduboy2Core::bootPins()
 	// Port D inputs (none)
 
 	// Port D outputs
-	DDRD |= _BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT);
+	DDRD |= (_BV(RST_BIT) | _BV(CS_BIT) | _BV(DC_BIT));
 
 	// Port E (none)
 
 	// Port F INPUT_PULLUP or HIGH
-	PORTF |= _BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT);
+	PORTF |= (_BV(A_BUTTON_BIT) | _BV(B_BUTTON_BIT));
 
 	// Port F INPUT or LOW
 	PORTF &= ~(_BV(RAND_SEED_IN_BIT));
@@ -262,7 +262,7 @@ void Arduboy2Core::LCDCommandMode()
 void Arduboy2Core::bootSPI()
 {
 	// master, mode 0, MSB first, CPU clock / 2 (8MHz)
-	SPCR = _BV(SPE) | _BV(MSTR);
+	SPCR = (_BV(SPE) | _BV(MSTR));
 	SPSR = _BV(SPI2X);
 }
 
@@ -319,7 +319,7 @@ void Arduboy2Core::bootPowerSaving()
 {
 	// disable Two Wire Interface (I2C) and the ADC
 	// All other bits will be written with 0 so will be enabled
-	PRR0 = _BV(PRTWI) | _BV(PRADC);
+	PRR0 = (_BV(PRTWI) | _BV(PRADC));
 
 	// disable USART1
 	PRR1 |= _BV(PRUSART1);
@@ -371,7 +371,7 @@ void Arduboy2Core::paint8Pixels(uint8_t pixels)
 
 void Arduboy2Core::paintScreen(const uint8_t *image)
 {
-	for(int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
+	for(int i = 0; i < ((HEIGHT * WIDTH) / 8); ++i)
 		SPItransfer(pgm_read_byte(image + i));
 }
 
@@ -435,7 +435,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 	// the code to iterate the loop and get the next byte from the buffer is
 	// executed while the previous byte is being sent out by the SPI controller
-	for(int i = 1; i < (HEIGHT * WIDTH) / 8; ++i)
+	for(int i = 1; i < ((HEIGHT * WIDTH) / 8); ++i)
 	{
 		// get the next byte. It's put in a local variable so it can be sent as
 		// as soon as possible after the sending of the previous byte has completed
@@ -460,7 +460,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 void Arduboy2Core::blank()
 {
-	for(int i = 0; i < (HEIGHT*WIDTH)/8; ++i)
+	for(int i = 0; i < ((HEIGHT * WIDTH) / 8); ++i)
 		SPItransfer(0x00);
 }
 
@@ -509,14 +509,14 @@ void Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 	// timer 0: Fast PWM, OC0A clear on compare / set at top
 	// We must stay in Fast PWM mode because timer 0 is used for system timing.
 	// We can't use "inverted" mode because it won't allow full shut off.
-	TCCR0A = _BV(COM0A1) | _BV(WGM01) | _BV(WGM00);
+	TCCR0A = (_BV(COM0A1) | _BV(WGM01) | _BV(WGM00));
 
-	OCR0A = 255 - green;
+	OCR0A = (255 - green);
 
 	// timer 1: Phase correct PWM 8 bit
 	// OC1A and OC1B set on up-counting / clear on down-counting (inverted). This
 	// allows the value to be directly loaded into the OCR with common anode LED.
-	TCCR1A = _BV(COM1A1) | _BV(COM1A0) | _BV(COM1B1) | _BV(COM1B0) | _BV(WGM10);
+	TCCR1A = (_BV(COM1A1) | _BV(COM1A0) | _BV(COM1B1) | _BV(COM1B0) | _BV(WGM10));
 
 	OCR1AL = blue;
 	OCR1BL = red;
@@ -543,7 +543,7 @@ void Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 	if(color == RED_LED)
 		OCR1BL = val;
 	else if(color == GREEN_LED)
-		OCR0A = 255 - val;
+		OCR0A = (255 - val);
 	else if(color == BLUE_LED)
 		OCR1AL = val;
 
@@ -560,7 +560,7 @@ void Arduboy2Core::freeRGBled()
 {
 #ifdef ARDUBOY_10
 	// clear the COM bits to return the pins to normal I/O mode
-	TCCR0A = _BV(WGM01) | _BV(WGM00);
+	TCCR0A = (_BV(WGM01) | _BV(WGM00));
 	TCCR1A = _BV(WGM10);
 #endif
 }
@@ -662,8 +662,8 @@ void Arduboy2Core::exitToBootloader()
 	// set bootloader magic key
 	// storing two uint8_t instead of one uint16_t saves an instruction
 	//  when high and low bytes of the magic key are the same
-	*reinterpret_cast<uint8_t *>(MAGIC_KEY_POS) = lowByte(MAGIC_KEY);
-	*reinterpret_cast<uint8_t *>(MAGIC_KEY_POS + 1) = highByte(MAGIC_KEY);
+	(*reinterpret_cast<uint8_t *>(MAGIC_KEY_POS + 0)) = lowByte(MAGIC_KEY);
+	(*reinterpret_cast<uint8_t *>(MAGIC_KEY_POS + 1)) = highByte(MAGIC_KEY);
 
 	// enable watchdog timer reset, with 16ms timeout
 	wdt_reset();
