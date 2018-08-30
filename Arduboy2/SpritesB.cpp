@@ -7,34 +7,34 @@
 
 #include "SpritesB.h"
 
-void SpritesB::drawExternalMask(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t frame, uint8_t mask_frame)
+void SpritesB::drawExternalMask(int16_t x, int16_t y, const uint8_t * bitmap, const uint8_t * mask, uint8_t frame, uint8_t mask_frame)
 {
 	draw(x, y, bitmap, frame, mask, mask_frame, SPRITE_MASKED);
 }
 
-void SpritesB::drawOverwrite(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame)
+void SpritesB::drawOverwrite(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t frame)
 {
 	draw(x, y, bitmap, frame, NULL, 0, SPRITE_OVERWRITE);
 }
 
-void SpritesB::drawErase(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame)
+void SpritesB::drawErase(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t frame)
 {
 	draw(x, y, bitmap, frame, NULL, 0, SPRITE_IS_MASK_ERASE);
 }
 
-void SpritesB::drawSelfMasked(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame)
+void SpritesB::drawSelfMasked(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t frame)
 {
 	draw(x, y, bitmap, frame, NULL, 0, SPRITE_IS_MASK);
 }
 
-void SpritesB::drawPlusMask(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame)
+void SpritesB::drawPlusMask(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t frame)
 {
 	draw(x, y, bitmap, frame, NULL, 0, SPRITE_PLUS_MASK);
 }
 
 
 //common functions
-void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, const uint8_t *mask, uint8_t sprite_frame, uint8_t drawMode)
+void SpritesB::draw(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t frame, const uint8_t * mask, uint8_t sprite_frame, uint8_t drawMode)
 {
 	if(bitmap == NULL)
 		return;
@@ -66,7 +66,7 @@ void SpritesB::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame, 
 	drawBitmap(x, y, bitmap, mask, width, height, drawMode);
 }
 
-void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask, uint8_t w, uint8_t h, uint8_t draw_mode)
+void SpritesB::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uint8_t * mask, uint8_t w, uint8_t h, uint8_t draw_mode)
 {
 	// no need to draw at all of we're offscreen
 	if(((x + w) <= 0) || (x > (WIDTH - 1)) || ((y + h) <= 0) || (y > (HEIGHT - 1)))

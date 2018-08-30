@@ -13,7 +13,7 @@
 
 uint8_t BeepPin1::duration = 0;
 
-void BeepPin1::begin()
+void BeepPin1::begin(void)
 {
 	TCCR3A = 0;
 
@@ -37,7 +37,7 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 	OCR3A = count;
 }
 
-void BeepPin1::timer()
+void BeepPin1::timer(void)
 {
 	if(duration == 0)
 		return;
@@ -49,7 +49,7 @@ void BeepPin1::timer()
 		TCCR3A = 0;
 }
 
-void BeepPin1::noTone()
+void BeepPin1::noTone(void)
 {
 	duration = 0;
 
@@ -62,7 +62,7 @@ void BeepPin1::noTone()
 
 uint8_t BeepPin2::duration = 0;
 
-void BeepPin2::begin()
+void BeepPin2::begin(void)
 {
 	// normal mode. Disable PWM
 	TCCR4A = 0;
@@ -99,7 +99,7 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 	OCR4C = lowByte(count);
 }
 
-void BeepPin2::timer()
+void BeepPin2::timer(void)
 {
 	if(duration == 0)
 		return;
@@ -111,7 +111,7 @@ void BeepPin2::timer()
 		TCCR4A = 0;
 }
 
-void BeepPin2::noTone()
+void BeepPin2::noTone(void)
 {
 	duration = 0;
 
@@ -128,7 +128,7 @@ void BeepPin2::noTone()
 
 uint8_t BeepPin1::duration = 0;
 
-void BeepPin1::begin()
+void BeepPin1::begin(void)
 {
 }
 
@@ -145,13 +145,13 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 	duration = dur;
 }
 
-void BeepPin1::timer()
+void BeepPin1::timer(void)
 {
 	if(duration > 0)
 		--duration;
 }
 
-void BeepPin1::noTone()
+void BeepPin1::noTone(void)
 {
 	duration = 0;
 }
@@ -159,7 +159,7 @@ void BeepPin1::noTone()
 
 uint8_t BeepPin2::duration = 0;
 
-void BeepPin2::begin()
+void BeepPin2::begin(void)
 {
 }
 
@@ -176,13 +176,13 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 	duration = dur;
 }
 
-void BeepPin2::timer()
+void BeepPin2::timer(void)
 {
 	if(duration > 0)
 		--duration;
 }
 
-void BeepPin2::noTone()
+void BeepPin2::noTone(void)
 {
 	duration = 0;
 }

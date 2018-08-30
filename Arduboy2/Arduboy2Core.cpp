@@ -72,11 +72,11 @@ const uint8_t PROGMEM lcdBootProgram[] =
 };
 
 
-Arduboy2Core::Arduboy2Core()
+Arduboy2Core::Arduboy2Core(void)
 {
 }
 
-void Arduboy2Core::boot()
+void Arduboy2Core::boot(void)
 {
 #ifdef ARDUBOY_SET_CPU_8MHZ
 	// ARDUBOY_SET_CPU_8MHZ will be set by the IDE using boards.txt
@@ -97,7 +97,7 @@ void Arduboy2Core::boot()
 // hardware clock on the Arduboy is 16MHz.
 // We also need to readjust the PLL prescaler because the Arduino USB code
 // likely will have incorrectly set it for an 8MHz hardware clock.
-void Arduboy2Core::setCPUSpeed8MHz()
+void Arduboy2Core::setCPUSpeed8MHz(void)
 {
 	const uint8_t oldSREG = SREG;
 
@@ -123,7 +123,7 @@ void Arduboy2Core::setCPUSpeed8MHz()
 
 // Pins are set to the proper modes and levels for the specific hardware.
 // This routine must be modified if any pins are moved to a different port
-void Arduboy2Core::bootPins()
+void Arduboy2Core::bootPins(void)
 {
 #ifdef ARDUBOY_10
 
@@ -223,7 +223,7 @@ void Arduboy2Core::bootPins()
 #endif
 }
 
-void Arduboy2Core::bootOLED()
+void Arduboy2Core::bootOLED(void)
 {
 	// reset the display
 	// reset pin should be low here. let it stay low a while
@@ -248,18 +248,18 @@ void Arduboy2Core::bootOLED()
 	LCDDataMode();
 }
 
-void Arduboy2Core::LCDDataMode()
+void Arduboy2Core::LCDDataMode(void)
 {
 	bitSet(DC_PORT, DC_BIT);
 }
 
-void Arduboy2Core::LCDCommandMode()
+void Arduboy2Core::LCDCommandMode(void)
 {
 	bitClear(DC_PORT, DC_BIT);
 }
 
 // Initialize the SPI interface for the display
-void Arduboy2Core::bootSPI()
+void Arduboy2Core::bootSPI(void)
 {
 	// master, mode 0, MSB first, CPU clock / 2 (8MHz)
 	SPCR = (_BV(SPE) | _BV(MSTR));
@@ -283,7 +283,7 @@ void Arduboy2Core::SPItransfer(uint8_t data)
 	while((SPSR & _BV(SPIF)) == 0);
 }
 
-void Arduboy2Core::safeMode()
+void Arduboy2Core::safeMode(void)
 {
 	if(buttonsState() != UP_BUTTON)
 		return;
@@ -304,7 +304,7 @@ void Arduboy2Core::safeMode()
 
 /* Power Management */
 
-void Arduboy2Core::idle()
+void Arduboy2Core::idle(void)
 {
 	// select idle mode and enable sleeping
 	SMCR = _BV(SE);
@@ -315,7 +315,7 @@ void Arduboy2Core::idle()
 	SMCR = 0;
 }
 
-void Arduboy2Core::bootPowerSaving()
+void Arduboy2Core::bootPowerSaving(void)
 {
 	// disable Two Wire Interface (I2C) and the ADC
 	// All other bits will be written with 0 so will be enabled
@@ -326,7 +326,7 @@ void Arduboy2Core::bootPowerSaving()
 }
 
 // Shut down the display
-void Arduboy2Core::displayOff()
+void Arduboy2Core::displayOff(void)
 {
 	LCDCommandMode();
 
@@ -346,17 +346,17 @@ void Arduboy2Core::displayOff()
 }
 
 // Restart the display after a displayOff()
-void Arduboy2Core::displayOn()
+void Arduboy2Core::displayOn(void)
 {
 	bootOLED();
 }
 
-uint8_t Arduboy2Core::width()
+uint8_t Arduboy2Core::width(void)
 {
 	return WIDTH;
 }
 
-uint8_t Arduboy2Core::height()
+uint8_t Arduboy2Core::height(void)
 {
 	return HEIGHT;
 }
@@ -369,7 +369,7 @@ void Arduboy2Core::paint8Pixels(uint8_t pixels)
 	SPItransfer(pixels);
 }
 
-void Arduboy2Core::paintScreen(const uint8_t *image)
+void Arduboy2Core::paintScreen(const uint8_t * image)
 {
 	for(int i = 0; i < ((HEIGHT * WIDTH) / 8); ++i)
 		SPItransfer(pgm_read_byte(image + i));
@@ -458,7 +458,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 }
 #endif
 
-void Arduboy2Core::blank()
+void Arduboy2Core::blank(void)
 {
 	for(int i = 0; i < ((HEIGHT * WIDTH) / 8); ++i)
 		SPItransfer(0x00);
@@ -556,7 +556,7 @@ void Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 #endif
 }
 
-void Arduboy2Core::freeRGBled()
+void Arduboy2Core::freeRGBled(void)
 {
 #ifdef ARDUBOY_10
 	// clear the COM bits to return the pins to normal I/O mode
@@ -610,7 +610,7 @@ void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 
 /* Buttons */
 
-uint8_t Arduboy2Core::buttonsState()
+uint8_t Arduboy2Core::buttonsState(void)
 {
 	uint8_t buttons;
 
@@ -655,7 +655,7 @@ void Arduboy2Core::delayShort(uint16_t ms)
 	delay(static_cast<unsigned long>(ms));
 }
 
-void Arduboy2Core::exitToBootloader()
+void Arduboy2Core::exitToBootloader(void)
 {
 	cli();
 
@@ -678,7 +678,7 @@ void Arduboy2Core::exitToBootloader()
 // Used by the ARDUBOY_NO_USB macro. This should not be called
 // directly from a sketch.
 
-void Arduboy2Core::mainNoUSB()
+void Arduboy2Core::mainNoUSB(void)
 {
 	// disable USB
 	UDCON = _BV(DETACH);
