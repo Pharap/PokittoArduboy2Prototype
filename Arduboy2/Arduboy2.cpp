@@ -14,7 +14,7 @@
 
 uint8_t Arduboy2Base::sBuffer[];
 
-Arduboy2Base::Arduboy2Base()
+Arduboy2Base::Arduboy2Base(void)
 {
 	currentButtonState = 0;
 	previousButtonState = 0;
@@ -28,7 +28,7 @@ Arduboy2Base::Arduboy2Base()
 // functions called here should be public so users can create their
 // own init functions if they need different behavior than `begin`
 // provides by default
-void Arduboy2Base::begin()
+void Arduboy2Base::begin(void)
 {
 	// raw hardware
 	boot();
@@ -57,7 +57,7 @@ void Arduboy2Base::begin()
 	waitNoButtons();
 }
 
-void Arduboy2Base::flashlight()
+void Arduboy2Base::flashlight(void)
 {
 	if(!pressed(UP_BUTTON))
 		return;
@@ -78,7 +78,7 @@ void Arduboy2Base::flashlight()
 		idle();
 }
 
-void Arduboy2Base::systemButtons()
+void Arduboy2Base::systemButtons(void)
 {
 	while(pressed(B_BUTTON))
 	{
@@ -116,7 +116,7 @@ void Arduboy2Base::sysCtrlSound(uint8_t buttons, uint8_t led, uint8_t eeVal)
 	}
 }
 
-void Arduboy2Base::bootLogo()
+void Arduboy2Base::bootLogo(void)
 {
 	bootLogoShell(drawLogoBitmap);
 }
@@ -126,7 +126,7 @@ void Arduboy2Base::drawLogoBitmap(int16_t y)
 	drawBitmap(20, y, arduboy_logo, 88, 16);
 }
 
-void Arduboy2Base::bootLogoCompressed()
+void Arduboy2Base::bootLogoCompressed(void)
 {
 	bootLogoShell(drawLogoCompressed);
 }
@@ -136,7 +136,7 @@ void Arduboy2Base::drawLogoCompressed(int16_t y)
 	drawCompressed(20, y, arduboy_logo_compressed);
 }
 
-void Arduboy2Base::bootLogoSpritesSelfMasked()
+void Arduboy2Base::bootLogoSpritesSelfMasked(void)
 {
 	bootLogoShell(drawLogoSpritesSelfMasked);
 }
@@ -146,7 +146,7 @@ void Arduboy2Base::drawLogoSpritesSelfMasked(int16_t y)
 	Sprites::drawSelfMasked(20, y, arduboy_logo_sprite, 0);
 }
 
-void Arduboy2Base::bootLogoSpritesOverwrite()
+void Arduboy2Base::bootLogoSpritesOverwrite(void)
 {
 	bootLogoShell(drawLogoSpritesOverwrite);
 }
@@ -156,7 +156,7 @@ void Arduboy2Base::drawLogoSpritesOverwrite(int16_t y)
 	Sprites::drawOverwrite(20, y, arduboy_logo_sprite, 0);
 }
 
-void Arduboy2Base::bootLogoSpritesBSelfMasked()
+void Arduboy2Base::bootLogoSpritesBSelfMasked(void)
 {
 	bootLogoShell(drawLogoSpritesBSelfMasked);
 }
@@ -166,7 +166,7 @@ void Arduboy2Base::drawLogoSpritesBSelfMasked(int16_t y)
 	SpritesB::drawSelfMasked(20, y, arduboy_logo_sprite, 0);
 }
 
-void Arduboy2Base::bootLogoSpritesBOverwrite()
+void Arduboy2Base::bootLogoSpritesBOverwrite(void)
 {
 	bootLogoShell(drawLogoSpritesBOverwrite);
 }
@@ -232,12 +232,12 @@ void Arduboy2Base::bootLogoShell(void (*drawLogo)(int16_t))
 }
 
 // Virtual function overridden by derived class
-void Arduboy2Base::bootLogoExtra()
+void Arduboy2Base::bootLogoExtra(void)
 {
 }
 
 // wait for all buttons to be released
-void Arduboy2Base::waitNoButtons()
+void Arduboy2Base::waitNoButtons(void)
 {
 	do
 	{
@@ -264,7 +264,7 @@ bool Arduboy2Base::everyXFrames(uint8_t frames)
 	return ((frameCount % frames) == 0);
 }
 
-bool Arduboy2Base::nextFrame()
+bool Arduboy2Base::nextFrame(void)
 {
 	const uint8_t now = static_cast<uint8_t>(millis());
 	const uint8_t frameDurationMs = (now - thisFrameStart);
@@ -295,7 +295,7 @@ bool Arduboy2Base::nextFrame()
 	return true;
 }
 
-bool Arduboy2Base::nextFrameDEV()
+bool Arduboy2Base::nextFrameDEV(void)
 {
 	if(!nextFrame())
 		return false;
@@ -308,12 +308,12 @@ bool Arduboy2Base::nextFrameDEV()
 	return true;
 }
 
-int Arduboy2Base::cpuLoad()
+int Arduboy2Base::cpuLoad(void)
 {
 	return ((lastFrameDurationMs * 100) / eachFrameMillis);
 }
 
-void Arduboy2Base::initRandomSeed()
+void Arduboy2Base::initRandomSeed(void)
 {
 	// ADC on
 	power_adc_enable();
@@ -333,7 +333,7 @@ void Arduboy2Base::initRandomSeed()
 
 /* Graphics */
 
-void Arduboy2Base::clear()
+void Arduboy2Base::clear(void)
 {
 	fillScreen(BLACK);
 }
@@ -855,7 +855,7 @@ void Arduboy2Base::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, 
 	}
 }
 
-void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color)
+void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t w, uint8_t h, uint8_t color)
 {
 	// no need to draw at all if we're offscreen
 	if(((x + w) < 0) || (x > (WIDTH - 1)) || ((y + h) < 0) || (y > (HEIGHT - 1)))
@@ -912,7 +912,7 @@ void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8
 }
 
 
-void Arduboy2Base::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color)
+void Arduboy2Base::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t * bitmap, uint8_t w, uint8_t h, uint8_t color)
 {
 	// no need to draw at all of we're offscreen
 	if(((x + w) < 0) || (x > (WIDTH - 1)) || ((y + h) < 0) || (y > (HEIGHT - 1)))
@@ -935,12 +935,12 @@ void Arduboy2Base::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
 // Helper for drawCompressed()
 struct BitStreamReader
 {
-	const uint8_t *source;
+	const uint8_t * source;
 	uint16_t sourceIndex;
 	uint8_t bitBuffer;
 	uint8_t byteBuffer;
 
-	BitStreamReader(const uint8_t *source)
+	BitStreamReader(const uint8_t * source)
 		: source(source), sourceIndex(), bitBuffer(), byteBuffer()
 	{
 	}
@@ -969,7 +969,7 @@ struct BitStreamReader
 	}
 };
 
-void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap, uint8_t color)
+void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t * bitmap, uint8_t color)
 {
 	// set up decompress state
 	BitStreamReader cs = BitStreamReader(bitmap);
@@ -1071,7 +1071,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap,
 	}
 }
 
-void Arduboy2Base::display()
+void Arduboy2Base::display(void)
 {
 	paintScreen(sBuffer);
 }
@@ -1081,7 +1081,7 @@ void Arduboy2Base::display(bool clear)
 	paintScreen(sBuffer, clear);
 }
 
-uint8_t* Arduboy2Base::getBuffer()
+uint8_t * Arduboy2Base::getBuffer(void)
 {
 	return sBuffer;
 }
@@ -1096,7 +1096,7 @@ bool Arduboy2Base::notPressed(uint8_t buttons)
 	return ((buttonsState() & buttons) == 0);
 }
 
-void Arduboy2Base::pollButtons()
+void Arduboy2Base::pollButtons(void)
 {
 	previousButtonState = currentButtonState;
 	currentButtonState = buttonsState();
@@ -1122,7 +1122,7 @@ bool Arduboy2Base::collide(Rect rect1, Rect rect2)
 	return !((rect2.x >= (rect1.x + rect1.width)) || ((rect2.x + rect2.width) <= rect1.x) || (rect2.y >= (rect1.y + rect1.height)) || ((rect2.y + rect2.height) <= rect1.y));
 }
 
-uint16_t Arduboy2Base::readUnitID()
+uint16_t Arduboy2Base::readUnitID(void)
 {
 	return ((static_cast<uint16_t>(EEPROM.read(EEPROM_UNIT_ID + 0)) << 0) | ((static_cast<uint16_t>(EEPROM.read(EEPROM_UNIT_ID + 1))) << 8));
 }
@@ -1133,7 +1133,7 @@ void Arduboy2Base::writeUnitID(uint16_t id)
 	EEPROM.update(EEPROM_UNIT_ID + 1, (static_cast<uint8_t>(id >> 8) & 0xFF));
 }
 
-uint8_t Arduboy2Base::readUnitName(char* name)
+uint8_t Arduboy2Base::readUnitName(char * name)
 {
 	for(uint8_t dest = 0, src = EEPROM_UNIT_NAME; dest < ARDUBOY_UNIT_NAME_LEN; ++dest, ++src)
 	{
@@ -1151,7 +1151,7 @@ uint8_t Arduboy2Base::readUnitName(char* name)
 	return ARDUBOY_UNIT_NAME_LEN;
 }
 
-void Arduboy2Base::writeUnitName(char* name)
+void Arduboy2Base::writeUnitName(char * name)
 {
 	bool done = false;
 	for(uint8_t src = 0, dest = EEPROM_UNIT_NAME; src < ARDUBOY_UNIT_NAME_LEN; ++src, ++dest)
@@ -1164,7 +1164,7 @@ void Arduboy2Base::writeUnitName(char* name)
 	}
 }
 
-bool Arduboy2Base::readShowBootLogoFlag()
+bool Arduboy2Base::readShowBootLogoFlag(void)
 {
 	return ((EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_SHOW_LOGO_MASK) != 0);
 }
@@ -1177,7 +1177,7 @@ void Arduboy2Base::writeShowBootLogoFlag(bool val)
 	EEPROM.update(EEPROM_SYS_FLAGS, flags);
 }
 
-bool Arduboy2Base::readShowUnitNameFlag()
+bool Arduboy2Base::readShowUnitNameFlag(void)
 {
 	return ((EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_UNAME_MASK) != 0);
 }
@@ -1190,7 +1190,7 @@ void Arduboy2Base::writeShowUnitNameFlag(bool val)
 	EEPROM.update(EEPROM_SYS_FLAGS, flags);
 }
 
-bool Arduboy2Base::readShowBootLogoLEDsFlag()
+bool Arduboy2Base::readShowBootLogoLEDsFlag(void)
 {
 	return ((EEPROM.read(EEPROM_SYS_FLAGS) & SYS_FLAG_SHOW_LOGO_LEDS_MASK) != 0);
 }
@@ -1203,7 +1203,7 @@ void Arduboy2Base::writeShowBootLogoLEDsFlag(bool val)
 	EEPROM.update(EEPROM_SYS_FLAGS, flags);
 }
 
-void Arduboy2Base::swap(int16_t& a, int16_t& b)
+void Arduboy2Base::swap(int16_t & a, int16_t & b)
 {
 	const int16_t temp = a;
 	a = b;
@@ -1215,7 +1215,7 @@ void Arduboy2Base::swap(int16_t& a, int16_t& b)
 //========== class Arduboy2 ==========
 //====================================
 
-Arduboy2::Arduboy2()
+Arduboy2::Arduboy2(void)
 {
 	cursor_x = 0;
 	cursor_y = 0;
@@ -1227,7 +1227,7 @@ Arduboy2::Arduboy2()
 
 // bootLogoText() should be kept in sync with bootLogoShell()
 // if changes are made to one, equivalent changes should be made to the other
-void Arduboy2::bootLogoText()
+void Arduboy2::bootLogoText(void)
 {
 	if(!readShowBootLogoFlag())
 		return;
@@ -1285,7 +1285,7 @@ void Arduboy2::bootLogoText()
 	bootLogoExtra();
 }
 
-void Arduboy2::bootLogoExtra()
+void Arduboy2::bootLogoExtra(void)
 {
 	if(!readShowUnitNameFlag())
 		return;
@@ -1371,12 +1371,12 @@ void Arduboy2::setCursor(int16_t x, int16_t y)
 	cursor_y = y;
 }
 
-int16_t Arduboy2::getCursorX()
+int16_t Arduboy2::getCursorX(void)
 {
 	return cursor_x;
 }
 
-int16_t Arduboy2::getCursorY()
+int16_t Arduboy2::getCursorY(void)
 {
 	return cursor_y;
 }
@@ -1386,7 +1386,7 @@ void Arduboy2::setTextColor(uint8_t color)
 	textColor = color;
 }
 
-uint8_t Arduboy2::getTextColor()
+uint8_t Arduboy2::getTextColor(void)
 {
 	return textColor;
 }
@@ -1396,7 +1396,7 @@ void Arduboy2::setTextBackground(uint8_t bg)
 	textBackground = bg;
 }
 
-uint8_t Arduboy2::getTextBackground()
+uint8_t Arduboy2::getTextBackground(void)
 {
 	return textBackground;
 }
@@ -1407,7 +1407,7 @@ void Arduboy2::setTextSize(uint8_t s)
 	textSize = max(1, s);
 }
 
-uint8_t Arduboy2::getTextSize()
+uint8_t Arduboy2::getTextSize(void)
 {
 	return textSize;
 }
@@ -1417,12 +1417,12 @@ void Arduboy2::setTextWrap(bool w)
 	textWrap = w;
 }
 
-bool Arduboy2::getTextWrap()
+bool Arduboy2::getTextWrap(void)
 {
 	return textWrap;
 }
 
-void Arduboy2::clear()
+void Arduboy2::clear(void)
 {
 	Arduboy2Base::clear();
 	cursor_x = 0;
