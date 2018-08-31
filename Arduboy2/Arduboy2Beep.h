@@ -249,7 +249,7 @@ class BeepPin1
 	 */
 	static constexpr uint16_t freq(const float hz)
 	{
-		return (uint16_t) (((F_CPU / 8 / 2) + (hz / 2)) / hz) - 1;
+		return (static_cast<uint16_t>((((F_CPU / 8) / 2) + (hz / 2)) / hz) - 1);
 	}
 };
 
@@ -354,7 +354,7 @@ class BeepPin2
 	 */
 	static constexpr uint16_t freq(const float hz)
 	{
-		return (uint16_t) (((F_CPU / 128 / 2) + (hz / 2)) / hz) - 1;
+		return (static_cast<uint16_t>((((F_CPU / 128) / 2) + (hz / 2)) / hz) - 1);
 	}
 };
 
