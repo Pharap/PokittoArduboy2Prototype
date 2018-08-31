@@ -37,13 +37,16 @@
 #define ARDUBOY_LIB_VER 50100
 
 // EEPROM settings
-#define ARDUBOY_UNIT_NAME_LEN 6 /**< The maximum length of the unit name string. */
+/// The maximum length of the unit name string.
+#define ARDUBOY_UNIT_NAME_LEN 6
 
 #define EEPROM_VERSION 0
 #define EEPROM_SYS_FLAGS 1
 #define EEPROM_AUDIO_ON_OFF 2
+
 // A uint16_t binary unit ID
 #define EEPROM_UNIT_ID 8
+
 // An up to 6 character unit name. Cannot contain
 // 0x00 or 0xFF. Lengths less than 6 are padded
 // with 0x00
@@ -53,9 +56,11 @@
 // Display the unit name on the logo screen
 #define SYS_FLAG_UNAME 0
 #define SYS_FLAG_UNAME_MASK _BV(SYS_FLAG_UNAME)
+
 // Show the logo sequence during boot up
 #define SYS_FLAG_SHOW_LOGO 1
 #define SYS_FLAG_SHOW_LOGO_MASK _BV(SYS_FLAG_SHOW_LOGO)
+
 // Flash the RGB led during the boot logo
 #define SYS_FLAG_SHOW_LOGO_LEDS 2
 #define SYS_FLAG_SHOW_LOGO_LEDS_MASK _BV(SYS_FLAG_SHOW_LOGO_LEDS)
@@ -78,8 +83,13 @@
 #define PIXEL_SAFE_MODE
 
 // pixel colors
-#define BLACK 0  /**< Color value for an unlit pixel for draw functions. */
-#define WHITE 1  /**< Color value for a lit pixel for draw functions. */
+
+/// Color value for an unlit pixel for draw functions.
+#define BLACK 0
+
+/// Color value for a lit pixel for draw functions.
+#define WHITE 1
+
 /** \brief
  * Color value to indicate pixels are to be inverted.
  *
@@ -91,7 +101,8 @@
  */
 #define INVERT 2
 
-#define CLEAR_BUFFER true /**< Value to be passed to `display()` to clear the screen buffer. */
+/// Value to be passed to `display()` to clear the screen buffer.
+#define CLEAR_BUFFER true
 
 
 /** \brief
@@ -105,10 +116,17 @@
  */
 struct Rect
 {
-	int16_t x;      /**< The X coordinate of the top left corner */
-	int16_t y;      /**< The Y coordinate of the top left corner */
-	uint8_t width;  /**< The width of the rectangle */
-	uint8_t height; /**< The height of the rectangle */
+	/// The X coordinate of the top left corner
+	int16_t x;
+
+	/// The Y coordinate of the top left corner
+	int16_t y;
+
+	/// The width of the rectangle
+	uint8_t width;
+
+	/// The height of the rectangle
+	uint8_t height;
 };
 
 /** \brief
@@ -121,8 +139,11 @@ struct Rect
  */
 struct Point
 {
-	int16_t x; /**< The X coordinate of the point */
-	int16_t y; /**< The Y coordinate of the point */
+	/// The X coordinate of the point
+	int16_t x;
+
+	/// The Y coordinate of the point
+	int16_t y;
 };
 
 //==================================

@@ -29,41 +29,61 @@
  *     // #define ARDUBOY_10
  *     #define AB_DEVKIT
  */
-//< compile for the production Arduboy v1.0
+
+/// compile for the production Arduboy v1.0
 #define ARDUBOY_10
-// #define AB_DEVKIT    //< compile for the official dev kit
+
+/// compile for the official dev kit
+// #define AB_DEVKIT
+
 #endif
 
-#define RGB_ON LOW   /**< For digitially setting an RGB LED on using digitalWriteRGB() */
-#define RGB_OFF HIGH /**< For digitially setting an RGB LED off using digitalWriteRGB() */
+/// For digitially setting an RGB LED on using digitalWriteRGB()
+#define RGB_ON LOW
+
+/// For digitially setting an RGB LED off using digitalWriteRGB()
+#define RGB_OFF HIGH
 
 // ----- Arduboy pins -----
 #ifdef ARDUBOY_10
 
 // Display CS Arduino pin number
 #define PIN_CS 12
+
 // Display CS port
 #define CS_PORT PORTD
+
 // Display CS physical bit number
 #define CS_BIT PORTD6
 
+
 // Display D/C Arduino pin number
 #define PIN_DC 4
+
 // Display D/C port
 #define DC_PORT PORTD
+
 // Display D/C physical bit number
 #define DC_BIT PORTD4
 
+
 // Display reset Arduino pin number
 #define PIN_RST 6
+
 // Display reset port
 #define RST_PORT PORTD
+
 // Display reset physical bit number
 #define RST_BIT PORTD7
 
-#define RED_LED 10   /**< The pin number for the red color in the RGB LED. */
-#define GREEN_LED 11 /**< The pin number for the greem color in the RGB LED. */
-#define BLUE_LED 9   /**< The pin number for the blue color in the RGB LED. */
+/// The pin number for the red color in the RGB LED.
+#define RED_LED 10
+
+/// The pin number for the greem color in the RGB LED.
+#define GREEN_LED 11
+
+/// The pin number for the blue color in the RGB LED.
+#define BLUE_LED 9
 
 #define RED_LED_PORT PORTB
 #define RED_LED_BIT PORTB6
@@ -76,12 +96,24 @@
 
 // bit values for button states
 // these are determined by the buttonsState() function
-#define LEFT_BUTTON _BV(5)  /**< The Left button value for functions requiring a bitmask */
-#define RIGHT_BUTTON _BV(6) /**< The Right button value for functions requiring a bitmask */
-#define UP_BUTTON _BV(7)    /**< The Up button value for functions requiring a bitmask */
-#define DOWN_BUTTON _BV(4)  /**< The Down button value for functions requiring a bitmask */
-#define A_BUTTON _BV(3)     /**< The A button value for functions requiring a bitmask */
-#define B_BUTTON _BV(2)     /**< The B button value for functions requiring a bitmask */
+
+/// The Left button value for functions requiring a bitmask
+#define LEFT_BUTTON _BV(5)
+
+/// The Right button value for functions requiring a bitmask
+#define RIGHT_BUTTON _BV(6)
+
+/// The Up button value for functions requiring a bitmask
+#define UP_BUTTON _BV(7)
+
+/// The Down button value for functions requiring a bitmask
+#define DOWN_BUTTON _BV(4)
+
+/// The A button value for functions requiring a bitmask
+#define A_BUTTON _BV(3)
+
+/// The B button value for functions requiring a bitmask
+#define B_BUTTON _BV(2)
 
 #define PIN_LEFT_BUTTON A2
 #define LEFT_BUTTON_PORT PORTF
@@ -119,8 +151,11 @@
 #define B_BUTTON_DDR DDRB
 #define B_BUTTON_BIT PORTB4
 
-#define PIN_SPEAKER_1 5  /**< The pin number of the first lead of the speaker */
-#define PIN_SPEAKER_2 13 /**< The pin number of the second lead of the speaker */
+/// The pin number of the first lead of the speaker
+#define PIN_SPEAKER_1 5
+
+/// The pin number of the second lead of the speaker
+#define PIN_SPEAKER_2 13
 
 #define SPEAKER_1_PORT PORTC
 #define SPEAKER_1_DDR DDRC
@@ -136,22 +171,30 @@
 
 // Display CS Arduino pin number
 #define PIN_CS 6
+
 // Display CS port
 #define CS_PORT PORTD
+
 // Display CS physical bit number
 #define CS_BIT PORTD7
 
+
 // Display D/C Arduino pin number
 #define PIN_DC 4
+
 // Display D/C port
 #define DC_PORT PORTD
+
 // Display D/C physical bit number
 #define DC_BIT PORTD4
 
+
 // Display reset Arduino pin number
 #define PIN_RST 12
+
 // Display reset port
 #define RST_PORT PORTD
+
 // Display reset physical bit number
 #define RST_BIT PORTD6
 
@@ -219,6 +262,7 @@
 #define SPEAKER_1_PORT PORTF
 #define SPEAKER_1_DDR DDRF
 #define SPEAKER_1_BIT PORTF5
+
 // SPEAKER_2 is purposely not defined for DEVKIT as it could potentially
 // be dangerous and fry your hardware (because of the devkit wiring).
 //
@@ -233,6 +277,7 @@
 #define RAND_SEED_IN A4
 #define RAND_SEED_IN_PORT PORTF
 #define RAND_SEED_IN_BIT PORTF1
+
 // Value for ADMUX to read the random seed pin: 2.56V reference, ADC1
 #define RAND_SEED_IN_ADMUX (_BV(REFS0) | _BV(REFS1) | _BV(MUX0))
 
@@ -254,31 +299,43 @@
 
 // All pixels inverted
 #define OLED_PIXELS_INVERTED 0xA7
+
 // All pixels normal
 #define OLED_PIXELS_NORMAL 0xA6
 
+
 // all pixels on
 #define OLED_ALL_PIXELS_ON 0xA5
+
 // pixels mapped to display RAM contents
 #define OLED_PIXELS_FROM_RAM 0xA4
 
+
 // reversed COM scan direction
 #define OLED_VERTICAL_FLIPPED 0xC0
+
 // normal COM scan direction
 #define OLED_VERTICAL_NORMAL 0xC8
 
+
 // reversed segment re-map
 #define OLED_HORIZ_FLIPPED 0xA0
+
 // normal segment re-map
 #define OLED_HORIZ_NORMAL 0xA1
 
 // -----
 
-#define WIDTH 128 /**< The width of the display in pixels */
-#define HEIGHT 64 /**< The height of the display in pixels */
+/// The width of the display in pixels
+#define WIDTH 128
+
+/// The height of the display in pixels
+#define HEIGHT 64
+
 
 // 128 pixels wide
 #define COLUMN_ADDRESS_END (WIDTH - 1) & 127
+
 // 8 pages high
 #define PAGE_ADDRESS_END ((HEIGHT/8)-1) & 7
 
