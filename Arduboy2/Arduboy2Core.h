@@ -338,8 +338,9 @@
  *
  * \see Arduboy2Core::exitToBootloader()
  */
-#define ARDUBOY_NO_USB int main() __attribute__ ((OS_main)); \
-int main() { \
+#define ARDUBOY_NO_USB int main(void) __attribute__ ((OS_main)); \
+int main(void) \
+{ \
 	Arduboy2Core::mainNoUSB(); \
 	return 0; \
 }
