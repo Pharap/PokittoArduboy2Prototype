@@ -248,139 +248,141 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 
 		case SPRITE_PLUS_MASK:
 		{
-			// *2 because we use double the bits (mask + bitmap)
-			bofs = reinterpret_cast<const uint8_t *>(&bitmap[((start_h * w) + xOffset) * 2]);
+			// TODO: Implement drawPlusMask mode functionality
 
-			// counter for x loop below
-			uint8_t xi = rendered_width;
-			uint8_t data;
-			uint16_t mask_data;
-			uint16_t bitmap_data;
+			// // *2 because we use double the bits (mask + bitmap)
+			// bofs = reinterpret_cast<const uint8_t *>(&bitmap[((start_h * w) + xOffset) * 2]);
 
-			asm volatile
-			(
-				// save Y
-				"push r28\n"
-				"push r29\n"
-				// Y = buffer_ofs_2
-				"movw r28, %[buffer_ofs]\n"
-				// buffer_ofs_2 = buffer_ofs + 128
-				"adiw r28, 63\n"
-				"adiw r28, 63\n"
-				"adiw r28, 2\n"
-				"loop_y:\n"
-				"loop_x:\n"
-				// load bitmap and mask data
-				"lpm %A[bitmap_data], Z+\n"
-				"lpm %A[mask_data], Z+\n"
+			// // counter for x loop below
+			// uint8_t xi = rendered_width;
+			// uint8_t data;
+			// uint16_t mask_data;
+			// uint16_t bitmap_data;
 
-				// shift mask and buffer data
-				"tst %[yOffset]\n"
-				"breq skip_shifting\n"
-				"mul %A[bitmap_data], %[mul_amt]\n"
-				"movw %[bitmap_data], r0\n"
-				"mul %A[mask_data], %[mul_amt]\n"
-				"movw %[mask_data], r0\n"
+			// asm volatile
+			// (
+				// // save Y
+				// "push r28\n"
+				// "push r29\n"
+				// // Y = buffer_ofs_2
+				// "movw r28, %[buffer_ofs]\n"
+				// // buffer_ofs_2 = buffer_ofs + 128
+				// "adiw r28, 63\n"
+				// "adiw r28, 63\n"
+				// "adiw r28, 2\n"
+				// "loop_y:\n"
+				// "loop_x:\n"
+				// // load bitmap and mask data
+				// "lpm %A[bitmap_data], Z+\n"
+				// "lpm %A[mask_data], Z+\n"
 
-				// SECOND PAGE
-				// if yOffset != 0 && sRow < 7
-				"cpi %[sRow], 7\n"
-				"brge end_second_page\n"
-				// then
-				"ld %[data], Y\n"
-				// invert high byte of mask
-				"com %B[mask_data]\n"
-				"and %[data], %B[mask_data]\n"
-				"or %[data], %B[bitmap_data]\n"
-				// update buffer, increment
-				"st Y+, %[data]\n"
+				// // shift mask and buffer data
+				// "tst %[yOffset]\n"
+				// "breq skip_shifting\n"
+				// "mul %A[bitmap_data], %[mul_amt]\n"
+				// "movw %[bitmap_data], r0\n"
+				// "mul %A[mask_data], %[mul_amt]\n"
+				// "movw %[mask_data], r0\n"
 
-				"end_second_page:\n"
-				"skip_shifting:\n"
+				// // SECOND PAGE
+				// // if yOffset != 0 && sRow < 7
+				// "cpi %[sRow], 7\n"
+				// "brge end_second_page\n"
+				// // then
+				// "ld %[data], Y\n"
+				// // invert high byte of mask
+				// "com %B[mask_data]\n"
+				// "and %[data], %B[mask_data]\n"
+				// "or %[data], %B[bitmap_data]\n"
+				// // update buffer, increment
+				// "st Y+, %[data]\n"
 
-				// FIRST PAGE
-				// if sRow >= 0
-				"tst %[sRow]\n"
-				"brmi skip_first_page\n"
-				"ld %[data], %a[buffer_ofs]\n"
-				// then
-				"com %A[mask_data]\n"
-				"and %[data], %A[mask_data]\n"
-				"or %[data], %A[bitmap_data]\n"
-				// update buffer, increment
-				"st %a[buffer_ofs]+, %[data]\n"
-				"jmp end_first_page\n"
+				// "end_second_page:\n"
+				// "skip_shifting:\n"
 
-				"skip_first_page:\n"
-				// since no ST Z+ when skipped we need to do this manually
-				"adiw %[buffer_ofs], 1\n"
+				// // FIRST PAGE
+				// // if sRow >= 0
+				// "tst %[sRow]\n"
+				// "brmi skip_first_page\n"
+				// "ld %[data], %a[buffer_ofs]\n"
+				// // then
+				// "com %A[mask_data]\n"
+				// "and %[data], %A[mask_data]\n"
+				// "or %[data], %A[bitmap_data]\n"
+				// // update buffer, increment
+				// "st %a[buffer_ofs]+, %[data]\n"
+				// "jmp end_first_page\n"
 
-				"end_first_page:\n"
+				// "skip_first_page:\n"
+				// // since no ST Z+ when skipped we need to do this manually
+				// "adiw %[buffer_ofs], 1\n"
 
-				// "x_loop_next:\n"
-				"dec %[xi]\n"
-				"brne loop_x\n"
+				// "end_first_page:\n"
 
-				// increment y
-				"next_loop_y:\n"
-				"dec %[yi]\n"
-				"breq finished\n"
-				// reset x counter
-				"mov %[xi], %[x_count]\n"
-				// sRow++;
-				"inc %[sRow]\n"
-				"clr __zero_reg__\n"
-				// sprite_ofs += (w - rendered_width) * 2;
-				"add %A[sprite_ofs], %A[sprite_ofs_jump]\n"
-				"adc %B[sprite_ofs], __zero_reg__\n"
-				// buffer_ofs += WIDTH - rendered_width;
-				"add %A[buffer_ofs], %A[buffer_ofs_jump]\n"
-				"adc %B[buffer_ofs], __zero_reg__\n"
-				// buffer_ofs_page_2 += WIDTH - rendered_width;
-				"add r28, %A[buffer_ofs_jump]\n"
-				"adc r29, __zero_reg__\n"
+				// // "x_loop_next:\n"
+				// "dec %[xi]\n"
+				// "brne loop_x\n"
 
-				"rjmp loop_y\n"
-				"finished:\n"
-				// put the Y register back in place
-				"pop r29\n"
-				"pop r28\n"
-				// just in case
-				"clr __zero_reg__\n"
-				:
-				[xi] "+&a" (xi),
-				[yi] "+&a" (loop_h),
-				// CPI requires an upper register (r16-r23)
-				[sRow] "+&a" (sRow),
-				[data] "=&l" (data),
-				[mask_data] "=&l" (mask_data),
-				[bitmap_data] "=&l" (bitmap_data)
-				:
-				[screen_width] "M" (WIDTH),
-				// lower register
-				[x_count] "l" (rendered_width),
-				[sprite_ofs] "z" (bofs),
-				[buffer_ofs] "x" (&Arduboy2Base::sBuffer[ofs]),
-				// upper reg (r16-r23)
-				[buffer_ofs_jump] "a" (WIDTH - rendered_width),
-				// upper reg (r16-r23)
-				[sprite_ofs_jump] "a" ((w - rendered_width) * 2),
+				// // increment y
+				// "next_loop_y:\n"
+				// "dec %[yi]\n"
+				// "breq finished\n"
+				// // reset x counter
+				// "mov %[xi], %[x_count]\n"
+				// // sRow++;
+				// "inc %[sRow]\n"
+				// "clr __zero_reg__\n"
+				// // sprite_ofs += (w - rendered_width) * 2;
+				// "add %A[sprite_ofs], %A[sprite_ofs_jump]\n"
+				// "adc %B[sprite_ofs], __zero_reg__\n"
+				// // buffer_ofs += WIDTH - rendered_width;
+				// "add %A[buffer_ofs], %A[buffer_ofs_jump]\n"
+				// "adc %B[buffer_ofs], __zero_reg__\n"
+				// // buffer_ofs_page_2 += WIDTH - rendered_width;
+				// "add r28, %A[buffer_ofs_jump]\n"
+				// "adc r29, __zero_reg__\n"
 
-				// [sprite_ofs_jump] "r" (0),
-				// lower register
-				[yOffset] "l" (yOffset),
-				// lower register
-				[mul_amt] "l" (mul_amt)
-				// NOTE: We also clobber r28 and r29 (y) but sometimes the compiler
-				// won't allow us, so in order to make this work we don't tell it
-				// that we clobber them. Instead, we push/pop to preserve them.
-				// Then we need to guarantee that the the compiler doesn't put one of
-				// our own variables into r28/r29.
-				// We do that by specifying all the inputs and outputs use either
-				// lower registers (l) or simple (r16-r23) upper registers (a).
-				// pushes/clobbers/pops r28 and r29 (y)
-				:
-			);
+				// "rjmp loop_y\n"
+				// "finished:\n"
+				// // put the Y register back in place
+				// "pop r29\n"
+				// "pop r28\n"
+				// // just in case
+				// "clr __zero_reg__\n"
+				// :
+				// [xi] "+&a" (xi),
+				// [yi] "+&a" (loop_h),
+				// // CPI requires an upper register (r16-r23)
+				// [sRow] "+&a" (sRow),
+				// [data] "=&l" (data),
+				// [mask_data] "=&l" (mask_data),
+				// [bitmap_data] "=&l" (bitmap_data)
+				// :
+				// [screen_width] "M" (WIDTH),
+				// // lower register
+				// [x_count] "l" (rendered_width),
+				// [sprite_ofs] "z" (bofs),
+				// [buffer_ofs] "x" (&Arduboy2Base::sBuffer[ofs]),
+				// // upper reg (r16-r23)
+				// [buffer_ofs_jump] "a" (WIDTH - rendered_width),
+				// // upper reg (r16-r23)
+				// [sprite_ofs_jump] "a" ((w - rendered_width) * 2),
+
+				// // [sprite_ofs_jump] "r" (0),
+				// // lower register
+				// [yOffset] "l" (yOffset),
+				// // lower register
+				// [mul_amt] "l" (mul_amt)
+				// // NOTE: We also clobber r28 and r29 (y) but sometimes the compiler
+				// // won't allow us, so in order to make this work we don't tell it
+				// // that we clobber them. Instead, we push/pop to preserve them.
+				// // Then we need to guarantee that the the compiler doesn't put one of
+				// // our own variables into r28/r29.
+				// // We do that by specifying all the inputs and outputs use either
+				// // lower registers (l) or simple (r16-r23) upper registers (a).
+				// // pushes/clobbers/pops r28 and r29 (y)
+				// :
+			// );
 			break;
 		}
 	}
