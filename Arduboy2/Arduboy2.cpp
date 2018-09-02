@@ -1343,7 +1343,7 @@ void Arduboy2::drawChar(int16_t x, int16_t y, unsigned char c, uint8_t color, ui
 	if((x >= WIDTH) || (y >= HEIGHT) || ((x + (5 * size) - 1) < 0) || ((y + (8 * size) - 1) < 0))
 		return;
 
-	const unsigned char * bitmap = (font + (c * 5));
+	const unsigned char * bitmap = &font[c * 5];
 	const bool draw_background = (bg != color);
 
 	for(uint8_t i = 0; i < 6; ++i)
