@@ -62,17 +62,20 @@ void Arduboy2Base::flashlight(void)
 	if(!pressed(UP_BUTTON))
 		return;
 
+	// TODO: Substitute for allPixelsOn
 	// smaller than allPixelsOn()
 	sendLCDCommand(OLED_ALL_PIXELS_ON);
 	digitalWriteRGB(RGB_ON, RGB_ON, RGB_ON);
 
-// for Arduboy core timer 0 should remain enabled
-#ifndef ARDUBOY_CORE
-	// prevent the bootloader magic number from being overwritten by timer 0
-	// when a timer variable overlaps the magic number location, for when
-	// flashlight mode is used for upload problem recovery
-	power_timer0_disable();
-#endif
+	// TODO: Remove this disabled code
+
+	//// for Arduboy core timer 0 should remain enabled
+	//#ifndef ARDUBOY_CORE
+	//// prevent the bootloader magic number from being overwritten by timer 0
+	//// when a timer variable overlaps the magic number location, for when
+	//// flashlight mode is used for upload problem recovery
+	//power_timer0_disable();
+	//#endif
 
 	while(true)
 		idle();
@@ -300,10 +303,12 @@ bool Arduboy2Base::nextFrameDEV(void)
 	if(!nextFrame())
 		return false;
 
-	if(lastFrameDurationMs > eachFrameMillis)
-		TXLED1;
-	else
-		TXLED0;
+	// TODO: Implement TXLED1 and TXLED0
+
+	//if(lastFrameDurationMs > eachFrameMillis)
+		//TXLED1;
+	//else
+		//TXLED0;
 
 	return true;
 }
@@ -315,20 +320,22 @@ int Arduboy2Base::cpuLoad(void)
 
 void Arduboy2Base::initRandomSeed(void)
 {
-	// ADC on
-	power_adc_enable();
+	// TODO: Implement Arduboy2Base::initRandomSeed(void)
 
-	// do an ADC read from an unconnected input pin
-	// start conversion (ADMUX has been pre-set in boot())
-	ADCSRA |= _BV(ADSC);
+	//// ADC on
+	//power_adc_enable();
 
-	// wait for conversion complete
-	while(bit_is_set(ADCSRA, ADSC));
+	//// do an ADC read from an unconnected input pin
+	//// start conversion (ADMUX has been pre-set in boot())
+	//ADCSRA |= _BV(ADSC);
 
-	randomSeed((static_cast<unsigned long>(ADC) << 16) + micros());
+	//// wait for conversion complete
+	//while(bit_is_set(ADCSRA, ADSC));
 
-	// ADC off
-	power_adc_disable();
+	//randomSeed((static_cast<unsigned long>(ADC) << 16) + micros());
+
+	//// ADC off
+	//power_adc_disable();
 }
 
 /* Graphics */
@@ -354,49 +361,53 @@ void Arduboy2Base::drawPixel(int16_t x, int16_t y, uint8_t color)
 		return;
 	#endif
 
-	// uint8_t row = static_cast<uint8_t>(y / 8);
-	// row_offset = (row*WIDTH) + static_cast<uint8_t>(x);
-	// bit = _BV(static_cast<uint8_t>(y) % 8);
+	// // uint8_t row = static_cast<uint8_t>(y / 8);
+	// // row_offset = (row*WIDTH) + static_cast<uint8_t>(x);
+	// // bit = _BV(static_cast<uint8_t>(y) % 8);
 
-	// the above math can also be rewritten more simply as;
-	//   row_offset = (y * WIDTH/8) & ~0b01111111 + static_cast<uint8_t>(x);
-	// which is what the below assembler does
+	// // the above math can also be rewritten more simply as;
+	// //   row_offset = (y * WIDTH/8) & ~0b01111111 + static_cast<uint8_t>(x);
+	// // which is what the below assembler does
 
-	// local variable for the bitshift_left array pointer,
-	// which can be declared a read-write operand
-	const uint8_t * bsl = bitshift_left;
+	// // local variable for the bitshift_left array pointer,
+	// // which can be declared a read-write operand
+	// const uint8_t * bsl = bitshift_left;
+
+	(void)bitshift_left;
 
 	uint16_t row_offset = 0;
 	uint8_t bit = 0;
 
-	asm volatile
-	(
-		"mul %[width_offset], %A[y]\n"
-		"movw %[row_offset], r0\n"
-		// row_offset &= (~0b01111111);
-		"andi %A[row_offset], 0x80\n"
-		"clr __zero_reg__\n"
-		"add %A[row_offset], %[x]\n"
-		// mask for only 0-7
-		"andi %A[y], 0x07\n"
-		// Z += y
-		"add r30, %A[y]\n"
-		"adc r31, __zero_reg__\n"
-		// load correct bitshift from program RAM
-		"lpm %[bit], Z\n"
-		// upper register (ANDI)
-		:
-		[row_offset] "=&x" (row_offset),
-		[bit] "=r" (bit),
-		// upper register (ANDI), must be writable
-		[y] "+d" (y),
-		// is modified to point to the proper shift array element
-		"+z" (bsl)
-		:
-		[width_offset] "r" (static_cast<uint8_t>(WIDTH / 8)),
-		[x] "r" (static_cast<uint8_t>(x))
-		:
-	);
+	// TODO: Implement Arduboy2Base::drawPixel(int16_t x, int16_t y, uint8_t color)
+
+	// asm volatile
+	// (
+		// "mul %[width_offset], %A[y]\n"
+		// "movw %[row_offset], r0\n"
+		// // row_offset &= (~0b01111111);
+		// "andi %A[row_offset], 0x80\n"
+		// "clr __zero_reg__\n"
+		// "add %A[row_offset], %[x]\n"
+		// // mask for only 0-7
+		// "andi %A[y], 0x07\n"
+		// // Z += y
+		// "add r30, %A[y]\n"
+		// "adc r31, __zero_reg__\n"
+		// // load correct bitshift from program RAM
+		// "lpm %[bit], Z\n"
+		// // upper register (ANDI)
+		// :
+		// [row_offset] "=&x" (row_offset),
+		// [bit] "=r" (bit),
+		// // upper register (ANDI), must be writable
+		// [y] "+d" (y),
+		// // is modified to point to the proper shift array element
+		// "+z" (bsl)
+		// :
+		// [width_offset] "r" (static_cast<uint8_t>(WIDTH / 8)),
+		// [x] "r" (static_cast<uint8_t>(x))
+		// :
+	// );
 
 	if(color != 0)
 		sBuffer[row_offset] |= bit;
@@ -526,7 +537,7 @@ void Arduboy2Base::fillCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t s
 		++x;
 		ddF_x += 2;
 		f += ddF_x;
-		
+
 		int16_t yy = y * 2;
 		int16_t xx = x * 2;
 
@@ -663,51 +674,53 @@ void Arduboy2Base::fillRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t 
 
 void Arduboy2Base::fillScreen(uint8_t color)
 {
-	// C version:
-	//
-	// if(color != BLACK)
-	// {
-	//   color = 0xFF; // all pixels on
-	// }
-	// for(int16_t i = 0; i < WIDTH * HEIGTH / 8; i++)
-	// {
-	//    sBuffer[i] = color;
-	// }
+	// TODO: Implement Arduboy2Base::fillScreen(uint8_t color)
 
-	// This asm version is hard coded for 1024 bytes. It doesn't use the defined
-	// WIDTH and HEIGHT values. It will have to be modified for a different
-	// screen buffer size.
-	// It also assumes color value for BLACK is 0.
+	// // C version:
+	// //
+	// // if(color != BLACK)
+	// // {
+	// //   color = 0xFF; // all pixels on
+	// // }
+	// // for(int16_t i = 0; i < WIDTH * HEIGTH / 8; i++)
+	// // {
+	// //    sBuffer[i] = color;
+	// // }
 
-	// local variable for screen buffer pointer,
-	// which can be declared a read-write operand
-	uint8_t * bPtr = sBuffer;
+	// // This asm version is hard coded for 1024 bytes. It doesn't use the defined
+	// // WIDTH and HEIGHT values. It will have to be modified for a different
+	// // screen buffer size.
+	// // It also assumes color value for BLACK is 0.
 
-	asm volatile
-	(
-		// if value is zero, skip assigning to 0xff
-		"cpse %[color], __zero_reg__\n"
-		"ldi %[color], 0xFF\n"
-		// counter = 0
-		"clr __tmp_reg__\n"
-		"loopto:\n"
-		// (4x) push zero into screen buffer,
-		// then increment buffer position
-		"st Z+, %[color]\n"
-		"st Z+, %[color]\n"
-		"st Z+, %[color]\n"
-		"st Z+, %[color]\n"
-		// increase counter
-		"inc __tmp_reg__\n"
-		// repeat for 256 loops
-		// (until counter rolls over back to 0)
-		"brne loopto\n"
-		:
-		[color] "+d" (color),
-		"+z" (bPtr)
-		:
-		:
-	);
+	// // local variable for screen buffer pointer,
+	// // which can be declared a read-write operand
+	// uint8_t * bPtr = sBuffer;
+
+	// asm volatile
+	// (
+		// // if value is zero, skip assigning to 0xff
+		// "cpse %[color], __zero_reg__\n"
+		// "ldi %[color], 0xFF\n"
+		// // counter = 0
+		// "clr __tmp_reg__\n"
+		// "loopto:\n"
+		// // (4x) push zero into screen buffer,
+		// // then increment buffer position
+		// "st Z+, %[color]\n"
+		// "st Z+, %[color]\n"
+		// "st Z+, %[color]\n"
+		// "st Z+, %[color]\n"
+		// // increase counter
+		// "inc __tmp_reg__\n"
+		// // repeat for 256 loops
+		// // (until counter rolls over back to 0)
+		// "brne loopto\n"
+		// :
+		// [color] "+d" (color),
+		// "+z" (bPtr)
+		// :
+		// :
+	// );
 }
 
 void Arduboy2Base::drawRoundRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t color)
@@ -925,7 +938,7 @@ void Arduboy2Base::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t * bitmap
 		{
 			const int16_t index = ((yi * byteWidth) + (xi / 8));
 			const int16_t mask = (128 >> (xi % 8));
-			
+
 			if((pgm_read_byte(&bitmap[index]) & mask) != 0)
 				drawPixel(x + xi, y + yi, color);
 		}
