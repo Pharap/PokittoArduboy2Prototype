@@ -15,7 +15,7 @@ char * itoa(int value, char * str, int radix)
 	(void)value;
 	(void)radix;
 	
-	// TODO: implement this;
+	// TODO: implement this
 	return str;
 }
 
@@ -24,7 +24,7 @@ char * utoa(unsigned int value, char * str, int radix)
 	(void)value;
 	(void)radix;
 	
-	// TODO: implement this;
+	// TODO: implement this
 	return str;
 }
 
@@ -33,7 +33,7 @@ char * ltoa(long value, char * str, int radix)
 	(void)value;
 	(void)radix;
 	
-	// TODO: implement this;
+	// TODO: implement this
 	return str;
 }
 
@@ -42,7 +42,7 @@ char * ultoa(unsigned long value, char * str, int radix)
 	(void)value;
 	(void)radix;
 	
-	// TODO: implement this;
+	// TODO: implement this
 	return str;
 }
 
@@ -50,23 +50,23 @@ char * ultoa(unsigned long value, char * str, int radix)
 // Non-standard floating point formatting functions
 //
 
-char * dtostrf(double value, signed char width, unsigned char prec, char * str)
+char * dtostrf(double value, signed char width, unsigned char precision, char * str)
 {
 	(void)value;
 	(void)width;
-	(void)prec;
+	(void)precision;
 	
-	// TODO: implement this;
-	return s;
+	// TODO: implement this
+	return str;
 }
 
-//char * dtostre(double value, char * s, unsigned char prec, unsigned char flags)
+//char * dtostre(double value, char * str, unsigned char precision, unsigned char flags)
 //{
 //	(void)value;
 //	(void)radix;
 //	
-//	// TODO: implement this;
-//	return s;
+//	// TODO: implement this
+//	return str;
 //}
 
 //

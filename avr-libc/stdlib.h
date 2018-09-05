@@ -57,7 +57,7 @@ char * ultoa(unsigned long value, char * str, int radix);
 // Non-standard floating point formatting functions
 //
 
-char * dtostrf(double value, signed char width, unsigned char prec, char * str);
+char * dtostrf(double value, signed char width, unsigned char precision, char * str);
 
 // Put '+' or ' ' for positives
 #define DTOSTR_ALWAYS_SIGN 0x01
@@ -68,7 +68,7 @@ char * dtostrf(double value, signed char width, unsigned char prec, char * str);
 // Use an uppercase 'E' in scientific notation
 #define DTOSTR_UPPERCASE 0x04
 
-char * dtostre(double value, char * str, unsigned char prec, unsigned char flags) = delete;
+char * dtostre(double value, char * str, unsigned char precision, unsigned char flags) = delete;
 
 //
 // Non-standard random number facilities
