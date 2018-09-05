@@ -14,6 +14,8 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
+  Modified 5 September 2018 by Pharap
 */
 
 /**
@@ -25,7 +27,12 @@
  * Its defined as a weak symbol and it can be redefined to implement a
  * real cooperative scheduler.
  */
-static void __empty() {
-	// Empty
+ 
+// Pharap: Put '__empty' in 'extern "C"' block
+extern "C" 
+{
+	// Pharap: Make '__empty' arguments explicitly 'void'
+	// Pharap: Collapse '__empty' body
+	static void __empty(void) {}
 }
 void yield(void) __attribute__ ((weak, alias("__empty")));
