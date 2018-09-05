@@ -19,11 +19,14 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
+  
+  Modified 25 August 2018 by Pharap
 */
 
-extern "C" {
-  #include "stdlib.h"
-}
+// Pharap: Change quote include to angle bracket include
+// Pharap: Remove extern "C"
+// Pharap: <stdlib.h> needed for random and srandom
+#include <stdlib.h>
 
 void randomSeed(unsigned long seed)
 {
