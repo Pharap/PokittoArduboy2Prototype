@@ -15,12 +15,18 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
+  Modified 25 August 2018 by Pharap
 */
 
 #ifndef Printable_h
 #define Printable_h
 
-#include <stdlib.h>
+// Pharap: Change <stdlib.h> to <cstddef>
+#include <cstddef>
+
+// Pharap: Add using
+using std::size_t;
 
 class Print;
 
