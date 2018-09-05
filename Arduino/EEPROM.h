@@ -16,14 +16,23 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
+  Modified 25 August 2018 by Pharap
 */
 
 #ifndef EEPROM_h
 #define EEPROM_h
 
-#include <inttypes.h>
-#include <avr/eeprom.h>
+// Pharap: Add cstdint
+#include <cstdint>
+
+// Pharap: Remove inttypes.h
 #include <avr/io.h>
+#include <avr/eeprom.h>
+
+// Pharap: Add usings
+using std::size_t;
+using std::uint8_t;
 
 /***
     EERef class.
