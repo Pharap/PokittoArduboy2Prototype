@@ -215,7 +215,9 @@ extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 #define TIMER5C 18
 
 #ifdef __cplusplus
-#include "WCharacter.h"
+
+// Pharap: Remove "WCharacter.h" include
+
 #include "WString.h"
 #include "HardwareSerial.h"
 #include "USBAPI.h"
