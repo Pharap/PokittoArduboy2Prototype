@@ -37,9 +37,7 @@
 #define FRACT_INC ((MICROSECONDS_PER_TIMER0_OVERFLOW % 1000) >> 3)
 #define FRACT_MAX (1000 >> 3)
 
-volatile unsigned long timer0_overflow_count = 0;
-volatile unsigned long timer0_millis = 0;
-static unsigned char timer0_fract = 0;
+// Pharap: Remove timer0_overflow_count, timer0_millis and timer0_fract
 
 // Pharap: Remove timer0 overflow interrupt
 
