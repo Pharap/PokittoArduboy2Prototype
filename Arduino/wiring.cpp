@@ -26,8 +26,17 @@
 // Pharap: Add "Arduino.h" include
 #include "Arduino.h"
 
+// Pharap: Define DISABLEAVRMIN
+#define DISABLEAVRMIN
+
 // Pharap: Add <Pokitto.h> include
 #include <Pokitto.h>
+
+// Pharap: Add <mbed_wait_api.h> include
+#include <mbed_wait_api.h>
+
+// Pharap: Add <limits> include
+#include <limits>
 
 // Pharap: Remove MICROSECONDS_PER_TIMER0_OVERFLOW, MILLIS_INC, FRACT_INC and FRACT_MAX
 
@@ -47,28 +56,38 @@ unsigned long micros()
 	return millis() * 1000;
 }
 
-// Pharap: Disable delay functionality
+// Pharap: Change delay implementation
 void delay(unsigned long ms)
 {
-	// TODO: Implement delay(unsigned long ms)
-	(void)ms;
+	constexpr auto maxWait = std::numeric_limits<int>::max();
 
-	//uint32_t start = micros();
+	unsigned long remaining = ms;
 
-	//while (ms > 0) {
-		//yield();
-		//while ( ms > 0 && (micros() - start) >= 1000) {
-			//ms--;
-			//start += 1000;
-		//}
-	//}
+	while(remaining > maxWait)
+	{
+		wait_ms(static_cast<int>(maxWait));
+		remaining -= maxWait;
+	}
+
+	if(remaining > 0)
+		wait_ms(static_cast<int>(remaining));
 }
 
-// Pharap: Disable delayMicroseconds functionality
+// Pharap: Change delayMicroseconds implementation
 void delayMicroseconds(unsigned int us)
 {
-	// TODO: Implement delayMicroseconds(unsigned int us)
-	(void)us;
+	constexpr auto maxWait = std::numeric_limits<int>::max();
+	
+	unsigned long remaining = us;
+
+	while(remaining > maxWait)
+	{
+		wait_us(static_cast<int>(maxWait));
+		remaining -= maxWait;
+	}
+
+	if(remaining > 0)
+		wait_us(static_cast<int>(remaining));
 }
 
 // Pharap: Disable init functionality
