@@ -40,9 +40,7 @@ void yield(void);
 #define HIGH 0x1
 #define LOW  0x0
 
-#define INPUT 0x0
-#define OUTPUT 0x1
-#define INPUT_PULLUP 0x2
+// Pharap: Remove INPUT, OUTPUT and INPUT_PULLUP macros to prevent name clash
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
