@@ -6,6 +6,8 @@
 
 #include "Sprites.h"
 
+#include <cstdlib>
+
 void Sprites::drawExternalMask(int16_t x, int16_t y, const uint8_t * bitmap, const uint8_t * mask, uint8_t frame, uint8_t mask_frame)
 {
 	draw(x, y, bitmap, frame, mask, mask_frame, SPRITE_MASKED);
@@ -77,7 +79,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 	// xOffset technically doesn't need to be 16 bit but the math operations
 	// are measurably faster if it is
 	// if the left side of the render is offscreen skip those loops
-	const uint16_t xOffset = (x < 0) ? abs(x) : 0;
+	const uint16_t xOffset = (x < 0) ? std::abs(x) : 0;
 
 	// if the right side of the render is offscreen skip those loops
 	const uint8_t rendered_width = ((x + w) > (WIDTH - 1)) ? ((WIDTH - x) - xOffset) : (w - xOffset);
@@ -87,7 +89,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 	int8_t sRow = ((y < 0) && (yOffset > 0)) ? (tempSRow - 1) : tempSRow;
 
 	// if the top side of the render is offscreen skip those loops
-	const uint8_t start_h = (sRow < -1) ? (abs(sRow) - 1) : 0;
+	const uint8_t start_h = (sRow < -1) ? (std::abs(sRow) - 1) : 0;
 
 	// divide, then round up
 	const uint8_t rows = (h / 8);

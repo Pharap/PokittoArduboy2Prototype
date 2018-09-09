@@ -4,6 +4,8 @@
  * Classes to generate simple square wave tones on the Arduboy speaker pins.
  */
 
+#include <Arduino.h>
+
 #ifndef ARDUBOY2_BEEP_H
 #define ARDUBOY2_BEEP_H
 
