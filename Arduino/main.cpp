@@ -48,6 +48,7 @@ int main(void)
 
 	// Pharap: Add Pokitto::Core::begin() call
 	Pokitto::Core::begin();
+	Pokitto::Display::persistence = static_cast<std::uint8_t>(~0);
 	
 	setup();
 
