@@ -18,9 +18,11 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
+  
+  Modified 9 September 2018 by Pharap
 */
 
-#include "wiring_private.h"
+// Pharap: Remove "wiring_private.h" include
 
 // the prescaler is set so that timer0 ticks every 64 clock cycles, and the
 // the overflow handler is called every 256 ticks.
