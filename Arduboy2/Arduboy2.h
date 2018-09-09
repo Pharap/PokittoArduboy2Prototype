@@ -15,6 +15,11 @@
 #include "SpritesB.h"
 #include <Print.h>
 
+// Include Pokitto early to let it define BLACK and WHITE,
+// then we can overwrite them later on to the values Arduboy2 needs
+#define DISABLEAVRMIN
+#include <Pokitto.h>
+
 /** \brief
  * Library version
  *
