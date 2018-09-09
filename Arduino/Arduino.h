@@ -31,7 +31,7 @@
 #include <avr/pgmspace.h>
 #include <avr/io.h>
 
-#include "binary.h"
+// Pharap: Remove "binary.h" include
 
 // Pharap: Remove extern "C"
 
