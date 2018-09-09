@@ -9,6 +9,7 @@
 #include "glcdfont.cpp"
 
 #include <algorithm>
+#include <cstdlib>
 
 //========================================
 //========== class Arduboy2Base ==========
@@ -562,7 +563,7 @@ void Arduboy2Base::fillCircleHelper(int16_t x0, int16_t y0, uint8_t r, uint8_t s
 void Arduboy2Base::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t color)
 {
 	// bresenham's algorithm - thx wikpedia
-	const bool steep = abs(y1 - y0) > abs(x1 - x0);
+	const bool steep = std::abs(y1 - y0) > std::abs(x1 - x0);
 
 	if(steep)
 	{
@@ -578,7 +579,7 @@ void Arduboy2Base::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint
 
 	const int8_t ystep = (y0 < y1) ? 1 : -1;
 	const int16_t dx = (x1 - x0);
-	const int16_t dy = abs(y1 - y0);
+	const int16_t dy = std::abs(y1 - y0);
 
 	int16_t err = (dx / 2);
 
@@ -876,7 +877,7 @@ void Arduboy2Base::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, uint
 	if(((x + w) < 0) || (x > (WIDTH - 1)) || ((y + h) < 0) || (y > (HEIGHT - 1)))
 		return;
 
-	const int tempYOffset = (abs(y) % 8);
+	const int tempYOffset = (std::abs(y) % 8);
 	const int tempSRow = (y / 8);
 
 	const int yOffset = (y < 0) ? (8 - tempYOffset) : tempYOffset;
@@ -998,7 +999,7 @@ void Arduboy2Base::drawCompressed(int16_t sx, int16_t sy, const uint8_t * bitmap
 		return;
 
 	// sy = sy - (frame * height);
-	const int tempYOffset = (abs(sy) % 8);
+	const int tempYOffset = (std::abs(sy) % 8);
 	const int tempStartRow = (sy / 8);
 	const int yOffset = (sy < 0) ? (8 - tempYOffset) : tempYOffset;
 	const int startRow = (sy < 0) ? (tempStartRow - 1) : tempStartRow;
