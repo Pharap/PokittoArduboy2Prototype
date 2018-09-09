@@ -631,11 +631,7 @@ uint8_t Arduboy2Core::buttonsState(void)
 // delay in ms with 16 bit duration
 void Arduboy2Core::delayShort(uint16_t ms)
 {
-	// TODO: Implement Arduboy2Core::delayShort(uint16_t ms)
-
-	(void)ms;
-
-	//delay(static_cast<unsigned long>(ms));
+	Pokitto::Core::wait(ms);
 }
 
 void Arduboy2Core::exitToBootloader(void)
