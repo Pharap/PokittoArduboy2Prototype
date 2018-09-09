@@ -175,7 +175,7 @@ void loop(void);
 
 // Pharap: Remove makeWord functions
 
-#define word(...) makeWord(__VA_ARGS__)
+// Pharap: Remove word macro
 
 // Pharap: Remove pulseIn and pulseInLong functions
 
