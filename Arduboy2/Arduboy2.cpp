@@ -351,58 +351,17 @@ void Arduboy2Base::drawPixel(int16_t x, int16_t y, uint8_t color)
 		return;
 	#endif
 
-	// // uint8_t row = static_cast<uint8_t>(y / 8);
-	// // row_offset = (row*WIDTH) + static_cast<uint8_t>(x);
-	// // bit = _BV(static_cast<uint8_t>(y) % 8);
-
-	// // the above math can also be rewritten more simply as;
-	// //   row_offset = (y * WIDTH/8) & ~0b01111111 + static_cast<uint8_t>(x);
-	// // which is what the below assembler does
-
-	// // local variable for the bitshift_left array pointer,
-	// // which can be declared a read-write operand
-	// const uint8_t * bsl = bitshift_left;
-
-	(void)bitshift_left;
-
-	uint16_t row_offset = 0;
-	uint8_t bit = 0;
-
-	// TODO: Implement Arduboy2Base::drawPixel(int16_t x, int16_t y, uint8_t color)
-
-	// asm volatile
-	// (
-		// "mul %[width_offset], %A[y]\n"
-		// "movw %[row_offset], r0\n"
-		// // row_offset &= (~0b01111111);
-		// "andi %A[row_offset], 0x80\n"
-		// "clr __zero_reg__\n"
-		// "add %A[row_offset], %[x]\n"
-		// // mask for only 0-7
-		// "andi %A[y], 0x07\n"
-		// // Z += y
-		// "add r30, %A[y]\n"
-		// "adc r31, __zero_reg__\n"
-		// // load correct bitshift from program RAM
-		// "lpm %[bit], Z\n"
-		// // upper register (ANDI)
-		// :
-		// [row_offset] "=&x" (row_offset),
-		// [bit] "=r" (bit),
-		// // upper register (ANDI), must be writable
-		// [y] "+d" (y),
-		// // is modified to point to the proper shift array element
-		// "+z" (bsl)
-		// :
-		// [width_offset] "r" (static_cast<uint8_t>(WIDTH / 8)),
-		// [x] "r" (static_cast<uint8_t>(x))
-		// :
-	// );
+	const std::size_t row = (y / 8);
+	const std::size_t bitIndex = (y % 8(;
+	const std::size_t bufferIndex = ((row * WIDTH) + x);
+	const std::size_t bit = (1 << bitIndex);
 
 	if(color != 0)
-		sBuffer[row_offset] |= bit;
+		// Set bit in screen buffer
+		sBuffer[bufferIndex] |= bit;
 	else
-		sBuffer[row_offset] &= ~bit;
+		// Clear bit in screen buffer
+		sBuffer[bufferIndex] &= ~bit;
 }
 
 uint8_t Arduboy2Base::getPixel(uint8_t x, uint8_t y)
