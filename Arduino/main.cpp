@@ -15,38 +15,41 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Modified 9 September 2018 by Pharap
 */
 
-#include <Arduino.h>
+// Pharap: Change <Arduino.h> to "Arduino.h"
+#include "Arduino.h"
 
+// Pharap: Disabled atexit to avoid name clash with mbed
 // Declared weak in Arduino.h to allow user redefinitions.
-int atexit(void (* /*func*/ )()) { return 0; }
+//int atexit(void (* /*func*/ )()) { return 0; }
 
 // Weak empty variant initialization function.
 // May be redefined by variant files.
 void initVariant() __attribute__((weak));
 void initVariant() { }
 
-void setupUSB() __attribute__((weak));
-void setupUSB() { }
+// Pharap: Disable setupUSB
+//void setupUSB() __attribute__((weak));
+//void setupUSB() { }
 
 int main(void)
 {
 	init();
 
 	initVariant();
-
-#if defined(USBCON)
-	USBDevice.attach();
-#endif
 	
+	// Pharap: Removed USB code
+
 	setup();
-    
+
 	for (;;) {
 		loop();
-		if (serialEventRun) serialEventRun();
+		// Pharap: Removed serial event code
 	}
-        
+
 	return 0;
 }
 
