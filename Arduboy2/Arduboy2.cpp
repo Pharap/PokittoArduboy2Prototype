@@ -8,6 +8,8 @@
 #include "ab_logo.cpp"
 #include "glcdfont.cpp"
 
+#include <algorithm>
+
 //========================================
 //========== class Arduboy2Base ==========
 //========================================
@@ -607,9 +609,9 @@ void Arduboy2Base::drawRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t 
 
 void Arduboy2Base::drawFastVLine(int16_t x, int16_t y, uint8_t h, uint8_t color)
 {
-	const int end = (y + h);
+	const int16_t end = (y + h);
 
-	for(int a = max(0, y); a < min(end, HEIGHT); ++a)
+	for(int16_t a = std::max<int16_t>(0, y); a < std::min<int16_t>(end, HEIGHT); ++a)
 		drawPixel(x, a, color);
 }
 
@@ -1417,7 +1419,7 @@ uint8_t Arduboy2::getTextBackground(void)
 void Arduboy2::setTextSize(uint8_t s)
 {
 	// size must always be 1 or higher
-	textSize = max(1, s);
+	textSize = std::max<uint8_t>(1, s);
 }
 
 uint8_t Arduboy2::getTextSize(void)
