@@ -140,8 +140,7 @@ void delayMicroseconds(unsigned int us);
 
 // Pharap: Remove shiftOut and shiftIn functions
 
-void attachInterrupt(uint8_t, void (*)(void), int mode);
-void detachInterrupt(uint8_t);
+// Pharap: Remove attachInterrupt and detachInterrupt functions
 
 void setup(void);
 void loop(void);
