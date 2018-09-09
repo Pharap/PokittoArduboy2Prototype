@@ -158,19 +158,7 @@ void loop(void);
 
 #define NOT_AN_INTERRUPT -1
 
-#ifdef ARDUINO_MAIN
-#define PA 1
-#define PB 2
-#define PC 3
-#define PD 4
-#define PE 5
-#define PF 6
-#define PG 7
-#define PH 8
-#define PJ 10
-#define PK 11
-#define PL 12
-#endif
+// Pharap: Remove PA, PB, PC, PD, PE, PF, PG, PH, PJ, PK, PL macros
 
 // Pharap: Remove TIMER macros
 
