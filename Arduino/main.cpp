@@ -35,20 +35,28 @@ void initVariant() { }
 //void setupUSB() __attribute__((weak));
 //void setupUSB() { }
 
+// Pharap: Add <Pokitto.h> include
+#include <Pokitto.h>
+
 int main(void)
 {
 	init();
 
 	initVariant();
 	
-	// Pharap: Removed USB code
+	// Pharap: Remove USB code
 
+	// Pharap: Add Pokitto::Core::begin() call
+	Pokitto::Core::begin();
+	
 	setup();
 
-	for (;;) {
-		loop();
-		// Pharap: Removed serial event code
-	}
+	// Pharap: Rewrite loop calling code
+	while(Pokitto::Core::isRunning())
+		if(Pokitto::Core::update())
+			loop();
+	
+	// Pharap: Remove serial event code
 
 	return 0;
 }
