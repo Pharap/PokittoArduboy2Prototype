@@ -153,8 +153,7 @@ void loop(void);
 // Pharap: Remove analogInPinToBit macro
 // Pharap: Remove portOutputRegister, portInputRegister, portModeRegister macros
 
-#define NOT_A_PIN 0
-#define NOT_A_PORT 0
+// Pharap: Remove NOT_A_PIN and NOT_A_PORT macros
 
 // Pharap: Remove NOT_AN_INTERRUPT macro
 
