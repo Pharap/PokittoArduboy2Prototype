@@ -15,6 +15,8 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
+  Modified 9 September 2018 by Pharap
 */
 
 #ifndef Arduino_h
@@ -25,9 +27,9 @@
 #include <string.h>
 #include <math.h>
 
+// Pharap: Remove <avr/interrupt.h> include
 #include <avr/pgmspace.h>
 #include <avr/io.h>
-#include <avr/interrupt.h>
 
 #include "binary.h"
 
