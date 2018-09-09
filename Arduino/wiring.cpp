@@ -55,17 +55,20 @@ unsigned long micros()
 	return 0;
 }
 
+// Pharap: Disable delay functionality
 void delay(unsigned long ms)
 {
-	uint32_t start = micros();
+	(void)ms;
 
-	while (ms > 0) {
-		yield();
-		while ( ms > 0 && (micros() - start) >= 1000) {
-			ms--;
-			start += 1000;
-		}
-	}
+	//uint32_t start = micros();
+
+	//while (ms > 0) {
+		//yield();
+		//while ( ms > 0 && (micros() - start) >= 1000) {
+			//ms--;
+			//start += 1000;
+		//}
+	//}
 }
 
 /* Delay for the given number of microseconds.  Assumes a 1, 8, 12, 16, 20 or 24 MHz clock. */
