@@ -18,7 +18,7 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
-  
+
   Modified 9 September 2018 by Pharap
 */
 
@@ -35,18 +35,21 @@
 // Pharap: Disable millis functionality
 unsigned long millis()
 {
+	// TODO: Implement millis(void)
 	return 0;
 }
 
 // Pharap: Disable micros functionality
 unsigned long micros()
 {
+	// TODO: Implement micros(void)
 	return 0;
 }
 
 // Pharap: Disable delay functionality
 void delay(unsigned long ms)
 {
+	// TODO: Implement delay(unsigned long ms)
 	(void)ms;
 
 	//uint32_t start = micros();
@@ -63,10 +66,12 @@ void delay(unsigned long ms)
 // Pharap: Disable delayMicroseconds functionality
 void delayMicroseconds(unsigned int us)
 {
+	// TODO: Implement delayMicroseconds(unsigned int us)
 	(void)us;
 }
 
 // Pharap: Disable init functionality
 void init()
 {
+	// TODO: Decide how to implement init(void)
 }
