@@ -8,10 +8,6 @@
 #define ARDUBOY2_CORE_H
 
 #include <Arduino.h>
-#include <avr/power.h>
-#include <avr/sleep.h>
-#include <avr/wdt.h>
-
 
 // main hardware compile flags
 
