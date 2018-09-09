@@ -352,7 +352,7 @@ void Arduboy2Base::drawPixel(int16_t x, int16_t y, uint8_t color)
 	#endif
 
 	const std::size_t row = (y / 8);
-	const std::size_t bitIndex = (y % 8(;
+	const std::size_t bitIndex = (y % 8);
 	const std::size_t bufferIndex = ((row * WIDTH) + x);
 	const std::size_t bit = (1 << bitIndex);
 
