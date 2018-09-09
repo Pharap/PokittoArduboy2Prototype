@@ -11,6 +11,8 @@
 #include <algorithm>
 #include <cstdlib>
 
+#include <Pokitto.h>
+
 //========================================
 //========== class Arduboy2Base ==========
 //========================================
@@ -323,22 +325,7 @@ int Arduboy2Base::cpuLoad(void)
 
 void Arduboy2Base::initRandomSeed(void)
 {
-	// TODO: Implement Arduboy2Base::initRandomSeed(void)
-
-	//// ADC on
-	//power_adc_enable();
-
-	//// do an ADC read from an unconnected input pin
-	//// start conversion (ADMUX has been pre-set in boot())
-	//ADCSRA |= _BV(ADSC);
-
-	//// wait for conversion complete
-	//while(bit_is_set(ADCSRA, ADSC));
-
-	//randomSeed((static_cast<unsigned long>(ADC) << 16) + micros());
-
-	//// ADC off
-	//power_adc_disable();
+	Pokitto::Core::initRandom();
 }
 
 /* Graphics */
