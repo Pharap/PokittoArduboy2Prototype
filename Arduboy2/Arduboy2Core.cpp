@@ -8,6 +8,8 @@
 
 #include "PokittoHelper.h"
 
+#include <Pokitto.h>
+
 // lcdBootProgram is intentionally kept despite not being used.
 const uint8_t PROGMEM lcdBootProgram[] =
 {
@@ -603,41 +605,25 @@ void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 
 uint8_t Arduboy2Core::buttonsState(void)
 {
-	uint8_t buttons = 0;
-
-	// TODO: Implement Arduboy2Core::buttonsState(void)
-
-//#ifdef ARDUBOY_10
-
-	//// up, right, left, down
-	//buttons = ((~PINF) & (_BV(UP_BUTTON_BIT) | _BV(RIGHT_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(DOWN_BUTTON_BIT)));
-
-	//// A
-	//if(bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0)
-		//buttons |= A_BUTTON;
-
-	//// B
-	//if(bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0)
-		//buttons |= B_BUTTON;
-
-//#elif defined(AB_DEVKIT)
-
-	//// down, left, up
-	//buttons = ((~PINB) & (_BV(DOWN_BUTTON_BIT) | _BV(LEFT_BUTTON_BIT) | _BV(UP_BUTTON_BIT)));
-
-	//// right
-	//if(bitRead(RIGHT_BUTTON_PORTIN, RIGHT_BUTTON_BIT) == 0)
-		//buttons |= RIGHT_BUTTON;
-
-	//// A
-	//if(bitRead(A_BUTTON_PORTIN, A_BUTTON_BIT) == 0)
-		//buttons |= A_BUTTON;
-
-	//// B
-	//if(bitRead(B_BUTTON_PORTIN, B_BUTTON_BIT) == 0)
-		//buttons |= B_BUTTON;
-
-//#endif
+	std::uint8_t buttons = 0;
+	
+	if(Pokitto::heldStates[BTN_A] != 0)
+		buttons |= A_BUTTON;
+		
+	if(Pokitto::heldStates[BTN_B] != 0)
+		buttons |= B_BUTTON;
+	
+	if(Pokitto::heldStates[BTN_UP] != 0)
+		buttons |= UP_BUTTON;
+		
+	if(Pokitto::heldStates[BTN_DOWN] != 0)
+		buttons |= DOWN_BUTTON;
+	
+	if(Pokitto::heldStates[BTN_LEFT] != 0)
+		buttons |= LEFT_BUTTON;
+		
+	if(Pokitto::heldStates[BTN_RIGHT] != 0)
+		buttons |= RIGHT_BUTTON;
 
 	return buttons;
 }
