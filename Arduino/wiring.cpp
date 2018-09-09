@@ -23,6 +23,8 @@
 */
 
 // Pharap: Remove "wiring_private.h" include
+// Pharap: Add "Arduino.h" include
+#include "Arduino.h"
 
 // Pharap: Remove MICROSECONDS_PER_TIMER0_OVERFLOW, MILLIS_INC, FRACT_INC and FRACT_MAX
 
