@@ -156,7 +156,7 @@ void loop(void);
 #define NOT_A_PIN 0
 #define NOT_A_PORT 0
 
-#define NOT_AN_INTERRUPT -1
+// Pharap: Remove NOT_AN_INTERRUPT macro
 
 // Pharap: Remove PA, PB, PC, PD, PE, PF, PG, PH, PJ, PK, PL macros
 
