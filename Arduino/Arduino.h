@@ -173,8 +173,7 @@ void loop(void);
 #error "Targets with both UART0 and CDC serial not supported"
 #endif
 
-uint16_t makeWord(uint16_t w);
-uint16_t makeWord(byte h, byte l);
+// Pharap: Remove makeWord functions
 
 #define word(...) makeWord(__VA_ARGS__)
 
