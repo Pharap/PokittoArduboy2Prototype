@@ -23,9 +23,8 @@
 #define Arduino_h
 
 #include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <math.h>
+
+// Pharap: Remove <stdbool.h>, <string.h> and <math.h> includes
 
 // Pharap: Remove <avr/interrupt.h> include
 #include <avr/pgmspace.h>
