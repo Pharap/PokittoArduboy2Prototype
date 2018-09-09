@@ -145,11 +145,7 @@ void loop(void);
 
 // Pharap: Remove analogInPinToBit macro
 
-// On the ATmega1280, the addresses of some of the port registers are
-// greater than 255, so we can't store them in uint8_t's.
-extern const uint16_t PROGMEM port_to_mode_PGM[];
-extern const uint16_t PROGMEM port_to_input_PGM[];
-extern const uint16_t PROGMEM port_to_output_PGM[];
+// Pharap: Remove port_to_mode_PGM, port_to_input_PGM, port_to_output_PGM arrays
 
 extern const uint8_t PROGMEM digital_pin_to_port_PGM[];
 // extern const uint8_t PROGMEM digital_pin_to_bit_PGM[];
