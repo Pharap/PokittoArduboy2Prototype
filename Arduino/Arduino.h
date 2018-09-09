@@ -233,8 +233,9 @@ uint16_t makeWord(byte h, byte l);
 
 // Pharap: Remove pulseIn and pulseInLong functions
 
-void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
-void noTone(uint8_t _pin);
+// Pharap: Disable tone and noTone functions
+//void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
+//void noTone(uint8_t _pin);
 
 // WMath prototypes
 long random(long);
