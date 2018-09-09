@@ -5,8 +5,8 @@
  */
 
 #include "Arduboy2.h"
-#include "ab_logo.c"
-#include "glcdfont.c"
+#include "ab_logo.cpp"
+#include "glcdfont.cpp"
 
 //========================================
 //========== class Arduboy2Base ==========
