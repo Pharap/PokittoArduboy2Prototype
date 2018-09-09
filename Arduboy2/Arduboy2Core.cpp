@@ -6,6 +6,8 @@
 
 #include "Arduboy2Core.h"
 
+#include "PokittoHelper.h"
+
 // lcdBootProgram is intentionally kept despite not being used.
 const uint8_t PROGMEM lcdBootProgram[] =
 {
@@ -400,10 +402,7 @@ void Arduboy2Core::paint8Pixels(uint8_t pixels)
 
 void Arduboy2Core::paintScreen(const uint8_t * image)
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::paintScreen(const uint8_t * image)
-
-	for(size_t i = 0; i < ((HEIGHT * WIDTH) / 8); ++i)
-		SPItransfer(pgm_read_byte(&image[i]));
+	Pokitto::Arduboy2Helper::drawArduboy2Buffer(image);
 }
 
 // paint from a memory buffer, this should be FAST as it's likely what
@@ -414,85 +413,8 @@ void Arduboy2Core::paintScreen(const uint8_t * image)
 // It is specifically tuned for a 16MHz CPU clock and SPI clocking at 8MHz.
 void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::paintScreen(uint8_t image[], bool clear)
-
-	(void)image;
-	(void)clear;
-
-	// uint16_t count;
-
-	// asm volatile
-	// (
-		// //for(len = WIDTH * HEIGHT / 8)
-		// "   ldi   %A[count], %[len_lsb]               \n\t"
-		// "   ldi   %B[count], %[len_msb]               \n\t"
-		// //tmp = *(image)
-		// "1: ld    __tmp_reg__, %a[ptr]      ;2        \n\t"
-		// //SPDR = tmp
-		// "   out   %[spdr], __tmp_reg__      ;1        \n\t"
-		// //if(clear) tmp = 0;
-		// "   cpse  %[clear], __zero_reg__    ;1/2      \n\t"
-		// "   mov   __tmp_reg__, __zero_reg__ ;1        \n\t"
-		// //len --
-		// "2: sbiw  %A[count], 1              ;2        \n\t"
-		// //loop twice for cheap delay
-		// "   sbrc  %A[count], 0              ;1/2      \n\t"
-		// "   rjmp  2b                        ;2        \n\t"
-		// //*(image++) = tmp
-		// "   st    %a[ptr]+, __tmp_reg__     ;2        \n\t"
-		// //len > 0
-		// "   brne  1b                        ;1/2 :18  \n\t"
-		// //read SPSR to clear SPIF
-		// "   in    __tmp_reg__, %[spsr]                \n\t"
-		// :
-		// [ptr]     "+&e" (image),
-		// [count]   "=&w" (count)
-		// :
-		// [spdr]    "I"   (_SFR_IO_ADDR(SPDR)),
-		// [spsr]    "I"   (_SFR_IO_ADDR(SPSR)),
-		// // 8: pixels per byte
-		// [len_msb] "M"   (WIDTH * (HEIGHT / 8 * 2) >> 8),
-		// // 2: for delay loop multiplier
-		// [len_lsb] "M"   (WIDTH * (HEIGHT / 8 * 2) & 0xFF),
-		// [clear]   "r"   (clear)
-	// );
+	Pokitto::Arduboy2Helper::drawArduboy2Buffer(image, clear);
 }
-#if 0
-// For reference, this is the "closed loop" C++ version of paintScreen()
-// used prior to the above version.
-void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
-{
-	// set the first SPI data byte to get things started
-	SPDR = image[0];
-
-	// clear the first image byte
-	if(clear)
-		image[0] = 0;
-
-	// the code to iterate the loop and get the next byte from the buffer is
-	// executed while the previous byte is being sent out by the SPI controller
-	for(int i = 1; i < ((HEIGHT * WIDTH) / 8); ++i)
-	{
-		// get the next byte. It's put in a local variable so it can be sent as
-		// as soon as possible after the sending of the previous byte has completed
-		uint8_t c = image[i];
-
-		// clear the byte in the image buffer
-		if(clear)
-			image[i] = 0;
-
-		// wait for the previous byte to be sent
-		while((SPSR & _BV(SPIF)) == 0);
-
-		// put the next byte in the SPI data register. The SPI controller will
-		// clock it out while the loop continues and gets the next byte ready
-		SPDR = c;
-	}
-
-	// wait for the last byte to be sent
-	while((SPSR & _BV(SPIF)) == 0);
-}
-#endif
 
 void Arduboy2Core::blank(void)
 {
