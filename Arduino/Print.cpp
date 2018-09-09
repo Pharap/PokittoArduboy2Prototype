@@ -18,15 +18,25 @@
  
  Modified 23 November 2006 by David A. Mellis
  Modified 03 August 2015 by Chuck Todd
+ Modified 25 August 2018 by Pharap
+ Modified 9 September 2018 by Pharap
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include "Arduino.h"
+// Pharap: Remove <stdlib.h>, <stdio.h>, <string.h>, <math.h>, "Arduino.h"
 
 #include "Print.h"
+
+// Pharap: Add <cstddef>, <cstdint>, <cmath> and <avr/pgmspace.h>
+#include <cstddef>
+#include <cstdint>
+#include <cmath>
+#include <avr/pgmspace.h>
+
+// Pharap: Add usings
+using std::size_t;
+using std::uint8_t;
+using std::isnan;
+using std::isinf;
 
 // Public Methods //////////////////////////////////////////////////////////////
 
