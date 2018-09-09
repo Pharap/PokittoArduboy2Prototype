@@ -74,8 +74,7 @@ void yield(void);
 
 // Pharap: Remove clock cycle timing macros
 
-#define lowByte(w) ((uint8_t) ((w) & 0xff))
-#define highByte(w) ((uint8_t) ((w) >> 8))
+// Pharap: Remove lowByte and highByte macros
 
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
