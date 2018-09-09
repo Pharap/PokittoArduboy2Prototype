@@ -161,7 +161,7 @@ void loop(void);
 
 // Pharap: Remove TIMER macros
 
-#ifdef __cplusplus
+// Pharap: Remove ifdef __cplusplus
 
 // Pharap: Remove "WCharacter.h" include
 
@@ -193,5 +193,3 @@ long map(long, long, long, long, long);
 #endif
 
 // Pharap: Remove "pins_arduino.h" include
-
-#endif
