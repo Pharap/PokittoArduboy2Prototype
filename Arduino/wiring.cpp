@@ -26,24 +26,25 @@
 // Pharap: Add "Arduino.h" include
 #include "Arduino.h"
 
+// Pharap: Add <Pokitto.h> include
+#include <Pokitto.h>
+
 // Pharap: Remove MICROSECONDS_PER_TIMER0_OVERFLOW, MILLIS_INC, FRACT_INC and FRACT_MAX
 
 // Pharap: Remove timer0_overflow_count, timer0_millis and timer0_fract
 
 // Pharap: Remove timer0 overflow interrupt
 
-// Pharap: Disable millis functionality
+// Pharap: Change millis implementation
 unsigned long millis()
 {
-	// TODO: Implement millis(void)
-	return 0;
+	return Pokitto::Core::getTime();
 }
 
-// Pharap: Disable micros functionality
+// Pharap: Change micros implementation
 unsigned long micros()
 {
-	// TODO: Implement micros(void)
-	return 0;
+	return millis() * 1000;
 }
 
 // Pharap: Disable delay functionality
