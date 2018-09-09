@@ -17,15 +17,15 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
+  Modified 25 August 2018 by Pharap
 */
 
 #ifndef String_class_h
 #define String_class_h
 #ifdef __cplusplus
 
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+// Pharap: Remove <stdlib.h>, <string.h> and <ctype.h>
 #include <avr/pgmspace.h>
 
 // When compiling programs with this class, the following gcc parameters
@@ -35,7 +35,12 @@
 //     -std=c++0x
 
 class __FlashStringHelper;
-#define F(string_literal) (reinterpret_cast<const __FlashStringHelper *>(PSTR(string_literal)))
+
+// Pharap: Replace F macro with F function
+inline const __FlashStringHelper * F(const PROGMEM char * string_literal)
+{
+	return (reinterpret_cast<const __FlashStringHelper *>(PSTR(string_literal)));
+}
 
 // An inherited class for holding the result of a concatenation.  These
 // result objects are assumed to be writable by subsequent concatenations.

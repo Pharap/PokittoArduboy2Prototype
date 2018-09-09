@@ -17,9 +17,35 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
+  Modified 25 August 2018 by Pharap
 */
 
 #include "WString.h"
+
+// Pharap: Add <cstdlib>, <cstring>, <cctype>, <avr/pgmspace> and <stdlib.h>
+#include <cstdlib>
+#include <cstring>
+#include <cctype>
+#include <stdlib.h>
+#include <avr/pgmspace.h>
+
+// Pharap: Add usings
+using std::free;
+using std::realloc;
+using std::atol;
+using std::atof;
+using std::strcpy;
+using std::strncpy;
+using std::strlen;
+using std::strcmp;
+using std::strncmp;
+using std::strchr;
+using std::strstr;
+using std::memcpy;
+using std::memmove;
+using std::tolower;
+using std::isspace;
 
 /*********************************************/
 /*  Constructors                             */
