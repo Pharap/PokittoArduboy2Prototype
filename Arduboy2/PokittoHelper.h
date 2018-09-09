@@ -13,5 +13,6 @@ namespace Pokitto
 		
 		void drawArduboy2Buffer(const std::uint8_t * buffer);
 		void drawArduboy2Buffer(std::uint8_t * buffer, bool clear);
+		void fillArduboyScreen(std::uint8_t colour);
 	};
 }

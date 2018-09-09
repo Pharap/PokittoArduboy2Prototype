@@ -418,10 +418,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 void Arduboy2Core::blank(void)
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::blank(void)
-
-	for(size_t i = 0; i < ((HEIGHT * WIDTH) / 8); ++i)
-		SPItransfer(0x00);
+	Pokitto::Arduboy2Helper::fillArduboyScreen(0);
 }
 
 void Arduboy2Core::sendLCDCommand(uint8_t command)
