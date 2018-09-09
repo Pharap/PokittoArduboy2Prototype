@@ -33,9 +33,7 @@
 
 #include "binary.h"
 
-#ifdef __cplusplus
-extern "C"{
-#endif
+// Pharap: Remove extern "C"
 
 void yield(void);
 
@@ -223,10 +221,6 @@ extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 #define TIMER5A 16
 #define TIMER5B 17
 #define TIMER5C 18
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #ifdef __cplusplus
 #include "WCharacter.h"
