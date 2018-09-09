@@ -622,54 +622,11 @@ void Arduboy2Base::fillRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t 
 }
 
 void Arduboy2Base::fillScreen(uint8_t color)
-{
-	// TODO: Implement Arduboy2Base::fillScreen(uint8_t color)
-
-	// // C version:
-	// //
-	// // if(color != BLACK)
-	// // {
-	// //   color = 0xFF; // all pixels on
-	// // }
-	// // for(int16_t i = 0; i < WIDTH * HEIGTH / 8; i++)
-	// // {
-	// //    sBuffer[i] = color;
-	// // }
-
-	// // This asm version is hard coded for 1024 bytes. It doesn't use the defined
-	// // WIDTH and HEIGHT values. It will have to be modified for a different
-	// // screen buffer size.
-	// // It also assumes color value for BLACK is 0.
-
-	// // local variable for screen buffer pointer,
-	// // which can be declared a read-write operand
-	// uint8_t * bPtr = sBuffer;
-
-	// asm volatile
-	// (
-		// // if value is zero, skip assigning to 0xff
-		// "cpse %[color], __zero_reg__\n"
-		// "ldi %[color], 0xFF\n"
-		// // counter = 0
-		// "clr __tmp_reg__\n"
-		// "loopto:\n"
-		// // (4x) push zero into screen buffer,
-		// // then increment buffer position
-		// "st Z+, %[color]\n"
-		// "st Z+, %[color]\n"
-		// "st Z+, %[color]\n"
-		// "st Z+, %[color]\n"
-		// // increase counter
-		// "inc __tmp_reg__\n"
-		// // repeat for 256 loops
-		// // (until counter rolls over back to 0)
-		// "brne loopto\n"
-		// :
-		// [color] "+d" (color),
-		// "+z" (bPtr)
-		// :
-		// :
-	// );
+{	
+	const std::uint8_t value = (color == 0) ? 0x00 : 0xFF;
+	
+	for(std::size_t i = 0; i < ((WIDTH * HEIGHT) / 8); ++i)
+		sBuffer[i] = value;
 }
 
 void Arduboy2Base::drawRoundRect(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t color)
