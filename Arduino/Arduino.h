@@ -151,15 +151,7 @@ void loop(void);
 
 // Pharap: Remove digitalPinToPort, digitalPinToBitMask, digitalPinToTimer macros
 // Pharap: Remove analogInPinToBit macro
-
-// Get the bit location within the hardware port of the given virtual pin.
-// This comes from the pins_*.c file for the active board configuration.
-// 
-// These perform slightly better as macros compared to inline functions
-//
-#define portOutputRegister(P) ( (volatile uint8_t *)( pgm_read_word( port_to_output_PGM + (P))) )
-#define portInputRegister(P) ( (volatile uint8_t *)( pgm_read_word( port_to_input_PGM + (P))) )
-#define portModeRegister(P) ( (volatile uint8_t *)( pgm_read_word( port_to_mode_PGM + (P))) )
+// Pharap: Remove portOutputRegister, portInputRegister, portModeRegister macros
 
 #define NOT_A_PIN 0
 #define NOT_A_PORT 0
