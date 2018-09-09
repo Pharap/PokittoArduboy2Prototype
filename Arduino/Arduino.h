@@ -69,8 +69,7 @@ void yield(void);
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define sq(x) ((x)*(x))
 
-#define interrupts() sei()
-#define noInterrupts() cli()
+// Pharap: Remove interrupts and noInterrupts macros
 
 // Pharap: Remove clock cycle timing macros
 
