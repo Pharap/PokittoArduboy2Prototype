@@ -17,6 +17,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
   Modified 9 September 2018 by Pharap
+  Modified 10 September 2018 by Pharap
 */
 
 // Pharap: Change <Arduino.h> to "Arduino.h"
@@ -54,8 +55,7 @@ int main(void)
 
 	// Pharap: Rewrite loop calling code
 	while(Pokitto::Core::isRunning())
-		if(Pokitto::Core::update())
-			loop();
+		loop();
 	
 	// Pharap: Remove serial event code
 
