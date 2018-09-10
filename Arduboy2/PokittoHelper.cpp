@@ -28,6 +28,8 @@ namespace Pokitto
 					}
 				}
 			}
+			
+			Pokitto::Display::update();
 		}
 		
 		void drawArduboy2Buffer(std::uint8_t * buffer, bool clear)
@@ -50,12 +52,15 @@ namespace Pokitto
 					}					
 				}
 			}
+			
+			Pokitto::Display::update();
 		}
 		
 		void fillArduboyScreen(std::uint8_t colour)
 		{		
 			Pokitto::Display::setColor((colour == 0) ? 0 : 1);
 			Pokitto::Display::fillRectangle(BaseX, BaseY, Width, Height);
+			Pokitto::Display::update();
 		}
 	};
 }
