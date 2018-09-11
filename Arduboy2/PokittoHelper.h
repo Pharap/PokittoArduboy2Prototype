@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Arduboy2.h"
+
 #include <cstddef>
 #include <cstdint>
 
@@ -7,10 +9,12 @@ namespace Pokitto
 {
 	namespace Arduboy2Helper
 	{
-		static constexpr std::size_t Width = 128;
-		static constexpr std::size_t Height = 64;
-		static constexpr std::size_t BufferSize = (Width * Height) / 8;
-		
+		constexpr std::size_t BitsPerByte = 8;
+
+		constexpr std::size_t ArduboyDisplayWidth = WIDTH;
+		constexpr std::size_t ArduboyDisplayHeight = HEIGHT;
+		constexpr std::size_t ArduboyDisplaySize = (ArduboyDisplayWidth * ArduboyDisplayHeight) / BitsPerByte;
+
 		void drawArduboy2Buffer(const std::uint8_t * buffer);
 		void drawArduboy2Buffer(std::uint8_t * buffer, bool clear);
 		void fillArduboyScreen(std::uint8_t colour);

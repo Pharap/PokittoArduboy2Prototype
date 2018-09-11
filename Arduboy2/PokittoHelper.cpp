@@ -4,23 +4,22 @@
 
 #include <Pokitto.h>
 
-#include <climits>
-
 namespace Pokitto
 {
 	namespace Arduboy2Helper
-	{		
-		static constexpr std::size_t BaseX = (LCDWIDTH / 2) - (Width / 2);
-		static constexpr std::size_t BaseY = (LCDHEIGHT / 2) - (Height / 2);
-		
-		constexpr std::size_t BitsPerByte = CHAR_BIT;
-		
+	{
+		constexpr std::size_t PokittoDisplayWidth = LCDWIDTH;
+		constexpr std::size_t PokittoDisplayHeight = LCDHEIGHT;
+
+		constexpr std::size_t BaseX = (PokittoDisplayWidth / 2) - (ArduboyDisplayWidth / 2);
+		constexpr std::size_t BaseY = (PokittoDisplayHeight / 2) - (ArduboyDisplayHeight / 2);
+
 		void drawArduboy2Buffer_2bpp(const std::uint8_t * buffer);
 		void drawArduboy2BufferAndClear_2bpp(std::uint8_t * buffer);
-		
+
 		void drawArduboy2Buffer_4bpp(const std::uint8_t * buffer);
 		void drawArduboy2BufferAndClear_4bpp(std::uint8_t * buffer);
-		
+
 		void drawArduboy2Buffer(const std::uint8_t * buffer)
 		{
 			#if (POK_SCREENMODE == MODE_HI_4COLOR)
@@ -33,7 +32,7 @@ namespace Pokitto
 
 			Pokitto::Display::update();
 		}
-		
+
 		void drawArduboy2BufferAndClear(std::uint8_t * buffer)
 		{
 			#if (POK_SCREENMODE == MODE_HI_4COLOR)
@@ -46,7 +45,7 @@ namespace Pokitto
 
 			Pokitto::Display::update();
 		}
-		
+
 		void drawArduboy2Buffer(std::uint8_t * buffer, bool clear)
 		{
 			if(clear)
@@ -54,27 +53,29 @@ namespace Pokitto
 			else
 				drawArduboy2Buffer(buffer);
 		}
-		
+
 		void fillArduboyScreen(std::uint8_t colour)
-		{		
+		{
 			Pokitto::Display::setColor((colour == 0) ? 0 : 1);
-			Pokitto::Display::fillRectangle(BaseX, BaseY, Width, Height);
+			Pokitto::Display::fillRectangle(BaseX, BaseY, ArduboyDisplayWidth, ArduboyDisplayHeight);
 			Pokitto::Display::update();
 		}
 
-		constexpr std::size_t Divisor2bpp = (BitsPerByte / 2);
-		
+
 		void drawArduboy2Buffer_2bpp(const std::uint8_t * buffer)
 		{
-			const std::size_t screenBufferWidth = (LCDWIDTH / Divisor2bpp);
+			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
+			constexpr std::size_t Divisor2bpp = (BitsPerByte / 2);
+
+			const std::size_t screenBufferWidth = (PokittoDisplayWidth / Divisor2bpp);
 			const std::size_t baseX = (BaseX / Divisor2bpp);
 
-			for(std::size_t y = 0; y < (Height / BitsPerByte); ++y)
+			for(std::size_t y = 0; y < ArduboyBufferHeight; ++y)
 			{
 				const std::size_t rowBase = (BaseY + (y * BitsPerByte));
-				const std::size_t columnOffsetBase = (y * Width);
+				const std::size_t columnOffsetBase = (y * ArduboyDisplayWidth);
 
-				for(std::size_t x = 0; x < (Width / Divisor2bpp); ++x)
+				for(std::size_t x = 0; x < (ArduboyDisplayWidth / Divisor2bpp); ++x)
 				{
 					const std::size_t columnOffset = columnOffsetBase + (x * Divisor2bpp);
 
@@ -103,18 +104,21 @@ namespace Pokitto
 				}
 			}
 		}
-		
+
 		void drawArduboy2BufferAndClear_2bpp(std::uint8_t * buffer)
 		{
-			const std::size_t screenBufferWidth = (LCDWIDTH / Divisor2bpp);
+			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
+			constexpr std::size_t Divisor2bpp = (BitsPerByte / 2);
+
+			const std::size_t screenBufferWidth = (PokittoDisplayWidth / Divisor2bpp);
 			const std::size_t baseX = (BaseX / Divisor2bpp);
 
-			for(std::size_t y = 0; y < (Height / BitsPerByte); ++y)
+			for(std::size_t y = 0; y < ArduboyBufferHeight; ++y)
 			{
 				const std::size_t rowBase = (BaseY + (y * BitsPerByte));
-				const std::size_t columnOffsetBase = (y * Width);
+				const std::size_t columnOffsetBase = (y * ArduboyDisplayWidth);
 
-				for(std::size_t x = 0; x < (Width / Divisor2bpp); ++x)
+				for(std::size_t x = 0; x < (ArduboyDisplayWidth / Divisor2bpp); ++x)
 				{
 					const std::size_t columnOffset = columnOffsetBase + (x * Divisor2bpp);
 
@@ -149,19 +153,20 @@ namespace Pokitto
 			}
 		}
 
-		constexpr std::size_t Divisor4bpp = (BitsPerByte / 4);
-		
 		void drawArduboy2Buffer_4bpp(const std::uint8_t * buffer)
 		{
-			const std::size_t screenBufferWidth = (LCDWIDTH / Divisor4bpp);
+			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
+			constexpr std::size_t Divisor4bpp = (BitsPerByte / 4);
+
+			const std::size_t screenBufferWidth = (PokittoDisplayWidth / Divisor4bpp);
 			const std::size_t baseX = (BaseX / Divisor4bpp);
 
-			for(std::size_t y = 0; y < (Height / BitsPerByte); ++y)
+			for(std::size_t y = 0; y < ArduboyBufferHeight; ++y)
 			{
 				const std::size_t rowBase = (BaseY + (y * BitsPerByte));
-				const std::size_t columnOffsetBase = (y * Width);
+				const std::size_t columnOffsetBase = (y * ArduboyDisplayWidth);
 
-				for(std::size_t x = 0; x < (Width / Divisor4bpp); ++x)
+				for(std::size_t x = 0; x < (ArduboyDisplayWidth / Divisor4bpp); ++x)
 				{
 					const std::size_t columnOffset = columnOffsetBase + (x * Divisor4bpp);
 
@@ -184,24 +189,27 @@ namespace Pokitto
 				}
 			}
 		}
-		
+
 		void drawArduboy2BufferAndClear_4bpp(std::uint8_t * buffer)
 		{
-			const std::size_t screenBufferWidth = (LCDWIDTH / Divisor4bpp);
+			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
+			constexpr std::size_t Divisor4bpp = (BitsPerByte / 4);
+
+			const std::size_t screenBufferWidth = (PokittoDisplayWidth / Divisor4bpp);
 			const std::size_t baseX = (BaseX / Divisor4bpp);
 
-			for(std::size_t y = 0; y < (Height / BitsPerByte); ++y)
+			for(std::size_t y = 0; y < ArduboyBufferHeight; ++y)
 			{
 				const std::size_t rowBase = (BaseY + (y * BitsPerByte));
-				const std::size_t columnOffsetBase = (y * Width);
+				const std::size_t columnOffsetBase = (y * ArduboyDisplayWidth);
 
-				for(std::size_t x = 0; x < (Width / Divisor4bpp); ++x)
+				for(std::size_t x = 0; x < (ArduboyDisplayWidth / Divisor4bpp); ++x)
 				{
 					const std::size_t columnOffset = columnOffsetBase + (x * Divisor4bpp);
 
 					std::uint_fast8_t column0 = buffer[columnOffset + 0];
 					std::uint_fast8_t column1 = buffer[columnOffset + 1];
-					
+
 					buffer[columnOffset + 0] = 0;
 					buffer[columnOffset + 1] = 0;
 
