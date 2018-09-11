@@ -325,7 +325,7 @@ int Arduboy2Base::cpuLoad(void)
 
 void Arduboy2Base::initRandomSeed(void)
 {
-	Pokitto::Core::initRandom();
+	srandom(Pokitto::Core::getTime());
 }
 
 /* Graphics */
