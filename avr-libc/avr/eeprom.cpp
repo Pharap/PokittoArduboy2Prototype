@@ -103,13 +103,9 @@ void eeprom_update_dword(std::uint32_t * pointer, std::uint32_t value)
 
 void eeprom_update_float(float * pointer, float value)
 {
-	(void)pointer;
-	(void)value;
-
-	// TODO: Implement eeprom_update_float(float * pointer, float value)
-	//auto current = eeprom_read_float(pointer);
-	//if(current != value)
-		//writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
+	auto current = eeprom_read_float(pointer);
+	if(current != value)
+		writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
 }
 
 void eeprom_update_block(const void * source, void * destination, size_t count)
