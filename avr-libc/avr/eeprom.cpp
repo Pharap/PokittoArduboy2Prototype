@@ -15,9 +15,9 @@ std::uint8_t eeprom_read_byte(const std::uint8_t * pointer)
 {
 	(void)pointer;
 	
-    std::uint8_t value = ~0;
+	std::uint8_t value = ~0;
 	// TODO: Implement eeprom_read_byte(const std::uint8_t * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
+	//readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
 	return value;
 }
 
@@ -26,9 +26,9 @@ std::uint16_t eeprom_read_word(const std::uint16_t * pointer)
 {
 	(void)pointer;
 	
-    std::uint16_t value = ~0;
+	std::uint16_t value = ~0;
 	// TODO: Implement eeprom_read_word(const std::uint16_t * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint16_t));
+	//readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint16_t));
 	return value;
 }
 
@@ -37,9 +37,9 @@ std::uint32_t eeprom_read_dword(const std::uint32_t * pointer)
 {
 	(void)pointer;
 	
-    std::uint32_t value = ~0;
+	std::uint32_t value = ~0;
 	// TODO: Implement eeprom_read_dword(const std::uint32_t * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
+	//readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
 	return value;
 }
 
@@ -48,9 +48,9 @@ float eeprom_read_float(const float * pointer)
 {
 	(void)pointer;
 	
-    float value = ~0;
+	float value = ~0;
 	// TODO: Implement eeprom_read_float(const float * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
+	//readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
 	return value;
 }
 
@@ -61,7 +61,7 @@ void eeprom_read_block(void * destination, const void * source, size_t count)
 	(void)count;
 	
 	// TODO: Implement eeprom_read_block(void * destination, const void * source, size_t count)
-    //readEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
+	//readEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
 }
 
 //
@@ -74,7 +74,7 @@ void eeprom_write_byte(std::uint8_t * pointer, std::uint8_t value)
 	(void)value;
 
 	// TODO: Implement eeprom_write_byte(std::uint8_t * pointer, std::uint8_t value)
-    //writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
+	//writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
 }
 
 void eeprom_write_word(std::uint16_t * pointer, std::uint16_t value)
@@ -83,7 +83,7 @@ void eeprom_write_word(std::uint16_t * pointer, std::uint16_t value)
 	(void)value;
 
 	// TODO: Implement eeprom_write_word(std::uint16_t * pointer, std::uint16_t value)
-    //writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint16_t));
+	//writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint16_t));
 }
 
 void eeprom_write_dword(std::uint32_t * pointer, std::uint32_t value)
@@ -92,7 +92,7 @@ void eeprom_write_dword(std::uint32_t * pointer, std::uint32_t value)
 	(void)value;
 
 	// TODO: Implement eeprom_write_dword(std::uint32_t * pointer, std::uint32_t value)
-    //writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
+	//writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
 }
 
 void eeprom_write_float(float * pointer, float value)
@@ -101,7 +101,7 @@ void eeprom_write_float(float * pointer, float value)
 	(void)value;
 
 	// TODO: Implement eeprom_write_float(float * pointer, float value)
-    //writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
+	//writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
 }
 
 void eeprom_write_block(const void * source, void * destination, size_t count)
@@ -111,7 +111,7 @@ void eeprom_write_block(const void * source, void * destination, size_t count)
 	(void)count;
 	
 	// TODO: Implement eeprom_write_block(const void * source, void * destination, size_t count)
-    //writeEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
+	//writeEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
 }
 
 //
@@ -169,5 +169,5 @@ void eeprom_update_block(const void * source, void * destination, size_t count)
 	(void)count;
 
 	// TODO: Implement eeprom_update_block(const void * source, void * destination, size_t count)
-    //writeEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
+	//writeEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
 }
