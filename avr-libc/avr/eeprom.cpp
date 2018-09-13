@@ -44,12 +44,7 @@ float eeprom_read_float(const float * pointer)
 
 void eeprom_read_block(void * destination, const void * source, size_t count)
 {
-	(void)destination;
-	(void)source;
-	(void)count;
-	
-	// TODO: Implement eeprom_read_block(void * destination, const void * source, size_t count)
-    //readEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
+	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(source)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(destination)), count);
 }
 
 //
