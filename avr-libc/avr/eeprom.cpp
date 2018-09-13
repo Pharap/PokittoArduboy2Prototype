@@ -37,11 +37,8 @@ std::uint32_t eeprom_read_dword(const std::uint32_t * pointer)
 // __ATTR_PURE__
 float eeprom_read_float(const float * pointer)
 {
-	(void)pointer;
-	
-    float value = ~0;
-	// TODO: Implement eeprom_read_float(const float * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
+	float value = ~0;
+	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(float));
 	return value;
 }
 
