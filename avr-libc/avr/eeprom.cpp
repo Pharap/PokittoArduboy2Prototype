@@ -21,11 +21,8 @@ std::uint8_t eeprom_read_byte(const std::uint8_t * pointer)
 // __ATTR_PURE__
 std::uint16_t eeprom_read_word(const std::uint16_t * pointer)
 {
-	(void)pointer;
-	
-    std::uint16_t value = ~0;
-	// TODO: Implement eeprom_read_word(const std::uint16_t * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint16_t));
+	std::uint16_t value = ~0;
+	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint16_t));
 	return value;
 }
 
