@@ -72,16 +72,6 @@ void Arduboy2Base::flashlight(void)
 	sendLCDCommand(OLED_ALL_PIXELS_ON);
 	digitalWriteRGB(RGB_ON, RGB_ON, RGB_ON);
 
-	// TODO: Remove this disabled code
-
-	//// for Arduboy core timer 0 should remain enabled
-	//#ifndef ARDUBOY_CORE
-	//// prevent the bootloader magic number from being overwritten by timer 0
-	//// when a timer variable overlaps the magic number location, for when
-	//// flashlight mode is used for upload problem recovery
-	//power_timer0_disable();
-	//#endif
-
 	while(true)
 		idle();
 }
