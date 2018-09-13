@@ -13,7 +13,7 @@
 // __ATTR_PURE__
 std::uint8_t eeprom_read_byte(const std::uint8_t * pointer)
 {
-	std::uint8_t value = ~0;
+	std::uint8_t value = 0;
 	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), reinterpret_cast<std::uint8_t *>(&value), sizeof(std::uint8_t));
 	return value;
 }
@@ -21,7 +21,7 @@ std::uint8_t eeprom_read_byte(const std::uint8_t * pointer)
 // __ATTR_PURE__
 std::uint16_t eeprom_read_word(const std::uint16_t * pointer)
 {
-	std::uint16_t value = ~0;
+	std::uint16_t value = 0;
 	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), reinterpret_cast<std::uint8_t *>(&value), sizeof(std::uint16_t));
 	return value;
 }
@@ -29,7 +29,7 @@ std::uint16_t eeprom_read_word(const std::uint16_t * pointer)
 // __ATTR_PURE__
 std::uint32_t eeprom_read_dword(const std::uint32_t * pointer)
 {
-	std::uint32_t value = ~0;
+	std::uint32_t value = 0;
 	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), reinterpret_cast<std::uint8_t *>(&value), sizeof(std::uint32_t));
 	return value;
 }
@@ -37,7 +37,7 @@ std::uint32_t eeprom_read_dword(const std::uint32_t * pointer)
 // __ATTR_PURE__
 float eeprom_read_float(const float * pointer)
 {
-	float value = ~0;
+	float value = 0;
 	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), reinterpret_cast<std::uint8_t *>(&value), sizeof(float));
 	return value;
 }
