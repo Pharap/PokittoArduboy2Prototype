@@ -29,11 +29,8 @@ std::uint16_t eeprom_read_word(const std::uint16_t * pointer)
 // __ATTR_PURE__
 std::uint32_t eeprom_read_dword(const std::uint32_t * pointer)
 {
-	(void)pointer;
-	
-    std::uint32_t value = ~0;
-	// TODO: Implement eeprom_read_dword(const std::uint32_t * pointer)
-    //readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
+	std::uint32_t value = ~0;
+	readEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
 	return value;
 }
 
