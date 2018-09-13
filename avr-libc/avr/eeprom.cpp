@@ -82,13 +82,9 @@ void eeprom_write_block(const void * source, void * destination, size_t count)
 
 void eeprom_update_byte(std::uint8_t * pointer, std::uint8_t value)
 {
-	(void)pointer;
-	(void)value;
-
-	// TODO: Implement eeprom_update_byte(std::uint8_t * pointer, std::uint8_t value)
-	//auto current = eeprom_read_byte(pointer);
-	//if(current != value)
-		//writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
+	auto current = eeprom_read_byte(pointer);
+	if(current != value)
+		writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
 }
 
 void eeprom_update_word(std::uint16_t * pointer, std::uint16_t value)
