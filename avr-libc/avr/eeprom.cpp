@@ -73,12 +73,7 @@ void eeprom_write_float(float * pointer, float value)
 
 void eeprom_write_block(const void * source, void * destination, size_t count)
 {
-	(void)destination;
-	(void)source;
-	(void)count;
-	
-	// TODO: Implement eeprom_write_block(const void * source, void * destination, size_t count)
-    //writeEEPROM((std::uint16_t *)source, (std::uint8_t *)destination, count);
+	writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(destination)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(source)), count);
 }
 
 //
