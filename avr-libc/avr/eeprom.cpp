@@ -53,11 +53,7 @@ void eeprom_read_block(void * destination, const void * source, size_t count)
 
 void eeprom_write_byte(std::uint8_t * pointer, std::uint8_t value)
 {
-	(void)pointer;
-	(void)value;
-
-	// TODO: Implement eeprom_write_byte(std::uint8_t * pointer, std::uint8_t value)
-    //writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
+	writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint8_t));
 }
 
 void eeprom_write_word(std::uint16_t * pointer, std::uint16_t value)
