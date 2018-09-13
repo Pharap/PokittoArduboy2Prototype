@@ -63,11 +63,7 @@ void eeprom_write_word(std::uint16_t * pointer, std::uint16_t value)
 
 void eeprom_write_dword(std::uint32_t * pointer, std::uint32_t value)
 {
-	(void)pointer;
-	(void)value;
-
-	// TODO: Implement eeprom_write_dword(std::uint32_t * pointer, std::uint32_t value)
-    //writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
+	writeEEPROM(const_cast<std::uint16_t *>(reinterpret_cast<const std::uint16_t *>(pointer)), const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(&value)), sizeof(std::uint32_t));
 }
 
 void eeprom_write_float(float * pointer, float value)
