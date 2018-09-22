@@ -6,7 +6,7 @@
 
 namespace Pokitto
 {
-	namespace Arduboy2Helper
+	namespace ArduboyUtilities
 	{
 		constexpr std::size_t PokittoDisplayWidth = LCDWIDTH;
 		constexpr std::size_t PokittoDisplayHeight = LCDHEIGHT;
