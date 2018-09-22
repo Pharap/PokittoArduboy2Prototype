@@ -36,8 +36,6 @@ namespace Pokitto
 				#else
 				static_assert(false, "Invalid screen mode for Arduboy2");
 				#endif
-
-				Pokitto::Display::update();
 			}
 
 			void drawBufferAndClear(std::uint8_t * buffer)
@@ -49,8 +47,6 @@ namespace Pokitto
 				#else
 				static_assert(false, "Invalid screen mode for Arduboy2");
 				#endif
-
-				Pokitto::Display::update();
 			}
 
 			void drawBuffer(std::uint8_t * buffer, bool clear)
@@ -65,7 +61,6 @@ namespace Pokitto
 			{
 				Pokitto::Display::setColor((colour == 0) ? 0 : 1);
 				Pokitto::Display::fillRectangle(BaseX, BaseY, ArduboyDisplayWidth, ArduboyDisplayHeight);
-				Pokitto::Display::update();
 			}
 
 
