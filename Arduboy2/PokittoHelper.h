@@ -15,8 +15,8 @@ namespace Pokitto
 		constexpr std::size_t ArduboyDisplayHeight = HEIGHT;
 		constexpr std::size_t ArduboyDisplaySize = (ArduboyDisplayWidth * ArduboyDisplayHeight) / BitsPerByte;
 
-		void drawArduboy2Buffer(const std::uint8_t * buffer);
-		void drawArduboy2Buffer(std::uint8_t * buffer, bool clear);
-		void fillArduboyScreen(std::uint8_t colour);
+		void drawBuffer(const std::uint8_t * buffer);
+		void drawBuffer(std::uint8_t * buffer, bool clear);
+		void fillDisplay(std::uint8_t colour);
 	};
 }

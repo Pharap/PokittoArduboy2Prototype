@@ -54,7 +54,7 @@ namespace Pokitto
 				drawBuffer(buffer);
 		}
 
-		void fillArduboyScreen(std::uint8_t colour)
+		void fillDisplay(std::uint8_t colour)
 		{
 			Pokitto::Display::setColor((colour == 0) ? 0 : 1);
 			Pokitto::Display::fillRectangle(BaseX, BaseY, ArduboyDisplayWidth, ArduboyDisplayHeight);

@@ -246,7 +246,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 
 void Arduboy2Core::blank(void)
 {
-	Pokitto::Arduboy2Helper::fillArduboyScreen(0);
+	Pokitto::Arduboy2Helper::fillDisplay(0);
 }
 
 void Arduboy2Core::sendLCDCommand(uint8_t command)
