@@ -7,7 +7,7 @@
 
 namespace Pokitto
 {
-	namespace Arduboy2Helper
+	namespace ArduboyUtilities
 	{
 		constexpr std::size_t BitsPerByte = 8;
 
