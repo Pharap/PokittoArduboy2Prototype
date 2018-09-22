@@ -230,7 +230,7 @@ void Arduboy2Core::paint8Pixels(uint8_t pixels)
 
 void Arduboy2Core::paintScreen(const uint8_t * image)
 {
-	Pokitto::Arduboy2Helper::drawArduboy2Buffer(image);
+	Pokitto::Arduboy2Helper::drawBuffer(image);
 }
 
 // paint from a memory buffer, this should be FAST as it's likely what
@@ -241,7 +241,7 @@ void Arduboy2Core::paintScreen(const uint8_t * image)
 // It is specifically tuned for a 16MHz CPU clock and SPI clocking at 8MHz.
 void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 {
-	Pokitto::Arduboy2Helper::drawArduboy2Buffer(image, clear);
+	Pokitto::Arduboy2Helper::drawBuffer(image, clear);
 }
 
 void Arduboy2Core::blank(void)

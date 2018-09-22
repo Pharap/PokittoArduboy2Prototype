@@ -14,18 +14,18 @@ namespace Pokitto
 		constexpr std::size_t BaseX = (PokittoDisplayWidth / 2) - (ArduboyDisplayWidth / 2);
 		constexpr std::size_t BaseY = (PokittoDisplayHeight / 2) - (ArduboyDisplayHeight / 2);
 
-		void drawArduboy2Buffer_2bpp(const std::uint8_t * buffer);
-		void drawArduboy2BufferAndClear_2bpp(std::uint8_t * buffer);
+		void drawBuffer_2bpp(const std::uint8_t * buffer);
+		void drawBufferAndClear_2bpp(std::uint8_t * buffer);
 
-		void drawArduboy2Buffer_4bpp(const std::uint8_t * buffer);
-		void drawArduboy2BufferAndClear_4bpp(std::uint8_t * buffer);
+		void drawBuffer_4bpp(const std::uint8_t * buffer);
+		void drawBufferAndClear_4bpp(std::uint8_t * buffer);
 
-		void drawArduboy2Buffer(const std::uint8_t * buffer)
+		void drawBuffer(const std::uint8_t * buffer)
 		{
 			#if (POK_SCREENMODE == MODE_HI_4COLOR)
-			drawArduboy2Buffer_2bpp(buffer);
+			drawBuffer_2bpp(buffer);
 			#elif (POK_SCREENMODE == MODE15)
-			drawArduboy2Buffer_4bpp(buffer);
+			drawBuffer_4bpp(buffer);
 			#else
 			static_assert(false, "Invalid screen mode for Arduboy2");
 			#endif
@@ -33,12 +33,12 @@ namespace Pokitto
 			Pokitto::Display::update();
 		}
 
-		void drawArduboy2BufferAndClear(std::uint8_t * buffer)
+		void drawBufferAndClear(std::uint8_t * buffer)
 		{
 			#if (POK_SCREENMODE == MODE_HI_4COLOR)
-			drawArduboy2BufferAndClear_2bpp(buffer);
+			drawBufferAndClear_2bpp(buffer);
 			#elif (POK_SCREENMODE == MODE15)
-			drawArduboy2BufferAndClear_4bpp(buffer);
+			drawBufferAndClear_4bpp(buffer);
 			#else
 			static_assert(false, "Invalid screen mode for Arduboy2");
 			#endif
@@ -46,12 +46,12 @@ namespace Pokitto
 			Pokitto::Display::update();
 		}
 
-		void drawArduboy2Buffer(std::uint8_t * buffer, bool clear)
+		void drawBuffer(std::uint8_t * buffer, bool clear)
 		{
 			if(clear)
-				drawArduboy2BufferAndClear(buffer);
+				drawBufferAndClear(buffer);
 			else
-				drawArduboy2Buffer(buffer);
+				drawBuffer(buffer);
 		}
 
 		void fillArduboyScreen(std::uint8_t colour)
@@ -62,7 +62,7 @@ namespace Pokitto
 		}
 
 
-		void drawArduboy2Buffer_2bpp(const std::uint8_t * buffer)
+		void drawBuffer_2bpp(const std::uint8_t * buffer)
 		{
 			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
 			constexpr std::size_t Divisor2bpp = (BitsPerByte / 2);
@@ -105,7 +105,7 @@ namespace Pokitto
 			}
 		}
 
-		void drawArduboy2BufferAndClear_2bpp(std::uint8_t * buffer)
+		void drawBufferAndClear_2bpp(std::uint8_t * buffer)
 		{
 			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
 			constexpr std::size_t Divisor2bpp = (BitsPerByte / 2);
@@ -153,7 +153,7 @@ namespace Pokitto
 			}
 		}
 
-		void drawArduboy2Buffer_4bpp(const std::uint8_t * buffer)
+		void drawBuffer_4bpp(const std::uint8_t * buffer)
 		{
 			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
 			constexpr std::size_t Divisor4bpp = (BitsPerByte / 4);
@@ -190,7 +190,7 @@ namespace Pokitto
 			}
 		}
 
-		void drawArduboy2BufferAndClear_4bpp(std::uint8_t * buffer)
+		void drawBufferAndClear_4bpp(std::uint8_t * buffer)
 		{
 			constexpr std::size_t ArduboyBufferHeight = (ArduboyDisplayHeight / BitsPerByte);
 			constexpr std::size_t Divisor4bpp = (BitsPerByte / 4);
