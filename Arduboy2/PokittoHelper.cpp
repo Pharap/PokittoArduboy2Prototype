@@ -16,6 +16,11 @@ namespace Pokitto
 
 		namespace Display
 		{
+			void update(void)
+			{
+				Pokitto::Display::update();
+			}
+
 			void drawBuffer_2bpp(const std::uint8_t * buffer);
 			void drawBufferAndClear_2bpp(std::uint8_t * buffer);
 
