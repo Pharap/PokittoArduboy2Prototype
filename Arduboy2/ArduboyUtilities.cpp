@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PokittoHelper.h"
+#include "ArduboyUtilities.h"
 
 #include <Pokitto.h>
 
