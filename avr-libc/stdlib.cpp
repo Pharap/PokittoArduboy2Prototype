@@ -73,11 +73,32 @@ char * ltoa(long value, char * str, int radix)
 
 char * ultoa(unsigned long value, char * str, int radix)
 {
-	(void)value;
-	(void)radix;
-	
-	// TODO: implement ultoa(unsigned long value, char * str, int radix)
-	return str;
+	const char * format = nullptr;
+
+	switch(radix)
+	{
+		case 8:
+			format = "%lo";
+			break;
+		case 10:
+			format = "%lu";
+			break;
+		case 16:
+			format = "%lX";
+			break;
+	}
+
+	if(format == nullptr)
+		return str;
+
+	const int result = std::sprintf(str, format, value);
+
+	if(result < 0)
+		return str;
+
+	const std::size_t size = static_cast<std::size_t>(result);
+
+	return &str[size];
 }
 
 //
