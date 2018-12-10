@@ -28,11 +28,32 @@ char * itoa(int value, char * str, int radix)
 
 char * utoa(unsigned int value, char * str, int radix)
 {
-	(void)value;
-	(void)radix;
-	
-	// TODO: implement utoa(unsigned int value, char * str, int radix)
-	return str;
+	const char * format = nullptr;
+
+	switch(radix)
+	{
+		case 8:
+			format = "%o";
+			break;
+		case 10:
+			format = "%u";
+			break;
+		case 16:
+			format = "%X";
+			break;
+	}
+
+	if(format == nullptr)
+		return str;
+
+	const int result = std::sprintf(str, format, value);
+
+	if(result < 0)
+		return str;
+
+	const std::size_t size = static_cast<std::size_t>(result);
+
+	return &str[size];
 }
 
 char * ltoa(long value, char * str, int radix)
