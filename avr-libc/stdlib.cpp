@@ -5,6 +5,7 @@
 //
 
 #include <cstdlib>
+#include <cstdio>
 
 //
 // Non-standard integer formatting functions
@@ -12,11 +13,17 @@
 
 char * itoa(int value, char * str, int radix)
 {
-	(void)value;
-	(void)radix;
-	
-	// TODO: implement itoa(int value, char * str, int radix)
-	return str;
+	if(radix != 10)
+		return str;
+
+	const int result = std::sprintf(str, "%d", value);
+
+	if(result < 0)
+		return str;
+
+	const std::size_t size = static_cast<std::size_t>(result);
+
+	return &str[size];
 }
 
 char * utoa(unsigned int value, char * str, int radix)
