@@ -37,11 +37,17 @@ char * utoa(unsigned int value, char * str, int radix)
 
 char * ltoa(long value, char * str, int radix)
 {
-	(void)value;
-	(void)radix;
-	
-	// TODO: implement ltoa(long value, char * str, int radix)
-	return str;
+	if(radix != 10)
+		return str;
+
+	const int result = std::sprintf(str, "%ld", value);
+
+	if(result < 0)
+		return str;
+
+	const std::size_t size = static_cast<std::size_t>(result);
+
+	return &str[size];
 }
 
 char * ultoa(unsigned long value, char * str, int radix)
