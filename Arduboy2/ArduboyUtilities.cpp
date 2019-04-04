@@ -1,5 +1,3 @@
-#pragma once
-
 #include "ArduboyUtilities.h"
 
 #include <Pokitto.h>
