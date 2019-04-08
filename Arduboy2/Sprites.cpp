@@ -84,7 +84,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 	// if the right side of the render is offscreen skip those loops
 	const uint8_t rendered_width = ((x + w) > (WIDTH - 1)) ? ((WIDTH - x) - xOffset) : (w - xOffset);
 
-	const int8_t yOffset = (y & 7);
+	const uint8_t yOffset = (y & 7);
 	const int8_t tempSRow = (y / 8);
 	int8_t sRow = ((y < 0) && (yOffset > 0)) ? (tempSRow - 1) : tempSRow;
 
