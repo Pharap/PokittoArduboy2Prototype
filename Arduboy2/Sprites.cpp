@@ -105,7 +105,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 	sRow += start_h;
 
 	const uint8_t mul_amt = (1 << yOffset);
-	uint16_t ofs = ((sRow * WIDTH) + x + xOffset);
+	int16_t ofs = ((sRow * WIDTH) + x + xOffset);
 	const uint8_t * bofs = &bitmap[(start_h * w) + xOffset];
 
 	switch (draw_mode)
