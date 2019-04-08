@@ -131,7 +131,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 						Arduboy2Base::sBuffer[ofs] = data;
 					}
 
-					if(yOffset != 0 && sRow < 7)
+					if((yOffset != 0) && (sRow < 7))
 					{
 						const std::size_t index = static_cast<uint16_t>(ofs + WIDTH);
 						uint8_t data = Arduboy2Base::sBuffer[index];
@@ -162,7 +162,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 					if(sRow >= 0)
 						Arduboy2Base::sBuffer[ofs] |= static_cast<uint8_t>(bitmap_data >> 0);
 
-					if(yOffset != 0 && sRow < 7)
+					if((yOffset != 0) && (sRow < 7))
 						Arduboy2Base::sBuffer[ofs + WIDTH] |= static_cast<uint8_t>(bitmap_data >> 8);
 
 					++ofs;
@@ -187,7 +187,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 					if(sRow >= 0)
 						Arduboy2Base::sBuffer[ofs]  &= ~static_cast<uint8_t>(bitmap_data >> 0);
 
-					if(yOffset != 0 && sRow < 7)
+					if((yOffset != 0) && (sRow < 7))
 					{
 						const std::size_t index = static_cast<uint16_t>(ofs + WIDTH);
 						Arduboy2Base::sBuffer[index] &= ~static_cast<uint8_t>(bitmap_data >> 8);
