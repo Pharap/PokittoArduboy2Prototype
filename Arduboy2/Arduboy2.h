@@ -198,7 +198,7 @@ class Arduboy2Base : public Arduboy2Core
  friend class Arduboy2Ex;
 
  public:
-	Arduboy2Base(void);
+	Arduboy2Base();
 
 	/** \brief
 	 * An object created to provide audio control functions within this class.
@@ -227,7 +227,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see boot()
 	 */
-	void begin(void);
+	void begin();
 
 	/** \brief
 	 * Turn the RGB LED and display fully on to act as a small flashlight/torch.
@@ -255,7 +255,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see begin() boot() safeMode()
 	 */
-	void flashlight(void);
+	void flashlight();
 
 	/** \brief
 	 * Handle buttons held on startup for system control.
@@ -273,7 +273,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see begin() boot()
 	 */
-	void systemButtons(void);
+	void systemButtons();
 
 	/** \brief
 	 * Display the boot logo sequence using `drawBitmap()`.
@@ -291,7 +291,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see begin() boot() bootLogoShell() Arduboy2::bootLogoText()
 	 */
-	void bootLogo(void);
+	void bootLogo();
 
 	/** \brief
 	 * Display the boot logo sequence using `drawCompressed()`.
@@ -303,7 +303,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see bootLogo() begin() boot()
 	 */
-	void bootLogoCompressed(void);
+	void bootLogoCompressed();
 
 	/** \brief
 	 * Display the boot logo sequence using `Sprites::drawSelfMasked()`.
@@ -315,7 +315,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see bootLogo() begin() boot() Sprites
 	 */
-	void bootLogoSpritesSelfMasked(void);
+	void bootLogoSpritesSelfMasked();
 
 	/** \brief
 	 * Display the boot logo sequence using `Sprites::drawOverwrite()`.
@@ -327,7 +327,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see bootLogo() begin() boot() Sprites
 	 */
-	void bootLogoSpritesOverwrite(void);
+	void bootLogoSpritesOverwrite();
 
 	/** \brief
 	 * Display the boot logo sequence using `SpritesB::drawSelfMasked()`.
@@ -339,7 +339,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see bootLogo() begin() boot() SpritesB
 	 */
-	void bootLogoSpritesBSelfMasked(void);
+	void bootLogoSpritesBSelfMasked();
 
 	/** \brief
 	 * Display the boot logo sequence using `SpritesB::drawOverwrite()`.
@@ -351,7 +351,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see bootLogo() begin() boot() SpritesB
 	 */
-	void bootLogoSpritesBOverwrite(void);
+	void bootLogoSpritesBOverwrite();
 
 	/** \brief
 	 * Display the boot logo sequence using the provided function
@@ -417,7 +417,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see begin() boot()
 	 */
-	void waitNoButtons(void);
+	void waitNoButtons();
 
 	/** \brief
 	 * Clear the display buffer.
@@ -427,7 +427,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see display(bool)
 	 */
-	void clear(void);
+	void clear();
 
 	/** \brief
 	 * Copy the contents of the display buffer to the display.
@@ -438,7 +438,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see display(bool)
 	 */
-	void display(void);
+	void display();
 
 	/** \brief
 	 * Copy the contents of the display buffer to the display. The display buffer
@@ -720,7 +720,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see sBuffer
 	 */
-	uint8_t * getBuffer(void);
+	uint8_t * getBuffer();
 
 	/** \brief
 	 * Seed the random number generator with a random value.
@@ -734,7 +734,7 @@ class Arduboy2Base : public Arduboy2Core
 	 * such as after a user hits a button to start a game or other semi-random
 	 * event.
 	 */
-	void initRandomSeed(void);
+	void initRandomSeed();
 
 	// Swap the values of two int16_t variables passed by reference.
 	void swap(int16_t & a, int16_t & b);
@@ -812,7 +812,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see setFrameRate() setFrameDuration() nextFrameDEV()
 	 */
-	bool nextFrame(void);
+	bool nextFrame();
 
 	/** \brief
 	 * Indicate that it's time to render the next frame, and visually indicate
@@ -839,7 +839,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see nextFrame() cpuLoad() setFrameRate()
 	 */
-	bool nextFrameDEV(void);
+	bool nextFrameDEV();
 
 	/** \brief
 	 * Indicate if the specified number of frames has elapsed.
@@ -889,7 +889,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see setFrameRate() nextFrame()
 	 */
-	int cpuLoad(void);
+	int cpuLoad();
 
 	/** \brief
 	 * Test if the specified buttons are pressed.
@@ -963,7 +963,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see justPressed() justReleased()
 	 */
-	void pollButtons(void);
+	void pollButtons();
 
 	/** \brief
 	 * Check if a button has just been pressed.
@@ -1060,7 +1060,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see writeUnitID() readUnitName()
 	 */
-	uint16_t readUnitID(void);
+	uint16_t readUnitID();
 
 	/** \brief
 	 * Write a unit ID to system EEPROM.
@@ -1153,7 +1153,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see writeShowBootLogoFlag() bootLogo()
 	 */
-	bool readShowBootLogoFlag(void);
+	bool readShowBootLogoFlag();
 
 	/** \brief
 	 * Write the "Show Boot Logo" flag in system EEPROM.
@@ -1185,7 +1185,7 @@ class Arduboy2Base : public Arduboy2Core
 	 * \see writeShowUnitNameFlag() writeUnitName() readUnitName()
 	 * Arduboy2::bootLogoExtra()
 	 */
-	bool readShowUnitNameFlag(void);
+	bool readShowUnitNameFlag();
 
 	/** \brief
 	 * Write the "Show Unit Name" flag in system EEPROM.
@@ -1216,7 +1216,7 @@ class Arduboy2Base : public Arduboy2Core
 	 *
 	 * \see writeShowBootLogoLEDsFlag()
 	 */
-	bool readShowBootLogoLEDsFlag(void);
+	bool readShowBootLogoLEDsFlag();
 
 	/** \brief
 	 * Write the "Show LEDs with boot logo" flag in system EEPROM.
@@ -1333,7 +1333,7 @@ class Arduboy2 : public Print, public Arduboy2Base
  friend class Arduboy2Ex;
 
  public:
-	Arduboy2(void);
+	Arduboy2();
 
 	/** \class Print
 	 * \brief
@@ -1394,7 +1394,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see bootLogo() boot() Arduboy2::bootLogoExtra()
 	 */
-	void bootLogoText(void);
+	void bootLogoText();
 
 	/** \brief
 	 * Show the unit name at the bottom of the boot logo screen.
@@ -1416,7 +1416,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 * \see readUnitName() writeUnitName() bootLogo() bootLogoShell()
 	 * bootLogoText() writeShowUnitNameFlag() begin()
 	 */
-	virtual void bootLogoExtra(void);
+	virtual void bootLogoExtra();
 
 	/** \brief
 	 * Write a single ASCII character at the current text cursor location.
@@ -1503,7 +1503,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see getCursorY() setCursor()
 	 */
-	int16_t getCursorX(void);
+	int16_t getCursorX();
 
 	/** \brief
 	 * Get the Y coordinate of the current text cursor position.
@@ -1516,7 +1516,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see getCursorX() setCursor()
 	 */
-	int16_t getCursorY(void);
+	int16_t getCursorY();
 
 	/** \brief
 	 * Set the text foreground color.
@@ -1534,7 +1534,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see setTextColor()
 	 */
-	uint8_t getTextColor(void);
+	uint8_t getTextColor();
 
 	/** \brief
 	 * Set the text background color.
@@ -1552,7 +1552,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see setTextBackground()
 	 */
-	uint8_t getTextBackground(void);
+	uint8_t getTextBackground();
 
 	/** \brief
 	 * Set the text character size.
@@ -1579,7 +1579,7 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see setTextSize()
 	 */
-	uint8_t getTextSize(void);
+	uint8_t getTextSize();
 
 	/** \brief
 	 * Set or disable text wrap mode.
@@ -1607,12 +1607,12 @@ class Arduboy2 : public Print, public Arduboy2Base
 	 *
 	 * \see setTextWrap()
 	 */
-	bool getTextWrap(void);
+	bool getTextWrap();
 
 	/** \brief
 	 * Clear the display buffer and set the text cursor to location 0, 0
 	 */
-	void clear(void);
+	void clear();
 
  protected:
 	int16_t cursor_x;

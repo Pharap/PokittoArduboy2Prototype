@@ -9,21 +9,21 @@
 
 bool Arduboy2Audio::audio_enabled = false;
 
-void Arduboy2Audio::on(void)
+void Arduboy2Audio::on()
 {
-	// TODO: Implement Arduboy2Audio::on(void)
+	// TODO: Implement Arduboy2Audio::on()
 
 	audio_enabled = true;
 }
 
-void Arduboy2Audio::off(void)
+void Arduboy2Audio::off()
 {
 	audio_enabled = false;
 
-	// TODO: Implement Arduboy2Audio::off(void)
+	// TODO: Implement Arduboy2Audio::off()
 }
 
-void Arduboy2Audio::toggle(void)
+void Arduboy2Audio::toggle()
 {
 	if(audio_enabled)
 		off();
@@ -31,16 +31,16 @@ void Arduboy2Audio::toggle(void)
 		on();
 }
 
-void Arduboy2Audio::saveOnOff(void)
+void Arduboy2Audio::saveOnOff()
 {
-	// TODO: Implement Arduboy2Audio::saveOnOff(void)
+	// TODO: Implement Arduboy2Audio::saveOnOff()
 
 	//EEPROM.update(EEPROM_AUDIO_ON_OFF, audio_enabled);
 }
 
-void Arduboy2Audio::begin(void)
+void Arduboy2Audio::begin()
 {
-	// TODO: Implement Arduboy2Audio::begin(void)
+	// TODO: Implement Arduboy2Audio::begin()
 
 	//if(EEPROM.read(EEPROM_AUDIO_ON_OFF) != 0)
 	if(true)
@@ -49,7 +49,7 @@ void Arduboy2Audio::begin(void)
 		off();
 }
 
-bool Arduboy2Audio::enabled(void)
+bool Arduboy2Audio::enabled()
 {
 	return audio_enabled;
 }

@@ -71,7 +71,7 @@ using std::uintptr_t;
 
 // Pharap: Remove extern "C"
 
-void yield(void);
+void yield();
 
 #define HIGH 0x1
 #define LOW  0x0
@@ -126,8 +126,8 @@ typedef unsigned int word;
 typedef bool boolean;
 typedef uint8_t byte;
 
-void init(void);
-void initVariant(void);
+void init();
+void initVariant();
 
 // Pharap: Disable atexit function to prevent name clash
 //int atexit(void (*func)()) __attribute__((weak));
@@ -140,8 +140,8 @@ void initVariant(void);
 //void analogReference(uint8_t mode);
 //void analogWrite(uint8_t, int);
 
-unsigned long millis(void);
-unsigned long micros(void);
+unsigned long millis();
+unsigned long micros();
 void delay(unsigned long);
 void delayMicroseconds(unsigned int us);
 
@@ -151,8 +151,8 @@ void delayMicroseconds(unsigned int us);
 
 // Pharap: Remove attachInterrupt and detachInterrupt functions
 
-void setup(void);
-void loop(void);
+void setup();
+void loop();
 
 // Pharap: Remove analogInPinToBit macro
 

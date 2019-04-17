@@ -17,7 +17,7 @@ namespace Pokitto
 
 		namespace Display
 		{
-			void update(void);
+			void update();
 			void drawBuffer(const std::uint8_t * buffer);
 			void drawBuffer(std::uint8_t * buffer, bool clear);
 			void fillDisplay(std::uint8_t colour);

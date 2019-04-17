@@ -93,5 +93,5 @@ void delayMicroseconds(unsigned int us)
 // Pharap: Disable init functionality
 void init()
 {
-	// TODO: Decide how to implement init(void)
+	// TODO: Decide how to implement init()
 }
