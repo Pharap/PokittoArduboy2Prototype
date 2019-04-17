@@ -161,7 +161,7 @@ void BeepPin1::tone(uint16_t count)
 void BeepPin1::tone(uint16_t count, uint8_t dur)
 {
 	// Intentionally unused
-	(void)count;
+	static_cast<void>(count);
 
 	duration = dur;
 }
@@ -194,7 +194,7 @@ void BeepPin2::tone(uint16_t count)
 void BeepPin2::tone(uint16_t count, uint8_t dur)
 {
 	// Intentionally unused
-	(void)count;
+	static_cast<void>(count);
 
 	duration = dur;
 }

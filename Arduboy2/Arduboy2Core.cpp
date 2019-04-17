@@ -155,7 +155,7 @@ void Arduboy2Core::bootSPI()
 void Arduboy2Core::SPItransfer(uint8_t data)
 {
 	// Arduboy2Core::SPItransfer(uint8_t data) is intentionally unimplemented.
-	(void)data;
+	static_cast<void>(data);
 }
 
 void Arduboy2Core::safeMode()
@@ -306,17 +306,17 @@ void Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 {
 	// TODO: Investigate the best way to implement Arduboy2Core::setRGBled(uint8_t red, uint8_t green, uint8_t blue)
 
-	(void)red;
-	(void)green;
-	(void)blue;
+	static_cast<void>(red);
+	static_cast<void>(green);
+	static_cast<void>(blue);
 }
 
 void Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 {
 	// TODO: Investigate the best way to implement Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 
-	(void)color;
-	(void)val;
+	static_cast<void>(color);
+	static_cast<void>(val);
 }
 
 void Arduboy2Core::freeRGBled()
@@ -328,17 +328,17 @@ void Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
 {
 	// TODO: Investigate the best way to implement Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
 
-	(void)red;
-	(void)green;
-	(void)blue;
+	static_cast<void>(red);
+	static_cast<void>(green);
+	static_cast<void>(blue);
 }
 
 void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 {
 	// TODO: Investigate the best way to implement Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 
-	(void)color;
-	(void)val;
+	static_cast<void>(color);
+	static_cast<void>(val);
 }
 
 /* Buttons */

@@ -107,9 +107,9 @@ char * ultoa(unsigned long value, char * str, int radix)
 
 char * dtostrf(double value, signed char width, unsigned char precision, char * str)
 {
-	(void)value;
-	(void)width;
-	(void)precision;
+	static_cast<void>(value);
+	static_cast<void>(width);
+	static_cast<void>(precision);
 	
 	// TODO: implement dtostrf(double value, signed char width, unsigned char precision, char * str)
 	return str;
@@ -117,8 +117,8 @@ char * dtostrf(double value, signed char width, unsigned char precision, char * 
 
 //char * dtostre(double value, char * str, unsigned char precision, unsigned char flags)
 //{
-//	(void)value;
-//	(void)radix;
+//	static_cast<void>(value);
+//	static_cast<void>(radix);
 //	
 //	// TODO: implement dtostre(double value, char * str, unsigned char precision, unsigned char flags)
 //	return str;
