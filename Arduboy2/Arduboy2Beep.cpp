@@ -12,9 +12,9 @@
 
 uint8_t BeepPin1::duration = 0;
 
-void BeepPin1::begin(void)
+void BeepPin1::begin()
 {
-	// TODO: Implement BeepPin1::begin(void)
+	// TODO: Implement BeepPin1::begin()
 
 	//TCCR3A = 0;
 
@@ -42,25 +42,25 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 	//OCR3A = count;
 }
 
-void BeepPin1::timer(void)
+void BeepPin1::timer()
 {
 	if(duration == 0)
 		return;
 
 	--duration;
 
-	// TODO: Implement BeepPin1::timer(void)
+	// TODO: Implement BeepPin1::timer()
 
 	//// set normal mode (which disconnects the pin)
 	//if(duration == 0)
 		//TCCR3A = 0;
 }
 
-void BeepPin1::noTone(void)
+void BeepPin1::noTone()
 {
 	duration = 0;
 
-	// TODO: Implement BeepPin1::noTone(void)
+	// TODO: Implement BeepPin1::noTone()
 
 	//// set normal mode (which disconnects the pin)
 	//TCCR3A = 0;
@@ -71,9 +71,9 @@ void BeepPin1::noTone(void)
 
 uint8_t BeepPin2::duration = 0;
 
-void BeepPin2::begin(void)
+void BeepPin2::begin()
 {
-	// TODO: Implement BeepPin2::begin(void)
+	// TODO: Implement BeepPin2::begin()
 
 	//// normal mode. Disable PWM
 	//TCCR4A = 0;
@@ -114,25 +114,25 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 	//OCR4C = lowByte(count);
 }
 
-void BeepPin2::timer(void)
+void BeepPin2::timer()
 {
 	if(duration == 0)
 		return;
 
 	--duration;
 
-	// TODO: Implement BeepPin2::timer(void)
+	// TODO: Implement BeepPin2::timer()
 
 	//// set normal mode (which disconnects the pin)
 	//if(duration == 0)
 		//TCCR4A = 0;
 }
 
-void BeepPin2::noTone(void)
+void BeepPin2::noTone()
 {
 	duration = 0;
 
-	// TODO: Implement BeepPin2::noTone(void)
+	// TODO: Implement BeepPin2::noTone()
 
 	//// set normal mode (which disconnects the pin)
 	//TCCR4A = 0;
@@ -147,7 +147,7 @@ void BeepPin2::noTone(void)
 
 uint8_t BeepPin1::duration = 0;
 
-void BeepPin1::begin(void)
+void BeepPin1::begin()
 {
 }
 
@@ -166,13 +166,13 @@ void BeepPin1::tone(uint16_t count, uint8_t dur)
 	duration = dur;
 }
 
-void BeepPin1::timer(void)
+void BeepPin1::timer()
 {
 	if(duration > 0)
 		--duration;
 }
 
-void BeepPin1::noTone(void)
+void BeepPin1::noTone()
 {
 	duration = 0;
 }
@@ -180,7 +180,7 @@ void BeepPin1::noTone(void)
 
 uint8_t BeepPin2::duration = 0;
 
-void BeepPin2::begin(void)
+void BeepPin2::begin()
 {
 }
 
@@ -199,13 +199,13 @@ void BeepPin2::tone(uint16_t count, uint8_t dur)
 	duration = dur;
 }
 
-void BeepPin2::timer(void)
+void BeepPin2::timer()
 {
 	if(duration > 0)
 		--duration;
 }
 
-void BeepPin2::noTone(void)
+void BeepPin2::noTone()
 {
 	duration = 0;
 }

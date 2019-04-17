@@ -128,7 +128,7 @@ char * dtostrf(double value, signed char width, unsigned char precision, char * 
 // Random number facilities
 //
 
-long random(void)
+long random()
 {
 	return std::rand() & RANDOM_MAX;
 }

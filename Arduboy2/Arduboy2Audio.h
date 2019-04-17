@@ -85,7 +85,7 @@ class Arduboy2Audio
 	 * `Arduboy2Core::boot()` is used instead of `Arduboy2Base::begin()` and the
 	 * sketch includes sound, then this function should be called after `boot()`.
 	 */
-	void static begin(void);
+	void static begin();
 
 	/** \brief
 	 * Turn sound on.
@@ -97,7 +97,7 @@ class Arduboy2Audio
 	 *
 	 * \see off() toggle() saveOnOff()
 	 */
-	void static on(void);
+	void static on();
 
 	/** \brief
 	 * Turn sound off (mute).
@@ -109,7 +109,7 @@ class Arduboy2Audio
 	 *
 	 * \see on() toggle() saveOnOff()
 	 */
-	void static off(void);
+	void static off();
 
 	/** \brief
 	 * Toggle the sound on/off state.
@@ -122,7 +122,7 @@ class Arduboy2Audio
 	 *
 	 * \see on() off() saveOnOff()
 	 */
-	void static toggle(void);
+	void static toggle();
 
 	/** \brief
 	 * Save the current sound state in EEPROM.
@@ -138,7 +138,7 @@ class Arduboy2Audio
 	 *
 	 * \see on() off() toggle()
 	 */
-	void static saveOnOff(void);
+	void static saveOnOff();
 
 	/** \brief
 	 * Get the current sound state.
@@ -152,7 +152,7 @@ class Arduboy2Audio
 	 *
 	 * \see on() off() toggle()
 	 */
-	bool static enabled(void);
+	bool static enabled();
 
  protected:
 	bool static audio_enabled;

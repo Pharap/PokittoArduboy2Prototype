@@ -39,7 +39,7 @@ void initVariant() { }
 // Pharap: Add <Pokitto.h> include
 #include <Pokitto.h>
 
-int main(void)
+int main()
 {
 	init();
 

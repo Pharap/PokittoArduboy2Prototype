@@ -77,11 +77,11 @@ const uint8_t PROGMEM lcdBootProgram[] =
 };
 
 
-Arduboy2Core::Arduboy2Core(void)
+Arduboy2Core::Arduboy2Core()
 {
 }
 
-void Arduboy2Core::boot(void)
+void Arduboy2Core::boot()
 {
 // ARDUBOY_SET_CPU_8MHZ will be set by the IDE using boards.txt
 #ifdef ARDUBOY_SET_CPU_8MHZ
@@ -93,7 +93,7 @@ void Arduboy2Core::boot(void)
 	bootOLED();
 	bootPowerSaving();
 
-	// TODO: implement Arduboy2Core::boot(void)
+	// TODO: implement Arduboy2Core::boot()
 }
 
 #ifdef ARDUBOY_SET_CPU_8MHZ
@@ -101,22 +101,22 @@ void Arduboy2Core::boot(void)
 // hardware clock on the Arduboy is 16MHz.
 // We also need to readjust the PLL prescaler because the Arduino USB code
 // likely will have incorrectly set it for an 8MHz hardware clock.
-void Arduboy2Core::setCPUSpeed8MHz(void)
+void Arduboy2Core::setCPUSpeed8MHz()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::setCPUSpeed8MHz(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::setCPUSpeed8MHz()
 }
 #endif
 
 // Pins are set to the proper modes and levels for the specific hardware.
 // This routine must be modified if any pins are moved to a different port
-void Arduboy2Core::bootPins(void)
+void Arduboy2Core::bootPins()
 {
-	// Arduboy2Core::bootPins(void) is intentionally unimplemented.
+	// Arduboy2Core::bootPins() is intentionally unimplemented.
 }
 
-void Arduboy2Core::bootOLED(void)
+void Arduboy2Core::bootOLED()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::bootOLED(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::bootOLED()
 
 	// reset the display
 	// reset pin should be low here. let it stay low a while
@@ -135,20 +135,20 @@ void Arduboy2Core::bootOLED(void)
 	LCDDataMode();
 }
 
-void Arduboy2Core::LCDDataMode(void)
+void Arduboy2Core::LCDDataMode()
 {
-	// Arduboy2Core::LCDDataMode(void) is intentionally unimplemented.
+	// Arduboy2Core::LCDDataMode() is intentionally unimplemented.
 }
 
-void Arduboy2Core::LCDCommandMode(void)
+void Arduboy2Core::LCDCommandMode()
 {
-	// Arduboy2Core::LCDCommandMode(void) is intentionally unimplemented.
+	// Arduboy2Core::LCDCommandMode() is intentionally unimplemented.
 }
 
 // Initialize the SPI interface for the display
-void Arduboy2Core::bootSPI(void)
+void Arduboy2Core::bootSPI()
 {
-	// Arduboy2Core::bootSPI(void) is intentionally unimplemented.
+	// Arduboy2Core::bootSPI() is intentionally unimplemented.
 }
 
 // Write to the SPI bus (MOSI pin)
@@ -158,7 +158,7 @@ void Arduboy2Core::SPItransfer(uint8_t data)
 	(void)data;
 }
 
-void Arduboy2Core::safeMode(void)
+void Arduboy2Core::safeMode()
 {
 	if(buttonsState() != UP_BUTTON)
 		return;
@@ -171,20 +171,20 @@ void Arduboy2Core::safeMode(void)
 
 /* Power Management */
 
-void Arduboy2Core::idle(void)
+void Arduboy2Core::idle()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::idle(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::idle()
 }
 
-void Arduboy2Core::bootPowerSaving(void)
+void Arduboy2Core::bootPowerSaving()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::bootPowerSaving(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::bootPowerSaving()
 }
 
 // Shut down the display
-void Arduboy2Core::displayOff(void)
+void Arduboy2Core::displayOff()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::displayOff(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::displayOff()
 
 	LCDCommandMode();
 
@@ -201,19 +201,19 @@ void Arduboy2Core::displayOff(void)
 }
 
 // Restart the display after a displayOff()
-void Arduboy2Core::displayOn(void)
+void Arduboy2Core::displayOn()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::displayOn(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::displayOn()
 
 	bootOLED();
 }
 
-uint8_t Arduboy2Core::width(void)
+uint8_t Arduboy2Core::width()
 {
 	return WIDTH;
 }
 
-uint8_t Arduboy2Core::height(void)
+uint8_t Arduboy2Core::height()
 {
 	return HEIGHT;
 }
@@ -248,7 +248,7 @@ void Arduboy2Core::paintScreen(uint8_t image[], bool clear)
 	Display::update();
 }
 
-void Arduboy2Core::blank(void)
+void Arduboy2Core::blank()
 {
 	using namespace Pokitto::ArduboyUtilities;
 	Display::fillDisplay(0);
@@ -319,9 +319,9 @@ void Arduboy2Core::setRGBled(uint8_t color, uint8_t val)
 	(void)val;
 }
 
-void Arduboy2Core::freeRGBled(void)
+void Arduboy2Core::freeRGBled()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::freeRGBled(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::freeRGBled()
 }
 
 void Arduboy2Core::digitalWriteRGB(uint8_t red, uint8_t green, uint8_t blue)
@@ -343,7 +343,7 @@ void Arduboy2Core::digitalWriteRGB(uint8_t color, uint8_t val)
 
 /* Buttons */
 
-uint8_t Arduboy2Core::buttonsState(void)
+uint8_t Arduboy2Core::buttonsState()
 {
 	std::uint8_t buttons = 0;
 	
@@ -374,9 +374,9 @@ void Arduboy2Core::delayShort(uint16_t ms)
 	Pokitto::Core::wait(ms);
 }
 
-void Arduboy2Core::exitToBootloader(void)
+void Arduboy2Core::exitToBootloader()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::exitToBootloader(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::exitToBootloader()
 
 	while(true);
 }
@@ -385,9 +385,9 @@ void Arduboy2Core::exitToBootloader(void)
 // Used by the ARDUBOY_NO_USB macro. This should not be called
 // directly from a sketch.
 
-void Arduboy2Core::mainNoUSB(void)
+void Arduboy2Core::mainNoUSB()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::mainNoUSB(void)
+	// TODO: Investigate the best way to implement Arduboy2Core::mainNoUSB()
 
 	//init();
 

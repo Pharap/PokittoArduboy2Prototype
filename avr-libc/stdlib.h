@@ -79,7 +79,7 @@ int rand_r(unsigned long * context) = delete;
 
 #define RANDOM_MAX 0x7FFFFFFF
 
-long random(void);
+long random();
 
 void srandom(unsigned long seed);
 

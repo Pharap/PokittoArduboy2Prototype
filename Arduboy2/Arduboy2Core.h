@@ -390,8 +390,8 @@
  *
  * \see Arduboy2Core::exitToBootloader()
  */
-#define ARDUBOY_NO_USB int main(void) __attribute__ ((OS_main)); \
-int main(void) \
+#define ARDUBOY_NO_USB int main() __attribute__ ((OS_main)); \
+int main() \
 { \
 	Arduboy2Core::mainNoUSB(); \
 	return 0; \
@@ -417,7 +417,7 @@ class Arduboy2Core
 	friend class Arduboy2Ex;
 
 	public:
-		Arduboy2Core(void);
+		Arduboy2Core();
 
 		/** \brief
 		 * Idle the CPU to save power.
@@ -429,7 +429,7 @@ class Arduboy2Core
 		 * app should be able to sleep maybe half the time in between rendering
 		 * it's own frames.
 		 */
-		void static idle(void);
+		void static idle();
 
 		/** \brief
 		 * Put the display into data mode.
@@ -445,7 +445,7 @@ class Arduboy2Core
 		 *
 		 * \see LCDCommandMode() SPItransfer()
 		 */
-		void static LCDDataMode(void);
+		void static LCDDataMode();
 
 		/** \brief
 		 * Put the display into command mode.
@@ -469,7 +469,7 @@ class Arduboy2Core
 		 *
 		 * \see LCDDataMode() sendLCDCommand() SPItransfer()
 		 */
-		void static LCDCommandMode(void);
+		void static LCDCommandMode();
 
 		/** \brief
 		 * Transfer a byte to the display.
@@ -497,7 +497,7 @@ class Arduboy2Core
 		 *
 		 * \see displayOn()
 		 */
-		void static displayOff(void);
+		void static displayOff();
 
 		/** \brief
 		 * Turn the display on.
@@ -513,7 +513,7 @@ class Arduboy2Core
 		 *
 		 * \see displayOff()
 		 */
-		void static displayOn(void);
+		void static displayOn();
 
 		/** \brief
 		 * Get the width of the display in pixels.
@@ -524,7 +524,7 @@ class Arduboy2Core
 		 * In most cases, the defined value `WIDTH` would be better to use instead
 		 * of this function.
 		 */
-		uint8_t static width(void);
+		uint8_t static width();
 
 		/** \brief
 		 * Get the height of the display in pixels.
@@ -535,7 +535,7 @@ class Arduboy2Core
 		 * In most cases, the defined value `HEIGHT` would be better to use instead
 		 * of this function.
 		 */
-		uint8_t static height(void);
+		uint8_t static height();
 
 		/** \brief
 		 * Get the current state of all buttons as a bitmask.
@@ -550,7 +550,7 @@ class Arduboy2Core
 		 *
 		 * LEFT_BUTTON, RIGHT_BUTTON, UP_BUTTON, DOWN_BUTTON, A_BUTTON, B_BUTTON
 		 */
-		uint8_t static buttonsState(void);
+		uint8_t static buttonsState();
 
 		/** \brief
 		 * Paint 8 pixels vertically to the display.
@@ -633,7 +633,7 @@ class Arduboy2Core
 		 * All pixels on the screen will be written with a value of 0 to turn
 		 * them off.
 		 */
-		void static blank(void);
+		void static blank();
 
 		/** \brief
 		 * Invert the entire display or set it back to normal.
@@ -792,7 +792,7 @@ class Arduboy2Core
 		 *
 		 * \see digitalWriteRGB() setRGBled()
 		 */
-		void static freeRGBled(void);
+		void static freeRGBled();
 
 		/** \brief
 		 * Set the RGB LEDs digitally, to either fully on or fully off.
@@ -872,7 +872,7 @@ class Arduboy2Core
 		 *
 		 * \see Arduboy2Base::begin()
 		 */
-		void static boot(void);
+		void static boot();
 
 		/** \brief
 		 * Allow upload when the bootloader "magic number" could be corrupted.
@@ -893,7 +893,7 @@ class Arduboy2Core
 		 *
 		 * \see Arduboy2Base::flashlight() boot()
 		 */
-		void static safeMode(void);
+		void static safeMode();
 
 		/** \brief
 		 * Delay for the number of milliseconds, specified as a 16 bit value.
@@ -924,20 +924,20 @@ class Arduboy2Core
 		 *
 		 * \see ARDUBOY_NO_USB
 		 */
-		void static exitToBootloader(void);
+		void static exitToBootloader();
 
 		// Replacement main() that eliminates the USB stack code.
 		// Used by the ARDUBOY_NO_USB macro. This should not be called
 		// directly from a sketch.
-		void static mainNoUSB(void);
+		void static mainNoUSB();
 
 	protected:
 		// internals
-		void static setCPUSpeed8MHz(void);
-		void static bootSPI(void);
-		void static bootOLED(void);
-		void static bootPins(void);
-		void static bootPowerSaving(void);
+		void static setCPUSpeed8MHz();
+		void static bootSPI();
+		void static bootOLED();
+		void static bootPins();
+		void static bootPowerSaving();
 };
 
 #endif

@@ -14,7 +14,7 @@ namespace Pokitto
 
 		namespace Display
 		{
-			void update(void)
+			void update()
 			{
 				Pokitto::Display::update();
 			}

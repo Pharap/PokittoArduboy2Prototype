@@ -155,7 +155,7 @@ class BeepPin1
 	 * This function must be called (usually in `setup()`) before using any of
 	 * the other functions in this class.
 	 */
-	static void begin(void);
+	static void begin();
 
 	/** \brief
 	 * Play a tone continually, until replaced by a new tone or stopped.
@@ -209,7 +209,7 @@ class BeepPin1
 	 * When the `duration` variable is decremented to 0, a playing tone will be
 	 * stopped.
 	 */
-	static void timer(void);
+	static void timer();
 
 	/** \brief
 	 * Stop a tone that is playing.
@@ -220,7 +220,7 @@ class BeepPin1
 	 *
 	 * \see tone()
 	 */
-	static void noTone(void);
+	static void noTone();
 
 	/** \brief
 	 * Convert a frequency to the required count.
@@ -303,7 +303,7 @@ class BeepPin2
 	 * \details
 	 * For details see `BeepPin1::begin()`.
 	 */
-	static void begin(void);
+	static void begin();
 
 	/** \brief
 	 * Play a tone on speaker pin 2 continually, until replaced by a new tone
@@ -335,7 +335,7 @@ class BeepPin2
 	 * \details
 	 * For details see `BeepPin1::timer()`.
 	 */
-	static void timer(void);
+	static void timer();
 
 	/** \brief
 	 * Stop a tone that is playing on speaker pin 2.
@@ -343,7 +343,7 @@ class BeepPin2
 	 * \details
 	 * For details see `BeepPin1::noTone()`.
 	 */
-	static void noTone(void);
+	static void noTone();
 
 	/** \brief
 	 * Convert a frequency to the required count for speaker pin 2.
