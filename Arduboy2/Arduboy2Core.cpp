@@ -83,7 +83,7 @@ Arduboy2Core::Arduboy2Core()
 
 void Arduboy2Core::boot()
 {
-// ARDUBOY_SET_CPU_8MHZ will be set by the IDE using boards.txt
+	// ARDUBOY_SET_CPU_8MHZ will be set by the IDE using boards.txt
 #ifdef ARDUBOY_SET_CPU_8MHZ
 	setCPUSpeed8MHz();
 #endif
@@ -92,8 +92,6 @@ void Arduboy2Core::boot()
 	bootSPI();
 	bootOLED();
 	bootPowerSaving();
-
-	// TODO: implement Arduboy2Core::boot()
 }
 
 #ifdef ARDUBOY_SET_CPU_8MHZ
