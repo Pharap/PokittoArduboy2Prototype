@@ -387,16 +387,14 @@ void Arduboy2Core::exitToBootloader()
 
 void Arduboy2Core::mainNoUSB()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::mainNoUSB()
+	using Pokitto::Core;
+	using Pokitto::Display;
 
-	//init();
+	init();
 
-	// Delay to give time for the pin to be pulled high if it was floating
-	delayShort(10);
-
-	//// if the DOWN button is pressed
-	//if(bitRead(DOWN_BUTTON_PORTIN, DOWN_BUTTON_BIT) == 0)
-		//exitToBootloader();
+	// if the DOWN button is pressed
+	if(Pokitto::heldStates[BTN_B] != 0)
+		exitToBootloader();
 
 	// The remainder is a copy of the Arduino main() function with the
 	// USB code and other unneeded code commented out.
@@ -405,10 +403,17 @@ void Arduboy2Core::mainNoUSB()
 	// error: "multiple definition of 'main'".
 	// The return statement is removed since this function is type void.
 
-	//setup();
+	// init();
 
-	//for(;;) {
-		//loop();
-	//}
+	// initVariant();
+
+	setup();
+
+	Core::begin();
+	Display::persistence = static_cast<std::uint8_t>(~0);
+
+	setup();
+
+	while(Core::isRunning())
+		loop();
 }
-
