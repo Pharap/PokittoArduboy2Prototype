@@ -374,8 +374,6 @@ void Arduboy2Core::delayShort(uint16_t ms)
 
 void Arduboy2Core::exitToBootloader()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::exitToBootloader()
-
 	while(true);
 }
 
