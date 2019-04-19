@@ -101,7 +101,7 @@ void Arduboy2Core::boot()
 // likely will have incorrectly set it for an 8MHz hardware clock.
 void Arduboy2Core::setCPUSpeed8MHz()
 {
-	// TODO: Investigate the best way to implement Arduboy2Core::setCPUSpeed8MHz()
+	// Arduboy2Core::setCPUSpeed8MHz() is intentionally unimplemented
 }
 #endif
 
