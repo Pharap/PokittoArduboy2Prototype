@@ -154,14 +154,14 @@ String::~String()
 /*  Memory Management                        */
 /*********************************************/
 
-inline void String::init()
+inline void String::init(void)
 {
 	buffer = NULL;
 	capacity = 0;
 	len = 0;
 }
 
-void String::invalidate()
+void String::invalidate(void)
 {
 	if (buffer) free(buffer);
 	buffer = NULL;
@@ -726,7 +726,7 @@ void String::remove(unsigned int index, unsigned int count){
 	buffer[len] = 0;
 }
 
-void String::toLowerCase()
+void String::toLowerCase(void)
 {
 	if (!buffer) return;
 	for (char *p = buffer; *p; p++) {
@@ -734,7 +734,7 @@ void String::toLowerCase()
 	}
 }
 
-void String::toUpperCase()
+void String::toUpperCase(void)
 {
 	if (!buffer) return;
 	for (char *p = buffer; *p; p++) {
@@ -742,7 +742,7 @@ void String::toUpperCase()
 	}
 }
 
-void String::trim()
+void String::trim(void)
 {
 	if (!buffer || len == 0) return;
 	char *begin = buffer;
@@ -758,18 +758,18 @@ void String::trim()
 /*  Parsing / Conversion                     */
 /*********************************************/
 
-long String::toInt() const
+long String::toInt(void) const
 {
 	if (buffer) return atol(buffer);
 	return 0;
 }
 
-float String::toFloat() const
+float String::toFloat(void) const
 {
 	return float(toDouble());
 }
 
-double String::toDouble() const
+double String::toDouble(void) const
 {
 	if (buffer) return atof(buffer);
 	return 0;

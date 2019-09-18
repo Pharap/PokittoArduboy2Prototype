@@ -96,7 +96,7 @@ class Print
     std::size_t println(unsigned long, int = DEC);
     std::size_t println(double, int = 2);
     std::size_t println(const Printable&);
-    std::size_t println();
+    std::size_t println(void);
 
     virtual void flush() { /* Empty implementation for backward compatibility */ }
 };

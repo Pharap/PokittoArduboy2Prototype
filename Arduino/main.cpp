@@ -18,7 +18,6 @@
 
   Modified 9 September 2018 by Pharap
   Modified 10 September 2018 by Pharap
-  Modified 18 April 2019 by Pharap
 */
 
 // Pharap: Change <Arduino.h> to "Arduino.h"
@@ -40,11 +39,8 @@ void initVariant() { }
 // Pharap: Add <Pokitto.h> include
 #include <Pokitto.h>
 
-int main()
+int main(void)
 {
-	using Pokitto::Core;
-	using Pokitto::Display;
-
 	init();
 
 	initVariant();
@@ -52,16 +48,18 @@ int main()
 	// Pharap: Remove USB code
 
 	// Pharap: Add Pokitto::Core::begin() call
-	Core::begin();
-	Display::persistence = static_cast<std::uint8_t>(~0);
+	Pokitto::Core::begin();
+	Pokitto::Display::persistence = static_cast<std::uint8_t>(~0);
+	//Pokitto::Core::setFrameRate(~0);
 	
 	setup();
 
 	// Pharap: Rewrite loop calling code
-	while(Core::isRunning())
+	while(Pokitto::Core::isRunning())
 		loop();
 	
 	// Pharap: Remove serial event code
 
 	return 0;
 }
+

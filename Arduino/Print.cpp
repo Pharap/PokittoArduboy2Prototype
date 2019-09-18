@@ -133,7 +133,7 @@ size_t Print::print(const Printable& x)
   return x.printTo(*this);
 }
 
-size_t Print::println()
+size_t Print::println(void)
 {
   return write("\r\n");
 }

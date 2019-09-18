@@ -76,14 +76,14 @@ public:
 	explicit String(unsigned long, unsigned char base=10);
 	explicit String(float, unsigned char decimalPlaces=2);
 	explicit String(double, unsigned char decimalPlaces=2);
-	~String();
+	~String(void);
 
 	// memory management
 	// return true on success, false on failure (in which case, the string
 	// is left unchanged).  reserve(0), if successful, will validate an
 	// invalid string (i.e., "if (s)" will be true afterwards)
 	unsigned char reserve(unsigned int size);
-	inline unsigned int length() const {return len;}
+	inline unsigned int length(void) const {return len;}
 
 	// creates a copy of the assigned value.  if the value is null or
 	// invalid, or if the memory allocation fails, the string will be
@@ -188,22 +188,22 @@ public:
 	void replace(const String& find, const String& replace);
 	void remove(unsigned int index);
 	void remove(unsigned int index, unsigned int count);
-	void toLowerCase();
-	void toUpperCase();
-	void trim();
+	void toLowerCase(void);
+	void toUpperCase(void);
+	void trim(void);
 
 	// parsing/conversion
-	long toInt() const;
-	float toFloat() const;
-	double toDouble() const;
+	long toInt(void) const;
+	float toFloat(void) const;
+	double toDouble(void) const;
 
 protected:
 	char *buffer;	        // the actual char array
 	unsigned int capacity;  // the array length minus one (for the '\0')
 	unsigned int len;       // the String length (not counting the '\0')
 protected:
-	void init();
-	void invalidate();
+	void init(void);
+	void invalidate(void);
 	unsigned char changeBuffer(unsigned int maxStrLen);
 	unsigned char concat(const char *cstr, unsigned int length);
 

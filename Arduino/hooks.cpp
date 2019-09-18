@@ -33,6 +33,6 @@ extern "C"
 {
 	// Pharap: Make '__empty' arguments explicitly 'void'
 	// Pharap: Collapse '__empty' body
-	static void __empty() {}
+	static void __empty(void) {}
 }
-void yield() __attribute__ ((weak, alias("__empty")));
+void yield(void) __attribute__ ((weak, alias("__empty")));
