@@ -214,7 +214,7 @@ void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t * bitmap, const uin
 				{
 					// NOTE: you might think in the yOffset==0 case that this results
 					// in more effort, but in all my testing the compiler was forcing
-					// 16-bit math to happen here anyways, so this isn't actually
+					// 16-bit maths to happen here anyways, so this isn't actually
 					// compiling to more code than it otherwise would. If the offset
 					// is 0 the high part of the word will just never be used.
 
